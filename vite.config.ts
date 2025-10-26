@@ -1,4 +1,3 @@
-// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
@@ -10,20 +9,16 @@ const __dirname = path.dirname(__filename);
 export default defineConfig(async () => {
   const plugins: any[] = [react()];
 
-  // Try to enable MDX only if it's installed (prevents dev crash)
+  // MDX is loaded only if resolvable (prevents hard crash on stale caches)
   try {
     const { default: mdx } = await import("@mdx-js/rollup");
     const remarkGfm = (await import("remark-gfm")).default;
     const remarkFrontmatter = (await import("remark-frontmatter")).default;
-
-    plugins.push(
-      mdx({
-        remarkPlugins: [remarkGfm, remarkFrontmatter],
-      })
-    );
-  } catch (e) {
+    plugins.push(mdx({ remarkPlugins: [remarkGfm, remarkFrontmatter] }));
+  } catch (err) {
     console.warn(
-      "[vite] MDX plugin not installed; skipping. MDX docs won't compile until deps are present."
+      "[vite] MDX plugin missing/failed; continuing without it:",
+      (err as Error).message
     );
   }
 

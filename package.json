@@ -1,5 +1,5 @@
 {
-  "name": "react-vite-ts",
+  "name": "the-business-idea-studio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -31,7 +31,7 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "picomatch": "^4",
     "postcss": "8.4.49",
-    "remark-frontmatter": "^4.0.1",
+    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
     "tailwindcss": "3.4.16",
     "typescript": "^5.7.2",
