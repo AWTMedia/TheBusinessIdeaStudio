@@ -8,23 +8,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
-  let mdxPlugin: any | null = null;
-
-  // Try to load MDX only if deps are present
+  // Try to load MDX plugin & remark helpers only if they’re installed
+  let mdxPlugin: any = null;
   try {
-    const [{ default: mdx }, { default: remarkGfm }, { default: remarkFrontmatter }] =
-      await Promise.all([
-        import("@mdx-js/rollup"),
-        import("remark-gfm"),
-        import("remark-frontmatter"),
-      ]);
-
+    const [
+      { default: mdx },
+      { default: remarkGfm },
+      { default: remarkFrontmatter },
+    ] = await Promise.all([
+      import("@mdx-js/rollup"),
+      import("remark-gfm"),
+      import("remark-frontmatter"),
+    ]);
     mdxPlugin = mdx({
-      providerImportSource: "@mdx-js/react",
       remarkPlugins: [remarkGfm, remarkFrontmatter],
+      providerImportSource: "@mdx-js/react",
     });
   } catch (e: any) {
-    console.warn("[vite] MDX plugin not loaded (optional):", e?.message ?? e);
+    console.warn("[vite] MDX plugin not loaded (optional):", e?.message || e);
   }
 
   return {
@@ -36,11 +37,5 @@ export default defineConfig(async () => {
       },
     },
     plugins: [react(), ...(mdxPlugin ? [mdxPlugin] : [])],
-    optimizeDeps: {
-      include: ["@mdx-js/react"], // harmless even if MDX plugin didn't load
-    },
-    build: {
-      chunkSizeWarningLimit: 1200, // silence large bundle warning
-    },
   };
 });
