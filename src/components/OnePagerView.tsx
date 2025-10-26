@@ -1,7 +1,11 @@
-import React, { useMemo } from "react";
-import type { OnePager } from "@/types/OnePager";
+import React, { useMemo, Suspense } from "react";
+import type { OnePager as LegacyOnePager } from "@/types/OnePager";
 import CTA from "./CTA";
 import { VIDEO_MAP } from "@/onepagers/videos";
+
+// If you created DocViewer.tsx earlier, keep this import.
+// If not, we inline a minimal PDF/MDX viewer below and use that.
+import DocViewer from "./DocViewer";
 
 // Local brand colors (match your palette)
 const C = {
@@ -87,19 +91,15 @@ function parseYouTubeEmbed(url: string, start?: number) {
     const u = new URL(url);
     let id = "";
 
-    // youtu.be/<id>
     if (u.hostname.includes("youtu.be")) {
       id = u.pathname.replace("/", "");
     }
-    // youtube.com/watch?v=<id>
     if (!id && u.searchParams.get("v")) {
       id = u.searchParams.get("v") || "";
     }
-    // youtube.com/shorts/<id>
     if (!id && u.pathname.startsWith("/shorts/")) {
       id = u.pathname.split("/")[2] || "";
     }
-    // youtube.com/embed/<id>
     if (!id && u.pathname.startsWith("/embed/")) {
       id = u.pathname.split("/")[2] || "";
     }
@@ -138,10 +138,7 @@ function YouTubeEmbed({
 
   return (
     <div className="mt-6">
-      <div
-        className="relative w-full"
-        style={{ paddingTop: "56.25%" /* 16:9 */ }}
-      >
+      <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
         <iframe
           className="absolute inset-0 w-full h-full rounded-xl border"
           src={embed.src}
@@ -155,20 +152,131 @@ function YouTubeEmbed({
   );
 }
 
+/* ---------------------- TYPES FOR AUTO-DOCS ---------------------- */
+
+type Stage =
+  | "self"
+  | "identity"
+  | "empathy"
+  | "offer"
+  | "systems"
+  | "scale"
+  | "proof";
+
+type AutoDoc = {
+  key: string;
+  title: string;
+  stage: Stage;
+  type: "mdx" | "pdf";
+  Component?: React.ComponentType<any>;
+  url?: string;
+  question?: string;
+  hook?: string;
+};
+
+type ViewerPager = LegacyOnePager | AutoDoc;
+
 /* ---------------------- MAIN VIEW ---------------------- */
 
 export default function OnePagerView({
   pager,
   onBack,
 }: {
-  pager: OnePager;
+  pager: ViewerPager;
   onBack: () => void;
 }) {
-  // Prefer inline pager.video; otherwise check centralized VIDEO_MAP
-  const videoCfg = pager.video ?? VIDEO_MAP[pager.key];
+  // Prefer inline pager.video; otherwise check centralized VIDEO_MAP (legacy)
+  const videoCfg =
+    (pager as any).video ?? (VIDEO_MAP as any)[(pager as any).key];
 
-  // LEGACY PATH: if a legacy renderer exists, show VIDEO AT THE TOP, then document
-  if (pager.render) {
+  // ── NEW: auto-indexed MDX/PDF path
+  if ((pager as any).type === "mdx" || (pager as any).type === "pdf") {
+    const title = (pager as any).title || (pager as any).key;
+
+    return (
+      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex items-center justify-between">
+          <button
+            onClick={onBack}
+            className="inline-flex items-center gap-2 text-sm font-medium"
+            style={{ color: C.blue }}
+          >
+            ← Back to Documents
+          </button>
+          <div className="text-xs opacity-70">One-Pager</div>
+        </div>
+
+        <div
+          className="mt-4 rounded-3xl p-8 md:p-10 shadow-xl relative overflow-hidden"
+          style={{
+            background: `linear-gradient(180deg, ${C.ink} 0%, #121827 100%)`,
+            color: "#fff",
+          }}
+        >
+          <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
+            {title}
+          </h1>
+          <div
+            className="mt-6 h-px w-full"
+            style={{ background: "rgba(255,255,255,.15)" }}
+          />
+          <div className="mt-6 text-xs opacity-75">
+            Updated weekly • Evidence-led
+          </div>
+        </div>
+
+        {/* Optional video helper if you want it for auto-docs too */}
+        {videoCfg && (
+          <YouTubeEmbed
+            url={videoCfg.url}
+            title={videoCfg.title}
+            start={videoCfg.start}
+          />
+        )}
+
+        <div className="mt-8">
+          {/* MDX → prose; PDF → <object> viewer */}
+          <Suspense fallback={<div className="py-16">Loading…</div>}>
+            <DocViewer pager={pager as any} />
+          </Suspense>
+        </div>
+
+        <Card className="mt-8 flex items-center justify-between gap-4 flex-wrap">
+          <div className="text-[15px] leading-relaxed opacity-90">
+            Need help applying this play? Get a 48–72h action plan.
+          </div>
+          <div className="flex items-center gap-2">
+            <CTA
+              variant="ghost"
+              href="#/repo"
+              onClick={(e) => {
+                e.preventDefault();
+                onBack();
+              }}
+            >
+              ← Documents
+            </CTA>
+            <CTA variant="lime" href="#/book-a-call">
+              Book a Call
+            </CTA>
+            <button
+              onClick={() => window.print()}
+              className="inline-flex items-center justify-center rounded-xl px-3 py-2 text-xs font-semibold border no-print"
+              style={{ borderColor: C.gray, color: C.text }}
+            >
+              Print PDF
+            </button>
+          </div>
+        </Card>
+      </section>
+    );
+  }
+
+  // ── LEGACY PATH (structured TS one-pagers) ────────────────────────
+  const kpis = (pager as any).kpis ?? [];
+  const tools = (pager as any).tools ?? [];
+
+  if ((pager as any).render) {
     return (
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between">
@@ -182,7 +290,6 @@ export default function OnePagerView({
           <div className="text-xs opacity-70">One-Pager (Legacy)</div>
         </div>
 
-        {/* ▶️ Video ABOVE the legacy document */}
         {videoCfg && (
           <YouTubeEmbed
             url={videoCfg.url}
@@ -195,18 +302,13 @@ export default function OnePagerView({
           className="mt-6 rounded-2xl border bg-white shadow-sm"
           style={{ borderColor: C.gray }}
         >
-          {/* Legacy mount renders its full page UI */}
-          {pager.render()}
+          {(pager as any).render()}
         </div>
       </section>
     );
   }
 
-  // Non-legacy path
-  const kpis = pager.kpis ?? [];
-  const tools = pager.tools ?? [];
-  const showMetaGrid = kpis.length > 0 || tools.length > 0;
-
+  // Non-legacy structured (question/summary/steps) path
   return (
     <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
       {/* Top bar */}
@@ -235,9 +337,11 @@ export default function OnePagerView({
               Question
             </div>
             <h1 className="mt-2 text-3xl md:text-4xl font-extrabold leading-tight">
-              {pager.question}
+              {(pager as any).question}
             </h1>
-            <p className="mt-3 text-sm md:text-base opacity-95">{pager.hook}</p>
+            <p className="mt-3 text-sm md:text-base opacity-95">
+              {(pager as any).hook}
+            </p>
           </div>
           <span
             className="hidden md:inline-flex shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
@@ -258,7 +362,7 @@ export default function OnePagerView({
         </div>
       </div>
 
-      {/* ▶️ Video BELOW the main question (non-legacy) */}
+      {/* ▶️ Video BELOW the main question */}
       {videoCfg && (
         <YouTubeEmbed
           url={videoCfg.url}
@@ -279,10 +383,10 @@ export default function OnePagerView({
             Summary
           </h3>
           <p className="mt-3 text-[15px] leading-relaxed opacity-90">
-            {pager.summary}
+            {(pager as any).summary}
           </p>
           <ul className="mt-4 space-y-2">
-            {pager.bullets.map((b, i) => (
+            {(pager as any).bullets?.map((b: string, i: number) => (
               <li key={i} className="flex items-start gap-2">
                 <span
                   className="mt-2 inline-block h-2 w-2 rounded-full"
@@ -296,13 +400,13 @@ export default function OnePagerView({
           </ul>
         </Card>
 
-        {/* Steps — single column, each with labeled blocks on new lines */}
+        {/* Steps */}
         <Card>
           <h3 className="text-xl font-bold" style={{ color: C.ink }} id="steps">
             What You’ll Do
           </h3>
           <ol className="mt-5 grid gap-4">
-            {pager.steps.map((s, i) => {
+            {(pager as any).steps?.map((s: any, i: number) => {
               const labeled = parseLabeledText(s.d);
               return (
                 <li
@@ -344,10 +448,10 @@ export default function OnePagerView({
           </ol>
         </Card>
 
-        {/* KPIs + Tools (render only if provided) */}
-        {(pager.kpis?.length || pager.tools?.length) && (
+        {/* KPIs + Tools */}
+        {!!(kpis?.length || (pager as any).tools?.length) && (
           <div className="grid gap-4 md:grid-cols-2">
-            {pager.kpis?.length ? (
+            {kpis?.length ? (
               <Card>
                 <h3
                   className="text-xl font-bold"
@@ -357,7 +461,7 @@ export default function OnePagerView({
                   KPIs
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {pager.kpis!.map((k, i) => (
+                  {kpis.map((k: string, i: number) => (
                     <span
                       key={i}
                       className="rounded-full border px-3 py-1 text-xs bg-white"
@@ -370,7 +474,7 @@ export default function OnePagerView({
               </Card>
             ) : null}
 
-            {pager.tools?.length ? (
+            {(pager as any).tools?.length ? (
               <Card>
                 <h3
                   className="text-xl font-bold"
@@ -380,7 +484,7 @@ export default function OnePagerView({
                   Tools
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {pager.tools!.map((t, i) => (
+                  {(pager as any).tools.map((t: string, i: number) => (
                     <span
                       key={i}
                       className="rounded-full border px-3 py-1 text-xs bg-white"
@@ -398,7 +502,7 @@ export default function OnePagerView({
         {/* CTA Panel */}
         <Card className="flex items-center justify-between gap-4 flex-wrap">
           <div className="text-[15px] leading-relaxed opacity-90">
-            {pager.cta}
+            {(pager as any).cta}
           </div>
           <div className="flex items-center gap-2">
             <CTA
