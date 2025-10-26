@@ -8,24 +8,23 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig(async () => {
-  // Try to load MDX plugin & remark helpers only if they’re installed
-  let mdxPlugin: any = null;
+  const plugins: any[] = [react()];
+
+  // Try to enable MDX only if it's installed (prevents dev crash)
   try {
-    const [
-      { default: mdx },
-      { default: remarkGfm },
-      { default: remarkFrontmatter },
-    ] = await Promise.all([
-      import("@mdx-js/rollup"),
-      import("remark-gfm"),
-      import("remark-frontmatter"),
-    ]);
-    mdxPlugin = mdx({
-      remarkPlugins: [remarkGfm, remarkFrontmatter],
-      providerImportSource: "@mdx-js/react",
-    });
-  } catch (e: any) {
-    console.warn("[vite] MDX plugin not loaded (optional):", e?.message || e);
+    const { default: mdx } = await import("@mdx-js/rollup");
+    const remarkGfm = (await import("remark-gfm")).default;
+    const remarkFrontmatter = (await import("remark-frontmatter")).default;
+
+    plugins.push(
+      mdx({
+        remarkPlugins: [remarkGfm, remarkFrontmatter],
+      })
+    );
+  } catch (e) {
+    console.warn(
+      "[vite] MDX plugin not installed; skipping. MDX docs won't compile until deps are present."
+    );
   }
 
   return {
@@ -36,6 +35,6 @@ export default defineConfig(async () => {
         "@layout": path.resolve(__dirname, "src/layout"),
       },
     },
-    plugins: [react(), ...(mdxPlugin ? [mdxPlugin] : [])],
+    plugins,
   };
 });

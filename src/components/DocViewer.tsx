@@ -1,50 +1,77 @@
-// src/components/DocViewer.tsx
-import { Suspense } from "react";
 import type { OnePager } from "@/types/OnePager";
 
+/**
+ * Renders document-like one-pagers:
+ * - { type: "mdx", Component?: React.FC, url?: string }
+ * - { type: "pdf", url: string }
+ * - { type: "embed", url: string }
+ * If pager.type is undefined, returns null (non-doc one-pagers).
+ */
 export default function DocViewer({ pager }: { pager: OnePager }) {
-  // MDX component (lazy import)
-  if (pager.type === "mdx" && pager.Component) {
-    const C = pager.Component;
-    return (
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10">
-        <article className="prose prose-slate max-w-none">
-          <Suspense fallback={<div className="p-6">Loading…</div>}>
-            <C />
-          </Suspense>
+  if (!pager.type) return null;
+
+  const { type, title } = pager;
+
+  if (type === "mdx") {
+    if (pager.Component) {
+      const Cmp = pager.Component;
+      return (
+        <article className="prose prose-neutral max-w-none bg-white rounded-2xl border p-6 md:p-8 mt-8">
+          <h2 className="sr-only">{title}</h2>
+          <Cmp />
         </article>
-      </section>
-    );
+      );
+    }
+    if (pager.url) {
+      return (
+        <article className="prose prose-neutral max-w-none bg-white rounded-2xl border p-6 md:p-8 mt-8">
+          <h2 className="mb-4">{title}</h2>
+          <p>
+            MDX file:{" "}
+            <a
+              className="underline"
+              href={pager.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {pager.url}
+            </a>
+          </p>
+          <p className="text-sm opacity-70">
+            (If you want to bundle MDX, import it and pass as{" "}
+            <code>Component</code>.)
+          </p>
+        </article>
+      );
+    }
+    return null;
   }
 
-  // PDF in an iframe
-  if (pager.type === "pdf" && pager.url) {
+  if (type === "pdf" && pager.url) {
     return (
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+      <div className="mt-8 rounded-2xl border bg-white/90 p-2">
         <iframe
-          className="w-full h-[80vh] rounded-xl border"
           src={pager.url}
-          title={pager.title ?? pager.question}
+          title={title}
+          className="w-full h-[80vh] rounded-xl"
         />
-      </section>
+      </div>
     );
   }
 
-  // External URL (only works if the site allows embedding)
-  if (pager.type === "url" && pager.url) {
+  if (type === "embed" && pager.url) {
     return (
-      <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
-        <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
-          <iframe
-            className="absolute inset-0 w-full h-full rounded-xl border"
-            src={pager.url}
-            title={pager.title ?? pager.question}
-          />
-        </div>
-      </section>
+      <div className="mt-8 rounded-2xl border bg-white/90 p-2">
+        <iframe
+          src={pager.url}
+          title={title}
+          className="w-full h-[80vh] rounded-xl"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </div>
     );
   }
 
-  // Nothing to render
   return null;
 }

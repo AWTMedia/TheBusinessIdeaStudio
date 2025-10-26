@@ -1,138 +1,99 @@
 // src/onepagers/index.ts
-import { lazy } from "react";
-import type { OnePager as LegacyOnePager } from "@/types/OnePager";
+import type { OnePager } from "@/types/OnePager";
 
-// ───────────────────────────────────────────────────────────────────────────────
-// 1) Keep your legacy one-pagers (hard imports)
-// ───────────────────────────────────────────────────────────────────────────────
+// 1) Bring in legacy one-pagers that render their own UI
 import profileFunnelLegacy from "./profile-funnel.legacy";
 import the4TypesOfLeverageLegacy from "./the-4-types-of-leverage.legacy";
 
-// ───────────────────────────────────────────────────────────────────────────────
-// 2) Define minimal shape for auto-discovered docs (MDX/PDF)
-//    NOTE: we unify on `key` so App + Repository keep working.
-// ───────────────────────────────────────────────────────────────────────────────
-export type Stage =
-  | "self"
-  | "identity"
-  | "empathy"
-  | "offer"
-  | "systems"
-  | "scale"
-  | "proof";
-
-export type AutoDoc = {
-  key: string;                         // slug
-  title: string;                       // human title (from slug by default)
-  stage: Stage;
-  type: "mdx" | "pdf";
-  Component?: React.ComponentType<any>; // for MDX
-  url?: string;                        // for PDF
-  // Optional fields to satisfy existing UI fallbacks
-  question?: string;
-  hook?: string;
-};
-
-// This registry will hold both legacy and auto docs.
-export const onePagers: Record<string, LegacyOnePager | AutoDoc> = {};
-
-// ───────────────────────────────────────────────────────────────────────────────
-// 3) Seed registry with legacy content first (cannot be skipped by globs)
-// ───────────────────────────────────────────────────────────────────────────────
-onePagers[profileFunnelLegacy.key] = profileFunnelLegacy;
-onePagers[the4TypesOfLeverageLegacy.key] = the4TypesOfLeverageLegacy;
-
-// ───────────────────────────────────────────────────────────────────────────────
-// 4) Auto-discover MDX & PDF under /src/docs/<stage>/<slug>.mdx|pdf
-//    - MDX is lazy-loaded as a component
-//    - PDF is imported as a URL (eager) for <object> viewer
-// ───────────────────────────────────────────────────────────────────────────────
-const mdxModules = import.meta.glob("../docs/**/*.mdx"); // lazy
-const pdfAssets = import.meta.glob("../docs/**/*.pdf", {
+// 2) Eagerly import all top-level .ts/.tsx one-pagers (structured format)
+const modules = import.meta.glob<{ default: OnePager }>("./*.{ts,tsx}", {
   eager: true,
-  as: "url",
 });
 
-function pathParts(p: string) {
-  // "../docs/<stage>/<slug>.<ext>"
-  const m = p.match(/\.{2}\/docs\/([^/]+)\/([^/]+)\.(mdx|pdf)$/i);
-  if (!m) return null;
-  return { stage: m[1] as Stage, slug: m[2], ext: m[3].toLowerCase() };
+export const onePagers: Record<string, OnePager> = {};
+
+// Put legacy first so they cannot be skipped by the glob overwriting
+onePagers[profileFunnelLegacy.key] = profileFunnelLegacy as OnePager;
+onePagers[the4TypesOfLeverageLegacy.key] =
+  the4TypesOfLeverageLegacy as OnePager;
+
+// Add everything from the glob (won’t overwrite existing keys)
+for (const mod of Object.values(modules)) {
+  const p = mod.default as OnePager;
+  if (!p?.key) continue;
+  if (!onePagers[p.key]) onePagers[p.key] = p;
 }
 
-function slugToTitle(s: string) {
-  return s
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
-}
+/* ------------------------------------------------------------------
+   3) (Optional) Register doc-like entries (MDX / PDF / EMBED)
+   - Uncomment when you add the file/URL so builds don’t break.
+------------------------------------------------------------------- */
 
-// MDX entries
-Object.entries(mdxModules).forEach(([p, loader]) => {
-  const parts = pathParts(p);
-  if (!parts) return;
-  const { stage, slug } = parts;
+// Example: MDX component (when you place a file at src/docs/monk-mode.mdx)
+// import MonkMode from "@/docs/monk-mode.mdx";
+// onePagers["monk-mode"] = {
+//   key: "monk-mode",
+//   question: "Monk Mode → Execution Protocol",
+//   hook: "Guardrails, environment, inputs, outputs.",
+//   bullets: [],
+//   steps: [],
+//   type: "mdx",
+//   title: "Monk Mode — Execution Protocol",
+//   Component: MonkMode,
+// };
 
-  // build lazy MDX component
-  const Component = lazy(async () => {
-    const mod: any = await (loader as any)();
-    return { default: mod.default };
-  });
+// Example: PDF (host a file under /public/docs or any public URL)
+// onePagers["analytics-report-template"] = {
+//   key: "analytics-report-template",
+//   question: "Free Analytics Report Template",
+//   bullets: [],
+//   steps: [],
+//   type: "pdf",
+//   title: "Analytics Report Template",
+//   url: "/docs/analytics-report-template.pdf",
+// };
 
-  const key = slug;
-  // don’t overwrite legacy pages if a slug collides
-  if (!onePagers[key]) {
-    const title = slugToTitle(slug);
-    onePagers[key] = {
-      key,
-      title,
-      stage,
-      type: "mdx",
-      Component,
-      // fill optional fallbacks used by grids/cards
-      question: title,
-      hook: "",
-    };
-  }
-});
+// Example: EMBED (public Notion page or any external URL)
+// onePagers["squadstart"] = {
+//   key: "squadstart",
+//   question: "SquadStart — Team-First Founder Engine",
+//   bullets: [],
+//   steps: [],
+//   type: "embed",
+//   title: "SquadStart — Team-First Founder Engine",
+//   url: "https://www.notion.so/your-public-notion-page",
+// };
 
-// PDF entries
-Object.entries(pdfAssets).forEach(([p, url]) => {
-  const parts = pathParts(p);
-  if (!parts) return;
-  const { stage, slug } = parts;
+/* ------------------------------------------------------------------ */
 
-  const key = slug;
-  if (!onePagers[key]) {
-    const title = slugToTitle(slug);
-    onePagers[key] = {
-      key,
-      title,
-      stage,
-      type: "pdf",
-      url: url as string,
-      question: title,
-      hook: "",
-    };
-  }
-});
-
-// ───────────────────────────────────────────────────────────────────────────────
-// 5) Sorted list for Repository grid
-//    Keeps "profile-funnel" at the top, then alphabetical by display text
-// ───────────────────────────────────────────────────────────────────────────────
+// Build a predictable, sorted list for Library/Repository
 export const allDocItems: { k: string; title: string; category?: string }[] =
   Object.values(onePagers)
-    .sort((a: any, b: any) => {
+    .sort((a, b) => {
+      // Keep "profile-funnel" prominent; then alphabetical by display title
       if (a.key === "profile-funnel") return -1;
       if (b.key === "profile-funnel") return 1;
-      const at = (a.question || a.title || a.key || "").toLowerCase();
-      const bt = (b.question || b.title || b.key || "").toLowerCase();
+      const at = (
+        ("title" in a && (a as any).title) ||
+        a.question ||
+        a.hook ||
+        a.key
+      ).toLowerCase();
+      const bt = (
+        ("title" in b && (b as any).title) ||
+        b.question ||
+        b.hook ||
+        b.key
+      ).toLowerCase();
       return at.localeCompare(bt);
     })
-    .map((p: any) => ({
+    .map((p) => ({
       k: p.key,
-      title: p.question || p.title || p.key,
-      category: p.stage || (p.category ?? "Other"),
+      title: (("title" in p && (p as any).title) ||
+        p.question ||
+        p.hook ||
+        p.key) as string,
+      category: (p as any).category ?? "Other",
     }));
 
 // (Optional) quick visibility check in the browser console

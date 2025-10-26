@@ -1,29 +1,45 @@
-export type OnePager = {
+// src/types/OnePager.ts
+import type React from "react";
+
+/** Base one-pager (your existing .ts/.tsx pages still satisfy this) */
+export type BaseOnePager = {
   key: string;
   question: string;
-  hook: string;
-  summary: string;
+  hook?: string;
+  summary?: string;
   bullets: string[];
-  steps: { t: string; d: string }[];
-  kpis?: string[];   // optional
-  tools?: string[];  // optional
-  cta: string;
-  // optional
-  category?: string; // e.g., "Growth & Demand"
-
-  /**
-   * When present, the viewer will render this instead of the schema sections.
-   * Use for legacy one-pagers that already render their own UI.
-   */
-  render?: () => JSX.Element;
-
-  /**
-   * Optional per-pager video config.
-   * If omitted, the viewer will try VIDEO_MAP[pager.key].
-   */
-  video?: {
-    url: string;        // any YouTube form: watch?v=, youtu.be, shorts, embed
-    title?: string;     // accessible title for iframe
-    start?: number;     // start time in seconds
-  };
+  steps: Array<{ t: string; d: string }>;
+  kpis?: string[];
+  tools?: string[];
+  cta?: string;
+  video?: { url: string; title?: string; start?: number };
+  /** legacy renderer (old pages) */
+  render?: () => React.ReactNode;
 };
+
+/** Document-like unions for MDX/PDF/Embed fallback viewer */
+export type DocLike =
+  | {
+      type: "mdx";
+      title: string;
+      /** If using raw MDX fetch via URL */
+      url?: string;
+      /** If bundling MDX as a component */
+      Component?: React.ComponentType<any>;
+    }
+  | {
+      type: "pdf";
+      title: string;
+      url: string;
+    }
+  | {
+      type: "embed";
+      title: string;
+      url: string;
+    }
+  | {
+      /** Not a DocViewer page; normal OnePager */
+      type?: undefined;
+    };
+
+export type OnePager = BaseOnePager & DocLike;
