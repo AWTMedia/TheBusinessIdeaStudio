@@ -1,12 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Matrix Onepagers</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>
+      The Business Idea Studio — Founder Psychology → Business Mechanics
+    </title>
+    <meta
+      name="description"
+      content="A living knowledge graph of founder psychology → business mechanics."
+    />
+    <meta name="theme-color" content="#2F5DE8" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Icons -->
+    <link rel="icon" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- Canonical (hash SPA keeps # so crawlers don't 404) -->
+    <link rel="canonical" href="https://awtmedia.com/#/" />
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="The Business Idea Studio" />
+    <meta
+      property="og:title"
+      content="The Business Idea Studio — Founder Psychology → Business Mechanics"
+    />
+    <meta
+      property="og:description"
+      content="A living knowledge graph of founder psychology → business mechanics."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://awtmedia.com/#/" />
+    <meta property="og:image" content="https://awtmedia.com/og-default.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      property="og:image:alt"
+      content="The Business Idea Studio — Founder Psychology → Business Mechanics"
+    />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="The Business Idea Studio — Founder Psychology → Business Mechanics"
+    />
+    <meta
+      name="twitter:description"
+      content="A living knowledge graph of founder psychology → business mechanics."
+    />
+    <meta name="twitter:image" content="https://awtmedia.com/og-default.png" />
+
+    <!-- Optional perf hints for embeds -->
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="preconnect" href="https://i.ytimg.com" />
+
+    <!-- JSON-LD (static, non-JS so crawlers can read) -->
+    <script type="application/ld+json" id="jsonld-org">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "The Business Idea Studio",
+        "url": "https://awtmedia.com/#/",
+        "logo": "https://awtmedia.com/logo.png"
+      }
+    </script>
+    <script type="application/ld+json" id="jsonld-website">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "The Business Idea Studio",
+        "url": "https://awtmedia.com/#/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://awtmedia.com/#/repo?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
   </head>
+
   <body>
     <div id="root"></div>
+
+    <!-- Vite entry (adjust if your entry is src/index.tsx) -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

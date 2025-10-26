@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://awtmedia.com/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url><loc>https://awtmedia.com/#/repo</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/graph</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/community</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/systems</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/ai</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/governance</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/faq</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://awtmedia.com/#/book-a-call</loc><changefreq>weekly</changefreq></url>
+</urlset>

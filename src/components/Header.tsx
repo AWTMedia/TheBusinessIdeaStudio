@@ -27,7 +27,7 @@ type HeaderProps = {
 function Header({ onNavHome, onNavRepo }: HeaderProps) {
   return (
     <header
-      className="border-b bg-white/70 backdrop-blur"
+      className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur"
       style={{ borderColor: C.gray }}
     >
       <div className="mx-auto max-w-6xl h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">

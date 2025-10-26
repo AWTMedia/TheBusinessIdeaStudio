@@ -24,10 +24,16 @@ function toEmbed(url: string) {
     let id = "";
     if (u.hostname.includes("youtu.be")) id = u.pathname.replace("/", "");
     if (!id && u.searchParams.get("v")) id = u.searchParams.get("v") || "";
-    if (!id && u.pathname.startsWith("/shorts/")) id = u.pathname.split("/")[2] || "";
-    if (!id && u.pathname.startsWith("/embed/")) id = u.pathname.split("/")[2] || "";
+    if (!id && u.pathname.startsWith("/shorts/"))
+      id = u.pathname.split("/")[2] || "";
+    if (!id && u.pathname.startsWith("/embed/"))
+      id = u.pathname.split("/")[2] || "";
     if (!id) return null;
-    const params = new URLSearchParams({ rel: "0", modestbranding: "1", playsinline: "1" });
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+    });
     return `https://www.youtube.com/embed/${id}?${params.toString()}`;
   } catch {
     return null;
@@ -38,7 +44,11 @@ function Kicker({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] tracking-widest uppercase"
-      style={{ border: `1px solid ${C.blue}`, color: C.blue, background: "#fff" }}
+      style={{
+        border: `1px solid ${C.blue}`,
+        color: C.blue,
+        background: "#fff",
+      }}
     >
       {children}
     </span>
@@ -47,7 +57,10 @@ function Kicker({ children }: { children: React.ReactNode }) {
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full border px-3 py-1 text-xs bg-white" style={{ borderColor: C.gray }}>
+    <span
+      className="rounded-full border px-3 py-1 text-xs bg-white"
+      style={{ borderColor: C.gray }}
+    >
       {children}
     </span>
   );
@@ -58,8 +71,12 @@ export default function Community() {
 
   return (
     <>
-      {/* HERO — same rhythm as landing page hero */}
-      <section id="top" className="relative overflow-hidden" style={{ background: "transparent" }}>
+      {/* HERO — same rhythm as landing page hero (transparent bg, YT on right, centered) */}
+      <section
+        id="top"
+        className="relative overflow-hidden"
+        style={{ background: "transparent" }}
+      >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 grid md:grid-cols-12 gap-10 items-start">
           {/* Left: Message */}
           <div className="md:col-span-7">
@@ -71,15 +88,10 @@ export default function Community() {
               The Business Idea Studio — Network on Skool
             </h1>
             <p className="mt-4 text-lg max-w-prose opacity-90">
-              Not a course — an <strong>operator-led network</strong> for founders who execute. We match by
-              stage and skill, run pods and AMAs, and compound results through shared systems and proof.
+              Not a course — an <strong>operator-led network</strong> for
+              founders who execute. We match by stage and skill, run pods and
+              AMAs, and compound results through shared systems and proof.
             </p>
-
-            <ul className="mt-5 space-y-2 text-sm opacity-90">
-              <li>• Pods • AMAs • Build-in-public</li>
-              <li>• Weekly action thread + leaderboard</li>
-              <li>• Operator receipts • Proof artifacts</li>
-            </ul>
 
             <div className="mt-6 flex flex-wrap gap-3">
               <CTA href={SKOOL_GROUP_URL}>Join on Skool</CTA>
@@ -105,7 +117,10 @@ export default function Community() {
             >
               <div className="rounded-2xl overflow-hidden">
                 {embed ? (
-                  <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+                  <div
+                    className="relative w-full"
+                    style={{ paddingTop: "56.25%" }}
+                  >
                     <iframe
                       className="absolute inset-0 w-full h-full"
                       src={embed}
@@ -116,7 +131,9 @@ export default function Community() {
                     />
                   </div>
                 ) : (
-                  <div className="p-6 text-sm opacity-80">Add a valid YouTube URL to HERO_VIDEO_URL.</div>
+                  <div className="p-6 text-sm opacity-80">
+                    Add a valid YouTube URL to HERO_VIDEO_URL.
+                  </div>
                 )}
               </div>
               <div className="p-4">
@@ -124,7 +141,8 @@ export default function Community() {
                   Watch: How the Network Works
                 </div>
                 <p className="mt-1 text-xs opacity-80">
-                  2–3 minutes. Pods, weekly actions, and proof-driven compounding.
+                  2–3 minutes. Pods, weekly actions, and proof-driven
+                  compounding.
                 </p>
               </div>
             </div>
@@ -135,41 +153,62 @@ export default function Community() {
       {/* VALUE STRIP — Why the network */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mt-2 grid gap-6 md:grid-cols-3">
-          <div className="rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
-            <div className="text-xs uppercase tracking-widest opacity-60">Why Network</div>
+          <div
+            className="rounded-2xl bg-white p-6 border"
+            style={{ borderColor: C.gray }}
+          >
+            <div className="text-xs uppercase tracking-widest opacity-60">
+              Why Network
+            </div>
             <h3 className="mt-1 text-lg font-semibold" style={{ color: C.ink }}>
               Action &gt; Consumption
             </h3>
             <p className="mt-2 text-sm opacity-90">
-              Courses teach in sequence. Networks compound through <strong>peer accountability</strong>,{" "}
-              <strong>live feedback</strong>, and <strong>proof</strong>. Execute playbooks with operators who
-              have receipts.
+              Courses teach in sequence. Networks compound through{" "}
+              <strong>peer accountability</strong>,{" "}
+              <strong>live feedback</strong>, and <strong>proof</strong>.
+              Execute playbooks with operators who have receipts.
             </p>
           </div>
-          <div className="rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
-            <div className="text-xs uppercase tracking-widest opacity-60">Matching</div>
+          <div
+            className="rounded-2xl bg-white p-6 border"
+            style={{ borderColor: C.gray }}
+          >
+            <div className="text-xs uppercase tracking-widest opacity-60">
+              Matching
+            </div>
             <h3 className="mt-1 text-lg font-semibold" style={{ color: C.ink }}>
               Pods by Stage &amp; Skill
             </h3>
             <p className="mt-2 text-sm opacity-90">
-              Get slotted into <strong>pods</strong> by revenue stage, channel expertise, and operating focus
-              (offer, demand, ops). Less noise, more signal.
+              Get slotted into <strong>pods</strong> by revenue stage, channel
+              expertise, and operating focus (offer, demand, ops). Less noise,
+              more signal.
             </p>
           </div>
-          <div className="rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
-            <div className="text-xs uppercase tracking-widest opacity-60">Outcomes</div>
+          <div
+            className="rounded-2xl bg-white p-6 border"
+            style={{ borderColor: C.gray }}
+          >
+            <div className="text-xs uppercase tracking-widest opacity-60">
+              Outcomes
+            </div>
             <h3 className="mt-1 text-lg font-semibold" style={{ color: C.ink }}>
               Systems + Proof
             </h3>
             <p className="mt-2 text-sm opacity-90">
-              We measure moves, not vibes. Ship one meaningful action weekly, stack case-worthy proof, and share
-              playbooks back to the community.
+              We measure moves, not vibes. Ship one meaningful action weekly,
+              stack case-worthy proof, and share playbooks back to the
+              community.
             </p>
           </div>
         </div>
 
         {/* What you get */}
-        <div className="mt-10 rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
+        <div
+          className="mt-10 rounded-2xl bg-white p-6 border"
+          style={{ borderColor: C.gray }}
+        >
           <h2 className="text-xl font-bold" style={{ color: C.ink }}>
             What You Get
           </h2>
@@ -191,7 +230,10 @@ export default function Community() {
 
         {/* Operating Rules */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
+          <div
+            className="rounded-2xl bg-white p-6 border"
+            style={{ borderColor: C.gray }}
+          >
             <h3 className="text-lg font-semibold" style={{ color: C.ink }}>
               Operating Principles
             </h3>
@@ -203,7 +245,10 @@ export default function Community() {
               <li>• Give back: post a teardown or template quarterly</li>
             </ul>
           </div>
-          <div className="rounded-2xl bg-white p-6 border" style={{ borderColor: C.gray }}>
+          <div
+            className="rounded-2xl bg-white p-6 border"
+            style={{ borderColor: C.gray }}
+          >
             <h3 className="text-lg font-semibold" style={{ color: C.ink }}>
               Joining &amp; Onboarding
             </h3>
@@ -227,7 +272,8 @@ export default function Community() {
           style={{ borderColor: C.gray }}
         >
           <div className="text-[15px] leading-relaxed opacity-90">
-            Ready to plug into an operator-led network? Join the Skool community and compound results with peers.
+            Ready to plug into an operator-led network? Join the Skool community
+            and compound results with peers.
           </div>
           <div className="flex gap-2">
             <CTA href={SKOOL_GROUP_URL}>Join on Skool</CTA>

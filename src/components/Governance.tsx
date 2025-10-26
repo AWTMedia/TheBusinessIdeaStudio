@@ -32,7 +32,7 @@ function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span
       className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide"
-      style={{ borderColor: C.blue, color: C.blue }}
+      style={{ borderColor: "#fff", color: "#fff" }}
     >
       {children}
     </span>
@@ -40,6 +40,18 @@ function Pill({ children }: { children: React.ReactNode }) {
 }
 
 export default function Governance() {
+  // Smooth-scroll within the Governance page without breaking the hash router
+  const scrollToSection =
+    (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Keep route as /governance while reflecting the subsection in the URL
+        history.replaceState(null, "", `#/governance#${id}`);
+      }
+    };
+
   return (
     <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
       {/* Top bar */}
@@ -110,7 +122,8 @@ export default function Governance() {
               ].map(([id, label]) => (
                 <a
                   key={id}
-                  href={`#${id}`}
+                  href={`#/governance#${id}`}
+                  onClick={scrollToSection(id)}
                   className="block rounded-lg px-3 py-2 hover:bg-white"
                   style={{ borderColor: C.gray }}
                 >
@@ -158,16 +171,27 @@ export default function Governance() {
               Definition of Done (DoD)
             </h2>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
-              <div className="rounded-xl border p-4 bg-white" style={{ borderColor: C.gray }}>
+              <div
+                className="rounded-xl border p-4 bg-white"
+                style={{ borderColor: C.gray }}
+              >
                 <div className="text-sm font-semibold">Minimum Criteria</div>
                 <ul className="mt-2 text-sm leading-6 opacity-90">
                   <li>• Clear problem statement and desired outcome</li>
-                  <li>• Step-by-step actions that can be executed in 72 hours</li>
-                  <li>• One proof artifact (metric, screenshot, or third-party source)</li>
+                  <li>
+                    • Step-by-step actions that can be executed in 72 hours
+                  </li>
+                  <li>
+                    • One proof artifact (metric, screenshot, or third-party
+                    source)
+                  </li>
                   <li>• Risks & constraints called out explicitly</li>
                 </ul>
               </div>
-              <div className="rounded-xl border p-4 bg-white" style={{ borderColor: C.gray }}>
+              <div
+                className="rounded-xl border p-4 bg-white"
+                style={{ borderColor: C.gray }}
+              >
                 <div className="text-sm font-semibold">Quality Gates</div>
                 <ul className="mt-2 text-sm leading-6 opacity-90">
                   <li>• Mobile-first legibility and print/PDF friendly</li>
@@ -240,8 +264,8 @@ export default function Governance() {
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed opacity-90">
               We practice <strong>data minimization</strong>, anonymize client
-              identifiers, and obtain explicit consent for any case material.
-              We do not sell or broker personal data. Aggregated insights may be
+              identifiers, and obtain explicit consent for any case material. We
+              do not sell or broker personal data. Aggregated insights may be
               published only after k-anonymity checks.
             </p>
             <ul className="mt-4 space-y-2 text-[15px] opacity-90">
@@ -262,7 +286,9 @@ export default function Governance() {
               client data are excluded from third-party training.
             </p>
             <ul className="mt-4 space-y-2 text-[15px] opacity-90">
-              <li>• Human review before publish; AI is a copilot, not the pilot</li>
+              <li>
+                • Human review before publish; AI is a copilot, not the pilot
+              </li>
               <li>• No confidential inputs to public models</li>
               <li>• Hallucination checks: source or remove</li>
             </ul>
@@ -281,7 +307,9 @@ export default function Governance() {
               <li>• SSO + MFA where available</li>
               <li>• Role-based access; quarterly permission reviews</li>
               <li>• Vendor risk reviews for any new tool in the stack</li>
-              <li>• Incident response: classify, contain, notify, postmortem</li>
+              <li>
+                • Incident response: classify, contain, notify, postmortem
+              </li>
             </ul>
           </Card>
 
@@ -315,7 +343,10 @@ export default function Governance() {
               major version; incremental updates bump the minor version with a
               date stamp.
             </p>
-            <div className="mt-4 rounded-xl border p-4 bg-white" style={{ borderColor: C.gray }}>
+            <div
+              className="mt-4 rounded-xl border p-4 bg-white"
+              style={{ borderColor: C.gray }}
+            >
               <div className="text-sm font-semibold">Recent Changes</div>
               <ul className="mt-2 text-sm leading-6 opacity-90">
                 <li>• 2025-10-26: Initial public Governance v1.0</li>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const C = {
   blue: "#2F5DE8",
   cream: "#F2EDDF",
@@ -9,7 +7,25 @@ const C = {
   gray: "#E8E6DE",
 } as const;
 
-type Active = "home" | "faq" | "governance" | "community" | "systems" | "ai";
+// Include all pages that can set the active state
+export type Active =
+  | "home"
+  | "repo"
+  | "faq"
+  | "governance"
+  | "community"
+  | "systems"
+  | "ai"
+  | "graph";
+
+type NavHandlers = {
+  onNavFaq?: () => void;
+  onNavGovernance?: () => void;
+  onNavCommunity?: () => void;
+  onNavSystems?: () => void;
+  onNavAi?: () => void;
+  onNavGraph?: () => void;
+};
 
 function Eye({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -22,17 +38,29 @@ function Eye({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
-export default function UtilityStrip({
-  leftLabel = "Knowledge Graph",
-  leftMeta = ["60+ Mental Models", "Evidence-led"],
-  active,
-}: {
-  leftLabel?: string;
-  leftMeta?: string[];
-  active?: Active;
-}) {
+export default function UtilityStrip(
+  props: {
+    leftLabel?: string;
+    leftMeta?: string[];
+    active?: Active;
+  } & NavHandlers
+) {
+  const {
+    leftLabel = "Knowledge Graph",
+    leftMeta = ["60+ Mental Models", "Evidence-led"],
+    active,
+  } = props;
+
   const linkCls = (key: Active) =>
     `hover:opacity-80 ${active === key ? "font-semibold" : ""}`;
+
+  // helper to support hash routing without full reload when handlers are provided
+  const handleClick = (fn?: () => void) => (e: any) => {
+    if (fn) {
+      e.preventDefault();
+      fn();
+    }
+  };
 
   return (
     <div className="border-b bg-white/80" style={{ borderColor: C.gray }}>
@@ -47,11 +75,27 @@ export default function UtilityStrip({
         </div>
 
         <nav className="hidden sm:flex items-center gap-4">
-          <a href="#/faq" className={linkCls("faq")}>FAQ</a>
-          <a href="#/governance" className={linkCls("governance")}>Governance</a>
-          <a href="#/community" className={linkCls("community")}>Community</a>
-          <a href="#/systems" className={linkCls("systems")}>Software</a>
-          <a href="#/ai" className={linkCls("ai")}>AI (Private)</a>
+          <a
+            href="#/community"
+            className={linkCls("community")}
+            onClick={handleClick(props.onNavCommunity)}
+          >
+            Community
+          </a>
+          <a
+            href="#/systems"
+            className={linkCls("systems")}
+            onClick={handleClick(props.onNavSystems)}
+          >
+            Software
+          </a>
+          <a
+            href="#/ai"
+            className={linkCls("ai")}
+            onClick={handleClick(props.onNavAi)}
+          >
+            AI (Private)
+          </a>
         </nav>
       </div>
     </div>
