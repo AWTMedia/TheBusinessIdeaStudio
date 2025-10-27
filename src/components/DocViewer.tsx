@@ -8,13 +8,13 @@ import type { OnePager } from "@/types/OnePager";
  * If pager.type is undefined, returns null (non-doc one-pagers).
  */
 export default function DocViewer({ pager }: { pager: OnePager }) {
-  if (!pager.type) return null;
+  if (!("type" in pager) || !pager.type) return null;
 
-  const { type, title } = pager;
+  const { type, title } = pager as any;
 
   if (type === "mdx") {
-    if (pager.Component) {
-      const Cmp = pager.Component;
+    if ((pager as any).Component) {
+      const Cmp = (pager as any).Component as React.FC;
       return (
         <article className="prose prose-neutral max-w-none bg-white rounded-2xl border p-6 md:p-8 mt-8">
           <h2 className="sr-only">{title}</h2>
@@ -22,7 +22,7 @@ export default function DocViewer({ pager }: { pager: OnePager }) {
         </article>
       );
     }
-    if (pager.url) {
+    if ((pager as any).url) {
       return (
         <article className="prose prose-neutral max-w-none bg-white rounded-2xl border p-6 md:p-8 mt-8">
           <h2 className="mb-4">{title}</h2>
@@ -30,11 +30,11 @@ export default function DocViewer({ pager }: { pager: OnePager }) {
             MDX file:{" "}
             <a
               className="underline"
-              href={pager.url}
+              href={(pager as any).url}
               target="_blank"
               rel="noreferrer"
             >
-              {pager.url}
+              {(pager as any).url}
             </a>
           </p>
           <p className="text-sm opacity-70">
@@ -47,11 +47,11 @@ export default function DocViewer({ pager }: { pager: OnePager }) {
     return null;
   }
 
-  if (type === "pdf" && pager.url) {
+  if (type === "pdf" && (pager as any).url) {
     return (
-      <div className="mt-8 rounded-2xl border bg-white/90 p-2">
+      <div className="mt-8 rounded-2zl border bg-white/90 p-2">
         <iframe
-          src={pager.url}
+          src={(pager as any).url}
           title={title}
           className="w-full h-[80vh] rounded-xl"
         />
@@ -59,11 +59,11 @@ export default function DocViewer({ pager }: { pager: OnePager }) {
     );
   }
 
-  if (type === "embed" && pager.url) {
+  if (type === "embed" && (pager as any).url) {
     return (
       <div className="mt-8 rounded-2xl border bg-white/90 p-2">
         <iframe
-          src={pager.url}
+          src={(pager as any).url}
           title={title}
           className="w-full h-[80vh] rounded-xl"
           allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

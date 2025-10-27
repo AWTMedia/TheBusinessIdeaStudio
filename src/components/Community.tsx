@@ -85,7 +85,7 @@ export default function Community() {
               className="mt-5 text-4xl leading-tight sm:text-5xl sm:leading-tight font-black"
               style={{ color: C.ink }}
             >
-              The Business Idea Studio — Network on Skool
+              The Business Idea Studio — <Network></Network> on Skool
             </h1>
             <p className="mt-4 text-lg max-w-prose opacity-90">
               Not a course — an <strong>operator-led network</strong> for

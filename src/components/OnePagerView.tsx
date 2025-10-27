@@ -33,11 +33,7 @@ function Card({
 }
 
 /**
- * Parse a step description string like:
- * "Principle: ... Core Idea — ... Levers: ... Takeaway — ..."
- *
- * Supports delimiters ":", "-", "–", "—" (colon, hyphen, en dash, em dash)
- * and is case-insensitive. Accepts "Key Levers" or "Levers".
+ * Parse labeled text into blocks.
  */
 function parseLabeledText(src: string): Array<{ label: string; text: string }> {
   const out: Array<{ label: string; text: string }> = [];
@@ -163,10 +159,10 @@ export default function OnePagerView({
   onBack: () => void;
 }) {
   // Prefer inline pager.video; otherwise check centralized VIDEO_MAP
-  const videoCfg = pager.video ?? (VIDEO_MAP as any)[pager.key];
+  const videoCfg = (pager as any).video ?? (VIDEO_MAP as any)[pager.key];
 
   /* ── LEGACY PATH (old pages with .render()) ─────────────────────── */
-  if (pager.render) {
+  if ("render" in pager && pager.render) {
     return (
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between">
@@ -199,7 +195,11 @@ export default function OnePagerView({
   }
 
   /* ── DOC-LIKE PATH (mdx/pdf/embed via DocViewer) ────────────────── */
-  if (pager.type === "mdx" || pager.type === "pdf" || pager.type === "embed") {
+  if (
+    ("type" in pager && pager.type === "mdx") ||
+    ("type" in pager && pager.type === "pdf") ||
+    ("type" in pager && pager.type === "embed")
+  ) {
     const title = (pager as any).title || pager.question || pager.key;
 
     return (
@@ -255,7 +255,8 @@ export default function OnePagerView({
 
         <Card className="mt-8 flex items-center justify-between gap-4 flex-wrap">
           <div className="text-[15px] leading-relaxed opacity-90">
-            Need help applying this play? Get a 48–72h action plan.
+            {(pager as any).cta ??
+              "Need help applying this play? Get a 48–72h action plan."}
           </div>
           <div className="flex items-center gap-2">
             <CTA
@@ -285,8 +286,8 @@ export default function OnePagerView({
   }
 
   /* ── STRUCTURED TS PATH (question/summary/steps) ─────────────────── */
-  const kpis = pager.kpis ?? [];
-  const tools = pager.tools ?? [];
+  const kpis = (pager as any).kpis ?? [];
+  const tools = (pager as any).tools ?? [];
 
   return (
     <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
@@ -318,9 +319,9 @@ export default function OnePagerView({
             <h1 className="mt-2 text-3xl md:text-4xl font-extrabold leading-tight">
               {pager.question}
             </h1>
-            {pager.hook ? (
+            {(pager as any).hook ? (
               <p className="mt-3 text-sm md:text-base opacity-95">
-                {pager.hook}
+                {(pager as any).hook}
               </p>
             ) : null}
           </div>
@@ -363,13 +364,13 @@ export default function OnePagerView({
           >
             Summary
           </h3>
-          {pager.summary ? (
+          {(pager as any).summary ? (
             <p className="mt-3 text-[15px] leading-relaxed opacity-90">
-              {pager.summary}
+              {(pager as any).summary}
             </p>
           ) : null}
           <ul className="mt-4 space-y-2">
-            {pager.bullets?.map((b, i) => (
+            {(pager as any).bullets?.map((b: string, i: number) => (
               <li key={i} className="flex items-start gap-2">
                 <span
                   className="mt-2 inline-block h-2 w-2 rounded-full"
@@ -384,7 +385,7 @@ export default function OnePagerView({
         </Card>
 
         {/* Steps */}
-        {pager.steps?.length ? (
+        {(pager as any).steps?.length ? (
           <Card>
             <h3
               className="text-xl font-bold"
@@ -394,7 +395,7 @@ export default function OnePagerView({
               What You’ll Do
             </h3>
             <ol className="mt-5 grid gap-4">
-              {pager.steps.map((s, i) => {
+              {(pager as any).steps.map((s: any, i: number) => {
                 const labeled = parseLabeledText(s.d);
                 return (
                   <li
@@ -450,7 +451,7 @@ export default function OnePagerView({
                   KPIs
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {kpis.map((k, i) => (
+                  {kpis.map((k: string, i: number) => (
                     <span
                       key={i}
                       className="rounded-full border px-3 py-1 text-xs bg-white"
@@ -473,7 +474,7 @@ export default function OnePagerView({
                   Tools
                 </h3>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {tools.map((t, i) => (
+                  {tools.map((t: string, i: number) => (
                     <span
                       key={i}
                       className="rounded-full border px-3 py-1 text-xs bg-white"
@@ -491,7 +492,8 @@ export default function OnePagerView({
         {/* CTA Panel */}
         <Card className="flex items-center justify-between gap-4 flex-wrap">
           <div className="text-[15px] leading-relaxed opacity-90">
-            {pager.cta ?? "Ready to turn insight into operating moves?"}
+            {(pager as any).cta ??
+              "Ready to turn insight into operating moves?"}
           </div>
           <div className="flex items-center gap-2">
             <CTA

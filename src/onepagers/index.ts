@@ -1,89 +1,108 @@
 // src/onepagers/index.ts
+import React from "react";
 import type { OnePager } from "@/types/OnePager";
 
-// 1) Bring in legacy one-pagers that render their own UI
+// 1) Legacy .legacy one-pagers that render their own UI
 import profileFunnelLegacy from "./profile-funnel.legacy";
 import the4TypesOfLeverageLegacy from "./the-4-types-of-leverage.legacy";
 
-// 2) Eagerly import all top-level .ts/.tsx one-pagers (structured format)
-const modules = import.meta.glob<{ default: OnePager }>("./*.{ts,tsx}", {
+// 2) Structured top-level .ts/.tsx one-pagers (question/summary/steps)
+const structured = import.meta.glob<{ default: OnePager }>("./*.{ts,tsx}", {
   eager: true,
 });
 
+// 3) Component-based legacy pages under subfolders (./*/index.tsx)
+import { legacyPages } from "./registry"; // each: { slug, title?, Component }
+
 export const onePagers: Record<string, OnePager> = {};
 
-// Put legacy first so they cannot be skipped by the glob overwriting
+// --- Add the .legacy exports first
 onePagers[profileFunnelLegacy.key] = profileFunnelLegacy as OnePager;
 onePagers[the4TypesOfLeverageLegacy.key] =
   the4TypesOfLeverageLegacy as OnePager;
 
-// Add everything from the glob (won’t overwrite existing keys)
-for (const mod of Object.values(modules)) {
+// --- Add structured top-level .ts/.tsx one-pagers
+for (const mod of Object.values(structured)) {
   const p = mod.default as OnePager;
-  if (!p?.key) continue;
-  if (!onePagers[p.key]) onePagers[p.key] = p;
+  if (p?.key && !onePagers[p.key]) {
+    onePagers[p.key] = p;
+  }
 }
 
-/* ------------------------------------------------------------------
-   3) (Optional) Register doc-like entries (MDX / PDF / EMBED)
-   - Uncomment when you add the file/URL so builds don’t break.
-------------------------------------------------------------------- */
+// --- Wrap subfolder legacy Component pages so they open via #/p/<slug>
+// (avoid JSX here since this file is .ts)
+for (const lp of legacyPages) {
+  const k = lp.slug;
+  if (!k || onePagers[k]) continue;
+  onePagers[k] = {
+    key: k,
+    // OnePagerView checks `render` for legacy pages
+    render: () => React.createElement(lp.Component),
+    // Optional header/title in the view
+    question: lp.title ?? undefined,
+  } as unknown as OnePager;
+}
 
-// Example: MDX component (when you place a file at src/docs/monk-mode.mdx)
-// import MonkMode from "@/docs/monk-mode.mdx";
-// onePagers["monk-mode"] = {
-//   key: "monk-mode",
-//   question: "Monk Mode → Execution Protocol",
-//   hook: "Guardrails, environment, inputs, outputs.",
-//   bullets: [],
-//   steps: [],
-//   type: "mdx",
-//   title: "Monk Mode — Execution Protocol",
-//   Component: MonkMode,
-// };
+// --- Auto-register all MDX docs in /src/docs/<stage>/<slug>.mdx
+// (EXCLUDES root-level /src/docs/<slug>.mdx by pattern)
+const mdxMods = import.meta.glob<{
+  default: React.ComponentType<any>;
+  frontmatter?: Record<string, any>;
+}>("../docs/*/*.mdx", { eager: true });
 
-// Example: PDF (host a file under /public/docs or any public URL)
-// onePagers["analytics-report-template"] = {
-//   key: "analytics-report-template",
-//   question: "Free Analytics Report Template",
-//   bullets: [],
-//   steps: [],
-//   type: "pdf",
-//   title: "Analytics Report Template",
-//   url: "/docs/analytics-report-template.pdf",
-// };
+const stageLabel: Record<string, string> = {
+  "self-mastery": "Self-Mastery & Execution Discipline",
+  identity: "Identity & Brand Perception",
+  audience: "Audience Empathy",
+  offer: "Offer Psychology",
+  systems: "Systems Thinking",
+  growth: "Behavioral Scaling",
+  proof: "Proof & Legitimacy",
+};
 
-// Example: EMBED (public Notion page or any external URL)
-// onePagers["squadstart"] = {
-//   key: "squadstart",
-//   question: "SquadStart — Team-First Founder Engine",
-//   bullets: [],
-//   steps: [],
-//   type: "embed",
-//   title: "SquadStart — Team-First Founder Engine",
-//   url: "https://www.notion.so/your-public-notion-page",
-// };
+function toTitle(s: string) {
+  return s
+    .replace(/-/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
-/* ------------------------------------------------------------------ */
+for (const [path, mod] of Object.entries(mdxMods)) {
+  // path like: ../docs/<stage>/<slug>.mdx
+  const parts = path.split("/");
+  const stage = parts[parts.length - 2];
+  const file = parts[parts.length - 1];
+  const slug = file.replace(/\.mdx$/i, "");
 
-// Build a predictable, sorted list for Library/Repository
+  const fm = (mod as any).frontmatter || {};
+  const key: string = fm.key || slug; // prefer frontmatter key
+  const title: string = fm.title || toTitle(slug);
+  const hook: string | undefined = fm.excerpt || fm.hook;
+
+  if (onePagers[key]) continue;
+
+  onePagers[key] = {
+    key,
+    type: "mdx" as any,
+    title,
+    Component: (mod as any).default,
+    category: stageLabel[stage] || toTitle(stage),
+    hook,
+  } as any;
+}
+
+// --- Sorted list for Library/Repository
 export const allDocItems: { k: string; title: string; category?: string }[] =
   Object.values(onePagers)
     .sort((a, b) => {
-      // Keep "profile-funnel" prominent; then alphabetical by display title
       if (a.key === "profile-funnel") return -1;
       if (b.key === "profile-funnel") return 1;
       const at = (
-        ("title" in a && (a as any).title) ||
-        a.question ||
-        a.hook ||
-        a.key
+        (("title" in a && (a as any).title) || a.question || a.hook || a.key) as string
       ).toLowerCase();
       const bt = (
-        ("title" in b && (b as any).title) ||
-        b.question ||
-        b.hook ||
-        b.key
+        (("title" in b && (b as any).title) || b.question || b.hook || b.key) as string
       ).toLowerCase();
       return at.localeCompare(bt);
     })
@@ -96,5 +115,5 @@ export const allDocItems: { k: string; title: string; category?: string }[] =
       category: (p as any).category ?? "Other",
     }));
 
-// (Optional) quick visibility check in the browser console
+// Debug
 console.log("[onepagers] loaded keys:", Object.keys(onePagers));
