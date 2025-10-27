@@ -1,35 +1,28 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import mdx from "@mdx-js/rollup"; // <-- default import (function)
+import remarkGfm from "remark-gfm";
+import remarkFrontmatter from "remark-frontmatter";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default defineConfig(async () => {
-  const plugins: any[] = [react()];
-
-  // MDX is loaded only if resolvable (prevents hard crash on stale caches)
-  try {
-    const { default: mdx } = await import("@mdx-js/rollup");
-    const remarkGfm = (await import("remark-gfm")).default;
-    const remarkFrontmatter = (await import("remark-frontmatter")).default;
-    plugins.push(mdx({ remarkPlugins: [remarkGfm, remarkFrontmatter] }));
-  } catch (err) {
-    console.warn(
-      "[vite] MDX plugin missing/failed; continuing without it:",
-      (err as Error).message
-    );
-  }
-
-  return {
-    resolve: {
-      alias: {
-        "@": path.resolve(__dirname, "src"),
-        "@ui": path.resolve(__dirname, "src/ui"),
-        "@layout": path.resolve(__dirname, "src/layout"),
-      },
+export default defineConfig({
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "@ui": path.resolve(__dirname, "src/ui"),
+      "@layout": path.resolve(__dirname, "src/layout"),
     },
-    plugins,
-  };
+  },
+  plugins: [
+    react(),
+    mdx({
+      remarkPlugins: [remarkGfm, remarkFrontmatter],
+      // You can add rehype plugins later if needed
+    }),
+  ],
 });
