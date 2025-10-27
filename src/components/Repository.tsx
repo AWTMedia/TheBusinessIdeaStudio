@@ -553,11 +553,69 @@ const STAGES: Stage[] = [
 
 /* ------------------------ HELPERS ------------------------ */
 
+// Normalize punctuation/whitespace so FAQ text matches onePagers.questions
+function norm(s: string) {
+  return s
+    .replace(/[“”]/g, '"')
+    .replace(/[’]/g, "'")
+    .replace(/[\u2013\u2014]/g, "-")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+// Explicit aliases: FAQ text → slug (for existing pages whose question text differs)
+const RAW_ALIAS_ENTRIES: Array<[string, string]> = [
+  // Stage 1 — Self-Mastery
+  ["Daily Grind Personal Operating System", "daily-grind-operating-system"],
+
+  // Stage 5 — Systems Thinking
+  ["How do I automate so I’m not trading time for money?", "systems-engine"],
+  [
+    "How do I document processes to deliver consistently at scale?",
+    "process-os",
+  ],
+
+  // Stage 6 — Behavioral Scaling
+  [
+    "How can I monetize my brand via performance-based partnerships?",
+    "personal-brand-affiliate-model",
+  ],
+  [
+    "How do we engineer referrals/reviews to lower CAC and raise trust?",
+    "referral-reviews-os",
+  ],
+  [
+    "How do we launch, test, and scale Meta profile/story ads into qualified conversations?",
+    "meta-ads-info",
+  ],
+  ["Which AI tools actually work—and how do I integrate them?", "ai-tooling"],
+  ["When should I hire help or delegate—and what first?", "delegation-engine"],
+  [
+    "How do we hire, ramp, and plan capacity without fire drills?",
+    "hiring-capacity-os",
+  ],
+  [
+    "How do we scale with UGC and affiliate engines without paid ads?",
+    "ugc-brands-growth-money-models",
+  ],
+  [
+    "How do we scale horizontally/vertically and structure money models?",
+    "vertical-horizontal-scale-money-models",
+  ],
+];
+
+const FAQ_ALIAS_TO_SLUG: Record<string, string> = Object.fromEntries(
+  RAW_ALIAS_ENTRIES.map(([q, slug]) => [norm(q), slug])
+);
+
+// Map normalized question -> key so FAQs can open local pages if present
 function useQuestionToKeyMap() {
   return useMemo(() => {
     const map = new Map<string, string>();
     Object.values(onePagers).forEach((p: any) => {
-      if (p?.question && p?.key) map.set(String(p.question), String(p.key));
+      if (p?.question && p?.key)
+        map.set(norm(String(p.question)), String(p.key));
     });
     return map;
   }, []);
@@ -644,8 +702,9 @@ export default function Repository({
                 <h4 className="mt-4 font-semibold">FAQs</h4>
                 <ul className="mt-2 grid grid-cols-1 gap-3">
                   {stage.faqs.map((q) => {
-                    const key = q2k.get(q);
-                    const found = Boolean(key);
+                    const nq = norm(q);
+                    const keyOrSlug = q2k.get(nq) || FAQ_ALIAS_TO_SLUG[nq];
+                    const found = Boolean(keyOrSlug);
                     return (
                       <li
                         key={q}
@@ -661,10 +720,10 @@ export default function Repository({
                           <div className="px-4 pb-4 text-sm leading-6 opacity-90">
                             {found ? (
                               <CTA
-                                href={`#/p/${key}`}
+                                href={`#/p/${keyOrSlug}`}
                                 onClick={(evt) => {
                                   evt.preventDefault();
-                                  onOpenPager(key!);
+                                  onOpenPager(keyOrSlug!);
                                 }}
                               >
                                 Open →
