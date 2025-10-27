@@ -235,7 +235,6 @@ function Home({
               <strong>60+ discrete mental models</strong>, each representing a{" "}
               <strong>behavioral bottleneck</strong> or{" "}
               <strong>psychological unlock</strong> in the founder’s journey.
-              It’s a living <strong>knowledge graph</strong> you can execute.
             </p>
             <ul className="mt-5 space-y-2 text-sm opacity-90">
               <li>
@@ -247,13 +246,13 @@ function Home({
             </ul>
             <div className="mt-6 flex flex-wrap gap-3">
               <CTA
-                href="#/graph"
+                href="#/repo"
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavGraph();
+                  onNavRepo();
                 }}
               >
-                Explore the Knowledge Graph
+                Explore the Library
               </CTA>
               <CTA
                 href="#/book-a-call"

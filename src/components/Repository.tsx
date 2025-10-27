@@ -172,11 +172,16 @@ export default function Repository({
     <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-3xl font-black">The Business Idea Studio Repository</h2>
+        <h2 className="text-3xl font-black">
+          The Business Idea Studio Open 
+          
+          Library
+        </h2>
         <p className="mt-2 text-sm opacity-85">
           This is <strong>The System</strong>: a deliberate sequence of{" "}
-          <strong>Founder Psychology → Business Mechanics</strong>. Move through the stages in order.
-          Each module resolves a specific behavioral bottleneck and installs a business capability.
+          <strong>Founder Psychology → Business Mechanics</strong>. Move through
+          the stages in order. Each module resolves a specific behavioral
+          bottleneck and installs a business capability.
         </p>
       </div>
 
@@ -208,7 +213,9 @@ export default function Repository({
                     <details className="group rounded-xl open:bg-white">
                       <summary className="cursor-pointer px-4 py-3 text-base font-semibold flex items-center justify-between">
                         <span className="pr-4">{title}</span>
-                        <span className="opacity-60 group-open:rotate-90 transition-transform">›</span>
+                        <span className="opacity-60 group-open:rotate-90 transition-transform">
+                          ›
+                        </span>
                       </summary>
                       <div className="px-4 pb-4 text-sm leading-6 opacity-90">
                         {found ? (
@@ -243,25 +250,57 @@ export default function Repository({
 
         {/* Summary */}
         <div>
-          <h3 className="text-xl font-bold">🧠 The Psychological Arc (Operating Order)</h3>
+          <h3 className="text-xl font-bold">
+            🧠 The Psychological Arc (Operating Order)
+          </h3>
           <div className="mt-3 overflow-x-auto">
             <table className="min-w-full text-sm border">
               <thead className="bg-gray-50">
                 <tr className="text-left">
                   <th className="px-3 py-2 border">Phase</th>
                   <th className="px-3 py-2 border">Core Psychology</th>
-                  <th className="px-3 py-2 border">Business Capability Installed</th>
+                  <th className="px-3 py-2 border">
+                    Business Capability Installed
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ["1", "Emotional regulation & clarity", "Founder operating system"],
-                  ["2", "Identity & social perception", "Brand that commands attention"],
-                  ["3", "Empathy & behavior insight", "True market understanding"],
-                  ["4", "Cognitive bias & framing", "Offers that convert by design"],
-                  ["5", "Cognitive economy & SOPs", "Reliable throughput and quality"],
-                  ["6", "Behavioral feedback & leverage", "Compounding growth loops"],
-                  ["7", "Authority signaling & proof", "Credibility that accelerates sales"],
+                  [
+                    "1",
+                    "Emotional regulation & clarity",
+                    "Founder operating system",
+                  ],
+                  [
+                    "2",
+                    "Identity & social perception",
+                    "Brand that commands attention",
+                  ],
+                  [
+                    "3",
+                    "Empathy & behavior insight",
+                    "True market understanding",
+                  ],
+                  [
+                    "4",
+                    "Cognitive bias & framing",
+                    "Offers that convert by design",
+                  ],
+                  [
+                    "5",
+                    "Cognitive economy & SOPs",
+                    "Reliable throughput and quality",
+                  ],
+                  [
+                    "6",
+                    "Behavioral feedback & leverage",
+                    "Compounding growth loops",
+                  ],
+                  [
+                    "7",
+                    "Authority signaling & proof",
+                    "Credibility that accelerates sales",
+                  ],
                 ].map((row) => (
                   <tr key={row[0]}>
                     <td className="px-3 py-2 border">{row[0]}</td>
@@ -274,8 +313,10 @@ export default function Repository({
           </div>
 
           <p className="mt-6 text-sm opacity-85">
-            This isn’t a document dump. It’s a sequenced curriculum for the entrepreneurial brain—over{" "}
-            <strong>60 discrete mental models</strong>, each mapped to a real constraint and its fix.
+            This isn’t a document dump. It’s a sequenced curriculum for the
+            entrepreneurial brain—over{" "}
+            <strong>60 discrete mental models</strong>, each mapped to a real
+            constraint and its fix.
           </p>
         </div>
       </div>
