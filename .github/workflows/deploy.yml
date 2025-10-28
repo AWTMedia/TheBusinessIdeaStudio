@@ -3,6 +3,7 @@ name: Deploy Vite to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -24,15 +25,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
+      # 👉 This is the missing piece — actually installs pnpm on the runner
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: false
 
-      - name: Install deps
+      - name: Show versions
+        run: |
+          node -v
+          pnpm -v
+
+      - name: Install deps (frozen lockfile)
         run: pnpm install --frozen-lockfile
 
       - name: Build
