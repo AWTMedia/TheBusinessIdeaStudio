@@ -5,10 +5,227 @@ stage: audience
 excerpt: Public, opt‑in data → compliant outreach assets.
 ---
 
-# Lead Scraping (Ethical)
+# Lead Scraping
 
-- **What it is:** Public, opt‑in data → compliant outreach assets.
-- **Why it matters:** Define the few moves that create most of the results.
-- **How to use:** Follow the checklist → ship → review → iterate.
+# Ethical Lead Scraping Playbook
+*A technically applicable, accuracy-focused guide for compliant B2B list building.*
 
-- **Evidence:** quotes, clips, and objection patterns.
+**Context (South Africa + global):** This guide assumes you operate in South Africa (POPIA applies) and may contact international audiences (GDPR/UK GDPR + PECR may apply). It focuses on *ethical collection of publicly provided business data* and *first-party capture*, and explicitly avoids prohibited sources and practices.
+
+---
+
+## 0) First Principles (Non-Negotiables)
+
+- **Lawful basis first:** For any personal data (e.g., “name@company.com”), establish a lawful basis (consent or legitimate interest depending on jurisdiction & channel). UK regulators note these are the two common bases in B2B; PECR may still require consent for certain electronic marketing.  [oai_citation:0‡ICO](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/sending-direct-marketing-choosing-your-lawful-basis/?utm_source=chatgpt.com)  
+- **POPIA direct marketing rules:** In SA, Section 69 requires prior consent for electronic direct marketing; you may contact *once* to request consent if none was withheld previously (and must honour a pre-emptive block registry).  [oai_citation:1‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)
+- **Respect terms of service:** Do **not** scrape platforms that prohibit it (e.g., LinkedIn; Google Maps content). Use permitted APIs instead.  [oai_citation:2‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)
+- **Robots & rate limits:** Honour `robots.txt`, set polite crawl delays, and never evade CAPTCHAs. (Robots Exclusion Protocol is formalized as RFC 9309; see Google’s guidance on directives.)  [oai_citation:3‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)
+- **Document provenance & consent:** Keep a *consent ledger* and a *source log* (URL, timestamp, screenshot hash).  
+
+---
+
+## 1) What Counts as “Ethical Lead Scraping”?
+
+> **Ethical scraping =** collecting *intentionally published* business contact data or metadata from *opt-in, terms-permitted, robots-allowed* sources **for the sole purpose** of relevant B2B outreach, with lawful basis + honouring opt-out.
+
+**Allowed (typical cases):**
+- First-party capture (forms, quizzes) on your assets (you control notice/consent).
+- Company websites’ “Team/Contact/Press” pages **where contact details are published for business inquiries**, and robots allow crawling.
+- Open data / government registries with *express permissible use*.
+- Event websites listing speakers/exhibitors with business emails and explicit contact permissions.
+- Vendor directories that **permit** data export for outreach in their TOS.
+
+**Not allowed / high-risk:**
+- Scraping **LinkedIn** or other platforms that prohibit scraping in their User Agreement.  [oai_citation:4‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)
+- Copying **Google Maps** business details at scale (explicitly prohibited). Use Places API (under terms) instead.  [oai_citation:5‡Google Cloud](https://cloud.google.com/maps-platform/terms?utm_source=chatgpt.com)
+
+---
+
+## 2) Ethical Source Catalogue (with technical notes)
+
+### A) First-Party Capture (Gold Standard)
+- **Assets:** Landing pages, ebooks, calculators, webinars, waitlists.
+- **How:** Present clear-purpose notice, consent checkbox (granular), and double opt-in for email.
+- **Store:** Consent ledger fields (see §4).
+- **Why:** Best deliverability + strongest lawful basis.
+
+### B) Company Websites (About/Team/Press/Jobs)
+- **Collection target:** Role, name, title, public email (often `media@`, `partners@`, individual emails), phone on “Contact”.
+- **Technical:**  
+  - Respect `robots.txt`; set crawl rate ≤ 0.5–1 req/sec, backoff on 4xx/5xx.  [oai_citation:6‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)  
+  - Parse `sitemap.xml` for discovery; prioritize `/about`, `/team`, `/contact`, `/press`.  
+  - Extract structured data (`schema.org/Organization`, `ContactPoint`) if present.
+
+### C) Conferences & Exhibitions (Speakers/Exhibitors)
+- **Collection target:** Company, role, talk topic (relevance signal), *only* emails that are publicly provided for inquiries.
+- **Check:** Show page TOS; many allow contact for networking but forbid bulk download—document permission.
+
+### D) Professional/Trade Directories (TOS-Permitted)
+- **Examples (category types):** Local chambers, industry associations listing members.
+- **Technical:** Crawl listing → profile pages; capture *company* contact or explicitly provided representative contact. Keep “purpose = member inquiries” note from TOS.
+
+### E) Open Data / Government Registers  
+- **Examples:** Company registries, tender portals (always review reuse licence).  
+- **Rule:** Use provided CSV/API when available (prefer API over scraping); log licence.
+
+### F) Publishers & Blogs (Author Pages)
+- **Collection target:** Authors who publish contact details for pitches/press.  
+- **Rule:** If email says “press only”, *use only for press*, not sales.
+
+> ⚠️ Do **not** infer or guess personal emails if no public email exists. Use website forms or generic inboxes (info@, partnerships@), and ask for routing/consent first.
+
+---
+
+## 3) Technical Pipeline (Reference Architecture)
+1) **Collectors**  
+   - HTTP client with: custom UA string, retry w/ jitter, max concurrency=2–5, robots check, per-host rate limit.  
+   - Parsers: HTML (meta, microdata), sitemap, RSS; de-dupe via URL + content hash.
+
+2) **Normalizer**  
+   - Clean names, titles, phones; standardize countries; email syntax check (RFC 5321/5322), **no SMTP pinging to avoid intrusion**.
+
+3) **Compliance Gate**  
+   - Run *Jurisdiction Rules Engine* → label record as `marketing_allowed`/`consent_required`/`forbidden`.  
+   - Cross-check: internal suppression list, **national “do-not-contact”/pre-emptive block** registers where applicable (POPIA).  [oai_citation:7‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)  
+   - Exclude prohibited-source fingerprints (e.g., linkedin.com paths; maps.google.* content).  [oai_citation:8‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)
+
+4) **Scoring & Relevance**  
+   - Match ICP via company size, tech tags on site, recent posts, hiring pages; compute a relevance score to avoid spam.
+
+5) **Sink (CRM/CDP)**  
+   - Store consent ledger (see below), source URL, crawl timestamp, and lawful-basis rationale string.
+
+---
+
+## 4) Consent Ledger (Minimum Fields)
+
+| Field | Example |
+|---|---|
+| data_subject_identifier | `alex@brand.com` |
+| source_url | `https://brand.com/contact` |
+| source_context | `"Contact page lists this email for partner inquiries"` |
+| capture_method | `first_party_form / public_page / api_download` |
+| timestamp_collected | ISO 8601 |
+| jurisdiction | `ZA` / `UK` / `EU` / `US-CA` |
+| lawful_basis | `consent` / `legitimate_interest` (include assessment ref) |
+| consent_status | `granted / withdrawn / not_sought (one-time consent request pending)` |
+| purpose | `B2B partnership outreach` |
+| proof_artifact | Screenshot hash/file id |
+| last_notice_sent | ISO 8601 |
+| unsubscribe_token | UUID |
+| suppression_status | `active / inactive` |
+
+---
+
+## 5) Outreach Rules (Channel-by-Channel)
+
+- **Email (B2B):**  
+  - UK/EU: confirm lawful basis; PECR may require consent for certain recipients; include identity, purpose, and *easy opt-out* (honour immediately).  [oai_citation:9‡ICO](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/sending-direct-marketing-choosing-your-lawful-basis/?utm_source=chatgpt.com)  
+  - ZA: Electronic marketing generally requires *prior consent*; one-time consent request allowed if not previously refused. Keep copy of the request.  [oai_citation:10‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)
+- **Phone/SMS/WhatsApp:** Highly jurisdiction-dependent; treat as high-friction channels—prefer opt-in.
+- **Postal:** Different rules; still provide opt-out and respect registries.
+
+---
+
+## 6) Tooling & Automation (Ethical Patterns)
+
+- **Discovery:** sitemap parsing → `/about|team|contact|press`; RSS for authors; site search (`/search?q=press`).
+- **Validation:** syntax validation only; no intrusive SMTP checks.  
+- **Suppression:** global DNC list + per-jurisdiction registries (where available under POPIA’s pre-emptive block mechanism).  [oai_citation:11‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)
+- **API over scraping:** Prefer official APIs (e.g., company directory exports), comply with licences/TOS.
+
+---
+
+## 7) Compliance Guardrails Checklist
+
+- [ ] We **do not** scrape LinkedIn or any site that bans scraping.  [oai_citation:12‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)  
+- [ ] We **do not** extract Google Maps content outside Google’s allowed Services.  [oai_citation:13‡Google Cloud](https://cloud.google.com/maps-platform/terms?utm_source=chatgpt.com)  
+- [ ] We check `robots.txt` and obey disallow rules.  [oai_citation:14‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)  
+- [ ] We maintain a consent ledger + source proofs.  
+- [ ] We classify each record’s lawful basis and purpose.  [oai_citation:15‡ICO](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/sending-direct-marketing-choosing-your-lawful-basis/?utm_source=chatgpt.com)  
+- [ ] We respect POPIA’s Section 69 rules (consent, one-time request, registry).  [oai_citation:16‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)  
+- [ ] We include clear identity + opt-out in every message and honour immediately.  
+- [ ] We never bypass CAPTCHAs or rate limits; we throttle politely.
+
+---
+
+## 8) Example Workflows (Step-By-Step)
+
+### Workflow A — Partner Leads from Company Sites (Allowed)
+1. Load target list of companies (from your ICP research).  
+2. For each domain:  
+   a) Fetch `robots.txt`; if disallowed → skip.  [oai_citation:17‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)  
+   b) Crawl `/about|team|contact|press|media|partners` (polite rate).  
+   c) Extract `mailto:` and `ContactPoint` schema; store with page context.  
+   d) Run Compliance Gate → if “contact provided for partnerships/press,” label purpose accordingly.  
+   e) Send *consent request* (ZA) or *LI assessment intro* (UK) with transparent purpose + opt-out.  [oai_citation:18‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)
+
+### Workflow B — Conferences/Speakers
+1. Check event site TOS; if allowed, crawl speakers/exhibitors pages.  
+2. Extract company + role; use *company contact* or *explicit speaker business email* only.  
+3. Outreach purpose must match the event context (e.g., partnerships re: topic).
+
+### Workflow C — Open Data/API
+1. Prefer CSV/API from registry with reuse licence (log licence).  
+2. Import; filter by region/size; **no personal emails unless licence allows marketing use**.  
+3. Use generic/company contact → ask for the right contact & consent.
+
+---
+
+## 9) Risk Notes & Case Law (Why We’re Strict)
+
+- **LinkedIn vs hiQ:** Even where CFAA anti-hacking claims may fail, scraping can still breach platform contracts (User Agreement) and lead to legal action. Don’t do it.  [oai_citation:19‡metaverselaw.com](https://www.metaverselaw.com/hiq-v-linkedin-user-agreements-in-the-age-of-data-scraping/?utm_source=chatgpt.com)  
+- **POPIA Guidance (2024/25):** SA’s regulator clarified strict direct-marketing consent rules and pre-emptive block listing—tighten consent practices.  [oai_citation:20‡globalpolicywatch.com](https://www.globalpolicywatch.com/2024/12/long-awaited-popia-guidance-on-direct-marketing-published-by-south-africas-information-regulator/?utm_source=chatgpt.com)  
+- **Google Maps:** Explicit “No Scraping” terms for Maps/Places content. Use official APIs with licence.  [oai_citation:21‡Google Cloud](https://cloud.google.com/maps-platform/terms?utm_source=chatgpt.com)
+
+---
+
+## 10) Template: One-Time Consent Request (ZA-oriented)
+Subject: Consent request to contact you about [relevant purpose]
+
+Hi [Name],
+
+We found your contact details on [URL] where they’re listed for [press/partnership/general enquiries].
+We’d like to send you occasional information relevant to [specific B2B purpose, e.g., partnership opportunities in X].
+
+If you consent, reply “YES” or use this link: [consent link].
+If you don’t wish to hear from us, reply “NO” or click [unsubscribe link].
+We will not contact you again without your consent.
+
+[Company identity | address | contact]
+
+*(Log the response in your consent ledger and suppress on “NO”.)*
+
+---
+
+## 11) Minimum Data to Store Per Record (for audits)
+
+- `url`, `page_title`, `crawl_time`, `robots_allowed` (Y/N)  
+- `tos_checked` (Y/N) + snippet/proof  
+- `extracted_fields` (name/title/email/role)  
+- `purpose` (press, partnerships, sales intro, etc.)  
+- `jurisdiction`, `lawful_basis`, `consent_status`  
+- `last_contact_time`, `opt_out_time`, `suppressed` (Y/N)
+
+---
+
+## 12) Final Do/Don’t Summary
+
+**Do:**  
+- Build lists from *first-party* capture and *terms-permitted* public pages.  
+- Keep a full consent ledger and suppression process.  
+- Start with value, relevance, and opt-out clarity.
+
+**Don’t:**  
+- Scrape platforms that ban it (LinkedIn, Google Maps content).  [oai_citation:22‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)  
+- Ignore robots or bypass technical controls.  [oai_citation:23‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)  
+- Assume B2B emails are exempt from privacy law (they’re not).  [oai_citation:24‡ICO](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/sending-direct-marketing-choosing-your-lawful-basis/?utm_source=chatgpt.com)
+
+---
+
+### References
+- **POPIA** — Guidance Note on Direct Marketing; direct marketing Section 69 and one-time consent.  [oai_citation:25‡Empowered Compliance Monitor](https://inforegulator.org.za/wp-content/uploads/2020/07/GUIDANCE-NOTE-ON-DIRECT-MARKETING-IN-TERMS-OF-THE-PROTECTION-OF-PERSONAL-INFORMATION-ACT-4-OF-2013-POPIA.pdf?utm_source=chatgpt.com)  
+- **UK GDPR/PECR** — ICO guidance on B2B direct marketing & lawful bases.  [oai_citation:26‡ICO](https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/business-to-business-marketing/?utm_source=chatgpt.com)  
+- **LinkedIn** — User Agreement + anti-scraping policies.  [oai_citation:27‡LinkedIn](https://www.linkedin.com/legal/user-agreement?utm_source=chatgpt.com)  
+- **Google Maps** — No-scraping TOS for Maps/Places content.  [oai_citation:28‡Google Cloud](https://cloud.google.com/maps-platform/terms?utm_source=chatgpt.com)  
+- **Robots.txt** — Google guidance and RFC 9309 background.  [oai_citation:29‡Google for Developers](https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt?utm_source=chatgpt.com)
