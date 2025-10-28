@@ -1,4 +1,3 @@
-# .github/workflows/pages.yml
 name: Deploy Vite to GitHub Pages
 
 on:
@@ -21,26 +20,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Node first
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'   # optional but nice to have
+          cache: 'npm'        # <-- caching npm, not pnpm
 
-      # ✅ Install pnpm CLI reliably (no Corepack)
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false  # we'll run install explicitly next
+      - run: npm install     # <-- use npm, not pnpm
+      - run: npm run build
 
-      # Sanity check (you should see a version printed in logs)
-      - run: pnpm --version
-
-      # Install deps & build
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-
-      # GitHub Pages steps
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
