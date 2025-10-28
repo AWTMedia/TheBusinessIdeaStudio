@@ -1,3 +1,4 @@
+# .github/workflows/pages.yml
 name: Deploy Vite to GitHub Pages
 
 on:
@@ -20,24 +21,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install Node
+      # Node + cache
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      # ✅ Install pnpm CLI
+      # ✅ Install pnpm (Corepack) so `pnpm` exists on PATH
       - name: Setup pnpm
         run: |
           corepack enable
           corepack prepare pnpm@9 --activate
           pnpm --version
 
-      # Install deps & build
+      # Install & build
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
 
-      # Configure GitHub Pages & upload the ./dist artifact
+      # Configure and upload Pages artifact
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
