@@ -13,7 +13,8 @@ const __dirname = path.dirname(__filename);
 const REPO = "TheBusinessIdeaStudio"; // <-- your repo name
 
 export default defineConfig({
-  base: `/${REPO}/`,   // <-- THIS fixes the blank page
+  base: "/TheBusinessIdeaStudio/",
+  build: { outDir: "docs", emptyOutDir: true },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
