@@ -9,8 +9,10 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const REPO = "TheBusinessIdeaStudio";
 
 export default defineConfig({
+  base: `/${REPO}/`,
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
