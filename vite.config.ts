@@ -10,11 +10,11 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const REPO = "TheBusinessIdeaStudio"; // <-- your repo name
+// Fallback to "/" if not provided (Vercel case).
+const BASE = process.env.VITE_BASE ?? "/";
 
 export default defineConfig({
-  base: "/TheBusinessIdeaStudio/",
-  build: { outDir: "docs", emptyOutDir: true },
+  base: BASE, // <-- "/TheBusinessIdeaStudio/" on Pages; "/" on Vercel
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
