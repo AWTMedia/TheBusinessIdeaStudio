@@ -7,12 +7,18 @@ import remarkFrontmatter from "remark-frontmatter";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+// Resolve __dirname for ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export default defineConfig({
-  // IMPORTANT: project pages need the repo name as base
-  base: "/TheBusinessIdeaStudio/",
+// ---------------------------------------------------------------------------
+//  VITE CONFIG
+// ---------------------------------------------------------------------------
+
+export default defineConfig(({ mode }) => ({
+  // 👇 Required for GitHub Pages to serve under /<repo-name>/
+  base: mode === "production" ? "/TheBusinessIdeaStudio/" : "/",
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -20,12 +26,21 @@ export default defineConfig({
       "@layout": path.resolve(__dirname, "src/layout"),
     },
   },
+
   plugins: [
     react(),
-    mdx({ remarkPlugins: [remarkGfm, remarkFrontmatter] }),
+    mdx({
+      remarkPlugins: [remarkGfm, remarkFrontmatter],
+    }),
   ],
+
   build: {
     outDir: "dist",
     emptyOutDir: true,
   },
-});
+
+  server: {
+    port: 5173,
+    open: true,
+  },
+}));
