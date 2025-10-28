@@ -21,24 +21,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Node + cache
+      # 🧩 Install Node (with Corepack enabled)
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      # ✅ Install pnpm (Corepack) so `pnpm` exists on PATH
-      - name: Setup pnpm
+      # ✅ Install pnpm via Corepack
+      - name: Enable pnpm
         run: |
           corepack enable
           corepack prepare pnpm@9 --activate
           pnpm --version
 
-      # Install & build
+      # 📦 Install dependencies
       - run: pnpm install --frozen-lockfile
+
+      # 🏗️ Build the project
       - run: pnpm build
 
-      # Configure and upload Pages artifact
+      # 🗂️ Configure and upload Pages artifact
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
