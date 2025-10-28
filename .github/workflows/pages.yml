@@ -20,20 +20,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Install Node
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      # ✅ Install pnpm CLI
+      - name: Setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@9 --activate
+          pnpm --version
 
+      # Install deps & build
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
 
+      # Configure GitHub Pages & upload the ./dist artifact
       - uses: actions/configure-pages@v5
-
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
