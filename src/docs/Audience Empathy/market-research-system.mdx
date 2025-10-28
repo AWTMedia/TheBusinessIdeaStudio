@@ -5,10 +5,211 @@ stage: audience
 excerpt: Jobs, pains, biases → interview and scrape workflow.
 ---
 
-# Full Market Research System
+# 📊 Social Media Market Research System  
+*A Research Framework & Process Blueprint*  
 
-- **What it is:** Jobs, pains, biases → interview and scrape workflow.
-- **Why it matters:** Define the few moves that create most of the results.
-- **How to use:** Follow the checklist → ship → review → iterate.
+---
 
-- **Evidence:** quotes, clips, and objection patterns.
+## 1) Objective
+
+To create a **systematic process** that transforms high-level business insights into **platform-specific social media data** — providing both **macro-level market direction** and **micro-level content trends**.
+
+> “Research should not just inform decisions — it should shape creative execution.”
+
+---
+
+## 2) Purpose
+
+The **Social Media Market Research System** enables a business or agency to:
+- Understand its **market dynamics** (macro trends).  
+- Identify **content opportunities** (micro trends).  
+- Generate **data-driven creative direction** using automation (via n8n).  
+- Document everything in a **Notion-based research library** for traceability and refinement.
+
+---
+
+## 3) System Overview
+
+| Stage | Description | Output |
+|--------|--------------|--------|
+| **Day 02 — Macro Research** | Collects & processes data from business plan to generate market & trend insights | Macro Trends Report |
+| **Day 03 — Micro Research** | Analyzes social platforms for keyword & creator trends | Creator & Content Insights |
+| **Day 04+ — Creative Strategy** | Synthesizes findings into frameworks, campaigns, and hooks | Creative Direction Deck |
+
+---
+
+## 4) Transformation Process — Day 02 (Macro Analysis)
+
+### Step-by-Step
+
+1. Retrieve **Market Analysis & Competitive Analysis** from Business Plan (Notion: [Planning](https://www.notion.so/Planning-22d53550947181af925dd8347f9a05cb?pvs=21))  
+2. Submit to **n8n Input Form** → *“Market Outline Input Form”*  
+3. Wait 30–60 minutes for automated deep research  
+4. Receive structured **outputs**:
+   - **Macro Trends**
+     - SOP (Standard Operating Pattern)
+     - TAM (Total Addressable Market)
+     - SAM (Serviceable Addressable Market)
+   - **Micro Trends**
+     - Platforms
+     - Keywords
+     - Hashtags  
+5. Log process in [Market Research](https://www.notion.so/Market-Research-228535509471807fb693dbaf3aafc420?pvs=21)  
+
+---
+
+### Input: n8n Market Outline Form
+
+| Section | Fields | Description |
+|----------|---------|-------------|
+| **Section 1** | Market Analysis, Competitive Analysis | From business plan |
+| **Section 2** | Business Details | Location, target market, competitors, growth strategy |
+
+---
+
+### Output 1: Macro Trends (SOP, TAM, SAM)
+
+| Type | Description | Output |
+|------|--------------|--------|
+| **SOP** | Patterns in market behavior and recurring success formulas | Operational insights |
+| **TAM** | Total market potential | Market size report |
+| **SAM** | Realistic segment available to target | Sub-market positioning guide |
+
+**Prompt Example:**
+> “Analyze the following market and competitive data to determine SOP, TAM, and SAM. Include supporting industry data, forecasts, and verified growth patterns.”
+
+---
+
+### Output 2: Micro Trends (Platforms, Keywords, Hashtags)
+
+| Type | Description | Output |
+|------|--------------|--------|
+| **Platforms** | Identify most relevant platforms by engagement & growth | Top 3–5 platforms |
+| **Keywords** | SEO & content trends within niche | Top 10–15 keywords |
+| **Hashtags** | Social visibility and trend acceleration tags | Top 25 hashtags |
+
+**Prompt Example:**
+> “Based on market segment and customer behavior, identify trending platforms, relevant keywords, and hashtags with growth velocity metrics.”
+
+---
+
+## 5) Transformation Process — Day 03 (Micro Analysis)
+
+### Step-by-Step
+
+1. Retrieve **platforms, keywords, and hashtags** from [Market Research](https://www.notion.so/Market-Research-228535509471807fb693dbaf3aafc420?pvs=21).  
+2. Search on selected **social platforms** (Instagram, TikTok, YouTube, LinkedIn, etc.):  
+   - Keywords  
+   - Hashtags  
+3. Collect and record:  
+   - Top 5 Creators (per platform)  
+   - Top 5 Videos per Creator  
+4. Extract content structure (Hook, Body, CTA)  
+5. Document findings back into Notion → *Market Research Database.*
+
+---
+
+### Input Fields
+
+| Input | Description |
+|--------|-------------|
+| Platforms | e.g., Instagram, TikTok, YouTube |
+| Keywords | e.g., “brand strategy”, “content systems” |
+| Hashtags | e.g., #MarketingStrategy, #DigitalGrowth |
+
+---
+
+### Output 1: Top 5 Creators
+
+| Rank | Creator | Platform | Description |
+|------|----------|-----------|--------------|
+| 1 | Creator 1 | TikTok | Style / content focus |
+| 2 | Creator 2 | YouTube | Key audience insights |
+| 3 | Creator 3 | Instagram | Engagement analysis |
+| 4 | Creator 4 | LinkedIn | Authority content examples |
+| 5 | Creator 5 | TikTok | Community or virality hooks |
+
+**Prompt Example:**  
+> “List the top 5 creators in this niche who demonstrate high engagement and recurring viral success. Include platform, audience type, and posting cadence.”
+
+---
+
+### Output 2: Top 5 Videos per Creator (Hook → Body → CTA)
+
+| Creator | Video # | Hook | Body | CTA |
+|----------|----------|------|------|-----|
+| **Creator 1** | Video 1 | Attention phrase | Message/content | Action statement |
+| | Video 2 |  |  |  |
+| | Video 3 |  |  |  |
+| | Video 4 |  |  |  |
+| | Video 5 |  |  |  |
+| **Creator 2** | Video 1–5 | Same format |  |  |
+| **Creator 3–5** | ... |  |  |  |
+
+**Prompt Example:**  
+> “Extract top-performing content from these creators. For each, break down the Hook, Body, and CTA pattern. Identify emotional triggers, narrative flow, and call-to-action styles.”
+
+---
+
+## 6) Automation Blueprint (n8n Flow Logic)
+
+| Stage | Action | Tool | Output |
+|--------|---------|------|--------|
+| 1 | Trigger Input Form | n8n Webhook | JSON payload |
+| 2 | Scrape Market & Competitor Data | Google SERP / API | Data set |
+| 3 | AI Trend Analysis | GPT / Claude API | SOP, TAM, SAM |
+| 4 | Keyword + Hashtag Finder | Semrush / Google Trends / TikTok API | Micro Trends |
+| 5 | Output Formatting | Markdown + Notion API | Research Report |
+| 6 | Archive | Notion DB + Google Sheets | Indexed data |
+
+---
+
+## 7) Deliverables & Artifacts
+
+| Artifact | Description |
+|-----------|--------------|
+| **Market Research Document (Notion)** | Centralized research storage (Macro & Micro) |
+| **Creator Analysis Spreadsheet** | Ranking + performance matrix |
+| **Trend Dashboard (Notion/Sheets)** | Visual trend tracker |
+| **Insights Summary PDF** | Weekly or monthly report snapshot |
+| **Creative Direction Deck** | Translates insights into visual & messaging strategy |
+
+---
+
+## 8) Success Metrics
+
+| KPI | Description | Target |
+|-----|--------------|--------|
+| Research Turnaround | Time from input → final output | ≤ 60 minutes |
+| Trend Accuracy | Relevance of top trends validated by performance | ≥ 80% match |
+| Platform Relevance | % of content ideas executed successfully | ≥ 70% |
+| Automation Efficiency | Human input vs automated output ratio | ≥ 4:1 |
+| Research Updates | Frequency of new data input cycles | Weekly |
+
+---
+
+## 9) Example Workflow (Timeline)
+
+| Day | Action | Output |
+|-----|---------|--------|
+| **Day 01** | Build Business Plan + Market Analysis | Foundational context |
+| **Day 02** | Submit Market Outline Form → Generate Macro/Micro Trends | Research Report |
+| **Day 03** | Search platforms → Extract Creators & Videos | Content Insights |
+| **Day 04–05** | Build Creative Direction Document | Framework + Hooks |
+
+---
+
+## 10) Closing Insight
+
+> “The market speaks through patterns — but only the listener who records, categorizes, and compares can hear its rhythm.”
+
+The **Social Media Market Research System** transforms abstract industry data into actionable content intelligence.  
+It’s not just about trends — it’s about building a **repeatable research operating system** that scales with every project.
+
+---
+
+**Document Owner:** Alexander Thomas  
+**System Name:** Social Media Market Research System  
+**Integrated Toolchain:** Notion × n8n × GPT × Google Trends × Platform APIs  
+**Version:** 1.0  
+**Purpose:** Convert raw market intelligence into platform-specific creative strategy for scalable brand growth.
