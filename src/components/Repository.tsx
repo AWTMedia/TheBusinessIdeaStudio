@@ -40,23 +40,23 @@ const STAGES: Stage[] = [
     ],
     modules: [
       {
-        title: "Monk Mode → Execution Protocol",
+        title: "Monk Mode",
         slug: "monk-mode",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Distraction-less = Focused",
+        title: "Focus",
         slug: "focus-protocol",
         url: NOTION_FALLBACK,
       },
       { title: "Routine", slug: "daily-routine", url: NOTION_FALLBACK },
       {
-        title: "Mental Energy Systems",
+        title: "Mental Energy",
         slug: "mental-energy-systems",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Limiting Beliefs → Reframes",
+        title: "Limiting Beliefs",
         slug: "belief-reframes",
         url: NOTION_FALLBACK,
       },
@@ -66,7 +66,7 @@ const STAGES: Stage[] = [
         url: NOTION_FALLBACK,
       },
       {
-        title: "Learning Techniques (Meta-learning)",
+        title: "Learning Techniques",
         slug: "meta-learning",
         url: NOTION_FALLBACK,
       },
@@ -76,12 +76,12 @@ const STAGES: Stage[] = [
         url: NOTION_FALLBACK,
       },
       {
-        title: "The Scientific Method (for builders)",
+        title: "The Scientific Method",
         slug: "scientific-method-for-growth",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Abundance / Long-Term Perspective",
+        title: "Long-Term Perspective",
         slug: "long-term-stance",
         url: NOTION_FALLBACK,
       },
@@ -104,12 +104,12 @@ const STAGES: Stage[] = [
     ],
     modules: [
       {
-        title: "Niche & Keyword — AWT Media Brand",
+        title: "AWT Media – Niche & Keyword",
         slug: "brand-keywords",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Brand Foundation Framework",
+        title: "Brand Foundations Framework",
         slug: "brand-foundations",
         url: NOTION_FALLBACK,
       },
@@ -119,27 +119,27 @@ const STAGES: Stage[] = [
         url: NOTION_FALLBACK,
       },
       {
-        title: "Thought Leadership Process",
+        title: "Thought Leadership",
         slug: "thought-leadership-system",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Elevator Pitch Framework",
+        title: "Elevator Pitch",
         slug: "elevator-pitch",
         url: NOTION_FALLBACK,
       },
       {
-        title: "The Business Art Studio",
+        title: "The Business Art Studio – Overveiw",
         slug: "business-art-studio",
         url: NOTION_FALLBACK,
       },
       {
-        title: "My War Strategy (Competitive Theory of War)",
+        title: "The Competitive Theory of War",
         slug: "competitive-theory-of-war",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Operating Principles: Natural Law / Stoicism",
+        title: "Operating Principles",
         slug: "operating-principles",
         url: NOTION_FALLBACK,
       },
