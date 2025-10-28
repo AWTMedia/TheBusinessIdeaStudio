@@ -162,17 +162,17 @@ const STAGES: Stage[] = [
     ],
     modules: [
       {
-        title: "Full Market Research System",
+        title: "Market Research System",
         slug: "market-research-system",
         url: NOTION_FALLBACK,
       },
       {
-        title: "Ideal Avatar (Brick & Mortar)",
+        title: "Ideal Avatar Identification",
         slug: "ideal-avatar-bm",
         url: NOTION_FALLBACK,
       },
       {
-        title: "300+ High-Income Target Clients Blueprint",
+        title: "300+ High-Income Target Clients List",
         slug: "high-income-icp",
         url: NOTION_FALLBACK,
       },
@@ -187,7 +187,7 @@ const STAGES: Stage[] = [
         url: NOTION_FALLBACK,
       },
       {
-        title: "Lead Scraping (Ethical)",
+        title: "Ethical Lead Scraping Blueprint",
         slug: "lead-scraping-playbook",
         url: NOTION_FALLBACK,
       },
