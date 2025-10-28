@@ -15,6 +15,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+env:
+  VITE_BASE: "/TheBusinessIdeaStudio/"
+
+# ...then your steps
+- uses: pnpm/action-setup@v4
+  with: { version: 9 }
+- run: pnpm install --frozen-lockfile
+- run: pnpm build
+
   build:
     runs-on: ubuntu-latest
     steps:
