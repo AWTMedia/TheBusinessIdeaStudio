@@ -10,11 +10,9 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Fallback to "/" if not provided (Vercel case).
-const BASE = process.env.VITE_BASE ?? "/";
-
 export default defineConfig({
-  base: BASE, // <-- "/TheBusinessIdeaStudio/" on Pages; "/" on Vercel
+  // IMPORTANT: project pages need the repo name as base
+  base: "/TheBusinessIdeaStudio/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -26,5 +24,8 @@ export default defineConfig({
     react(),
     mdx({ remarkPlugins: [remarkGfm, remarkFrontmatter] }),
   ],
-  build: { outDir: "dist", emptyOutDir: true },
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+  },
 });
