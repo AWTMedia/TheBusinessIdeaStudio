@@ -182,7 +182,6 @@ export default function OnePagerView({
           >
             ← Back to Documents
           </button>
-          <div className="text-xs opacity-70">One-Pager (Legacy)</div>
         </div>
 
         {videoCfg && (
@@ -361,7 +360,6 @@ export default function OnePagerView({
           className="mt-6 h-px w-full"
           style={{ background: "rgba(255,255,255,.15)" }}
         />
-        {/* Removed global “Updated weekly • Evidence-led”. */}
         {(pager as any).meta ? (
           <div className="mt-6 text-xs opacity-80">{(pager as any).meta}</div>
         ) : null}
