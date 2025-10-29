@@ -1,5 +1,5 @@
 // src/onepagers/index.ts
-import React from "react";
+import * as React from "react";
 import type { OnePager } from "@/types/OnePager";
 
 // 1) Legacy .legacy one-pagers that render their own UI
@@ -23,7 +23,7 @@ onePagers[the4TypesOfLeverageLegacy.key] =
 
 // --- Add structured top-level .ts/.tsx one-pagers
 for (const mod of Object.values(structured)) {
-  const p = mod.default as OnePager;
+  const p = mod?.default as OnePager | undefined;
   if (p?.key && !onePagers[p.key]) {
     onePagers[p.key] = p;
   }
@@ -43,7 +43,17 @@ for (const lp of legacyPages) {
   } as unknown as OnePager;
 }
 
-// --- Auto-register all MDX docs in /src/docs/<stage>/<slug>.mdx
+/* ─────────────────────────── MDX AUTOREG ────────────────────────────
+   We import all MDX docs under /src/docs/<stage>/<slug>.mdx and register
+   them as OnePagers. To avoid "Coming soon" from slug mismatches, we
+   register multiple alias keys per doc:
+   - frontmatter.slug (preferred)
+   - frontmatter.key
+   - filename (without .mdx)
+   - slugified frontmatter.title
+   Any of these URLs (#/p/<alias>) will resolve the same page.
+--------------------------------------------------------------------- */
+
 // (EXCLUDES root-level /src/docs/<slug>.mdx by pattern)
 const mdxMods = import.meta.glob<{
   default: React.ComponentType<any>;
@@ -68,28 +78,78 @@ function toTitle(s: string) {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+function toSlug(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/['"’“”]/g, "") // drop quotes
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 for (const [path, mod] of Object.entries(mdxMods)) {
   // path like: ../docs/<stage>/<slug>.mdx
   const parts = path.split("/");
   const stage = parts[parts.length - 2];
   const file = parts[parts.length - 1];
-  const slug = file.replace(/\.mdx$/i, "");
+  const fileBaseSlug = file.replace(/\.mdx$/i, "");
 
   const fm = (mod as any).frontmatter || {};
-  const key: string = fm.key || slug; // prefer frontmatter key
-  const title: string = fm.title || toTitle(slug);
+  const fmSlug: string | undefined = fm.slug;
+  const fmKey: string | undefined = fm.key;
+  const fmTitle: string | undefined = fm.title;
+
+  // Primary key preference: frontmatter.slug → frontmatter.key → filename
+  const primaryKey: string =
+    (fmSlug && String(fmSlug)) ||
+    (fmKey && String(fmKey)) ||
+    String(fileBaseSlug);
+
+  const title: string = fmTitle || toTitle(fileBaseSlug);
+  const description: string | undefined = fm.description || fm.subtitle || fm.tagline;
+  const meta: string | undefined = fm.meta;
   const hook: string | undefined = fm.excerpt || fm.hook;
 
-  if (onePagers[key]) continue;
-
-  onePagers[key] = {
-    key,
-    type: "mdx" as any,
+  // Build the page object once
+  const page: any = {
+    key: primaryKey,
+    type: "mdx", // consumed by OnePagerView → DocViewer
     title,
-    Component: (mod as any).default,
+    description,
+    meta,
     category: stageLabel[stage] || toTitle(stage),
     hook,
-  } as any;
+    // DocViewer commonly looks for `Component` on pager to render MDX
+    Component: (mod as any).default,
+  };
+
+  // Alias keys to register for this doc
+  const aliases = new Set<string>([
+    primaryKey,
+    fileBaseSlug,
+  ]);
+
+  if (fmSlug) aliases.add(String(fmSlug));
+  if (fmKey) aliases.add(String(fmKey));
+  if (fmTitle) aliases.add(toSlug(String(fmTitle)));
+
+  // Register under every alias (first one wins, but we want this doc
+  // to override empty/placeholder entries from earlier passes)
+  for (const k of aliases) {
+    if (!k) continue;
+    // Prefer not to overwrite an existing *real* page with different content,
+    // but do overwrite placeholders if any were added earlier.
+    if (!onePagers[k]) {
+      onePagers[k] = { ...page, key: k } as OnePager;
+    } else {
+      // If an existing record has no renderer and this one is MDX, upgrade it
+      const existing = onePagers[k] as any;
+      const lacksRenderer =
+        !("render" in existing) && !("Component" in existing) && !existing.type;
+      if (lacksRenderer) {
+        onePagers[k] = { ...page, key: k } as OnePager;
+      }
+    }
+  }
 }
 
 // --- Sorted list for Library/Repository
