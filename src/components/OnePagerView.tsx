@@ -161,6 +161,15 @@ export default function OnePagerView({
   // Prefer inline pager.video; otherwise check centralized VIDEO_MAP
   const videoCfg = (pager as any).video ?? (VIDEO_MAP as any)[pager.key];
 
+  // Common metadata helpers
+  const titleFallback = pager.question || pager.key;
+  const title = (pager as any).title || titleFallback;
+  const description =
+    (pager as any).description ||
+    (pager as any).subtitle ||
+    (pager as any).tagline ||
+    ""; // no global fallback string
+
   /* ── LEGACY PATH (old pages with .render()) ─────────────────────── */
   if ("render" in pager && pager.render) {
     return (
@@ -200,8 +209,6 @@ export default function OnePagerView({
     ("type" in pager && pager.type === "pdf") ||
     ("type" in pager && pager.type === "embed")
   ) {
-    const title = (pager as any).title || pager.question || pager.key;
-
     return (
       <section className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between">
@@ -225,18 +232,24 @@ export default function OnePagerView({
           <h1 className="text-3xl md:text-4xl font-extrabold leading-tight">
             {title}
           </h1>
-          {(pager as any).hook ? (
+
+          {/* Prefer explicit description; fall back to hook if provided */}
+          {description ? (
+            <p className="mt-3 text-sm md:text-base opacity-95">{description}</p>
+          ) : (pager as any).hook ? (
             <p className="mt-3 text-sm md:text-base opacity-95">
               {(pager as any).hook}
             </p>
           ) : null}
+
           <div
             className="mt-6 h-px w-full"
             style={{ background: "rgba(255,255,255,.15)" }}
           />
-          <div className="mt-6 text-xs opacity-75">
-            Updated weekly • Evidence-led
-          </div>
+          {/* No global tagline; optionally show per-page meta if provided */}
+          {(pager as any).meta ? (
+            <div className="mt-6 text-xs opacity-80">{(pager as any).meta}</div>
+          ) : null}
         </div>
 
         {videoCfg && (
@@ -289,6 +302,13 @@ export default function OnePagerView({
   const kpis = (pager as any).kpis ?? [];
   const tools = (pager as any).tools ?? [];
 
+  // If a custom title is provided, we treat it as a "Module"; otherwise it's a "Question"
+  const hasCustomTitle = Boolean((pager as any).title);
+  const headLabel = hasCustomTitle ? (pager as any).category || "Module" : "Question";
+  const headTitle = title;
+  const headDescription =
+    description || (pager as any).hook || "";
+
   return (
     <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
       {/* Top bar */}
@@ -314,14 +334,15 @@ export default function OnePagerView({
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="text-xs uppercase tracking-widest opacity-80">
-              Question
+              {headLabel}
             </div>
             <h1 className="mt-2 text-3xl md:text-4xl font-extrabold leading-tight">
-              {pager.question}
+              {headTitle}
             </h1>
-            {(pager as any).hook ? (
+
+            {headDescription ? (
               <p className="mt-3 text-sm md:text-base opacity-95">
-                {(pager as any).hook}
+                {headDescription}
               </p>
             ) : null}
           </div>
@@ -335,13 +356,15 @@ export default function OnePagerView({
             One-Pager
           </span>
         </div>
+
         <div
           className="mt-6 h-px w-full"
           style={{ background: "rgba(255,255,255,.15)" }}
         />
-        <div className="mt-6 text-xs opacity-75">
-          Updated weekly • Evidence-led
-        </div>
+        {/* Removed global “Updated weekly • Evidence-led”. */}
+        {(pager as any).meta ? (
+          <div className="mt-6 text-xs opacity-80">{(pager as any).meta}</div>
+        ) : null}
       </div>
 
       {/* ▶️ Video BELOW the main question */}
@@ -492,8 +515,7 @@ export default function OnePagerView({
         {/* CTA Panel */}
         <Card className="flex items-center justify-between gap-4 flex-wrap">
           <div className="text-[15px] leading-relaxed opacity-90">
-            {(pager as any).cta ??
-              "Ready to turn insight into operating moves?"}
+            {(pager as any).cta ?? "Ready to turn insight into operating moves?"}
           </div>
           <div className="flex items-center gap-2">
             <CTA
