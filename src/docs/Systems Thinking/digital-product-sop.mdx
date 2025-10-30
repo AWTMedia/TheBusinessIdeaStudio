@@ -2,13 +2,618 @@
 title: "Digital Product Creation & GTM — Step-by-Step SOP"
 key: digital-product-sop
 stage: systems
-excerpt: From insight to launch with feedback loops.
+excerpt: A complete, step-by-step operating template to build, test, and iterate online products—ship fast, validate with data, and scale what works.
 ---
 
-# Digital Product Creation & GTM — Step-by-Step SOP
+**Version:** 2025-10-07
 
-- **What it is:** From insight to launch with feedback loops.
-- **Why it matters:** Define the few moves that create most of the results.
-- **How to use:** Follow the checklist → ship → review → iterate.
+**Purpose:** A complete, step-by-step operating template to build, test, and iterate online businesses. Fill in each block, check off tasks, and attach evidence (links, files, screenshots) where requested.
 
-- **Artifacts:** SOP, checklist, owner, cadence.
+---
+
+## How to Use
+
+- Duplicate this page, rename to: **[Product Name] — Build & GTM**.
+- Add page **Properties** (top of Notion page):
+  - **Status** (Select): Idea / Validating / Building / Live Test / Scaling / Parked  
+  - **Owner** (Person) • **Timezone:** Africa/Johannesburg  
+  - **Current Phase** (Select): A / B / C / D / E / F / G / H  
+  - **SKU / Offer** (Text) • **Price (USD/ZAR)** (Number) • **Primary Avatar** (Text)  
+  - **Gate 1** (Checkbox) • **Gate 2** (Checkbox) • **Gate 3** (Checkbox)  
+  - **Docs Folder URL** (URL) • **Store URL** (URL) • **Tracker Sheet URL** (URL)
+- Each section below contains **Tasks**, **Inputs**, and **Prompts**. Use the companion CSVs (download links at the end) to create Notion databases for Leads, Ads, Sales, and Validation.
+
+## Prime Directive & Operating Mindset
+
+- **Prime Directive:** *Ship → Measure → Learn → Iterate.*
+- **Bias to Action:** Imperfect and live beats perfect and never shipped.
+- **Data over Ego:** Every result is a datapoint; decisions follow evidence.
+- **Tool Leverage:** Use AI to compress research, drafting, creative, and analysis cycles.
+
+### Guardrails (check all before each test loop)
+
+- [ ] Time-box the experiment to **7–14 days**.  
+- [ ] Define **success/fail thresholds pre-launch** (no moving goalposts).  
+- [ ] Document inputs, changes, outcomes, learnings in the **Change Log** (see Governance).
+
+---
+
+## 1) Prerequisites & Tooling
+
+### Accounts & Infrastructure
+
+- [ ] **Payments:** Stripe and/or PayPal (live + test modes) — add account IDs.  
+- [ ] **Storefront:** Digital-product platform (Gumroad/Etsy/your DP platform) or own site/cart.  
+- [ ] **Tracking:** Google Tag Manager, GA4, Meta Pixel, Google Ads conversion tag.  
+- [ ] **Ad Platforms:** Meta Ads Manager, Google Ads.  
+- [ ] **Email ESP:** ConvertKit / Beehiiv / Klaviyo — **DMARC/SPF/DKIM** configured.  
+- [ ] **File design & packaging:** Canva templates, Google Docs → PDF export.  
+- [ ] **Analytics workspace:** Notion/Sheets for dashboards & SOPs.  
+- [ ] **Link tracking:** UTM builder + shortener (Bitly).
+
+### Folder & Naming Conventions
+
+/ProductName/01_Research
+/ProductName/02_Validation
+/ProductName/03_Assets
+/ProductName/04_Store
+/ProductName/05_Ads
+/ProductName/06_Influencers
+/ProductName/07_Content
+/ProductName/08_Analytics
+/ProductName/09_Legal
+Files: YYYYMMDD_context_vX.ext (e.g., 20251006_offer_v1.docx)
+
+---
+
+## 2) Roles & RACI
+
+**(Single-Founder? You own all.)**
+
+| Work-stream | Responsible | Accountable | Consulted | Informed |
+| --- | --- | --- | --- | --- |
+| Topic, outline, MVP, QA | Product Lead (P) | Founder | Peer reviewer | Team |
+| Influencers, ads, content | Growth Lead (G) | Founder | Designers | Team |
+| Covers, thumbnails, layout | Design (D) | Founder | Product | Team |
+| Payments, delivery, support, analytics | Ops (O) | Founder | Finance/Legal | Team |
+
+> Note: If solo, set all to **You** and use AI as “Consulted.”
+
+---
+
+## 3) Phase A — Topic Discovery (2–3 days)
+
+### A1) Skill-Led Path
+
+**Inputs:**
+- Brain-dump 10–20 topics from skills, hobbies, and work wins.  
+- For each topic, map **Audience → Problem → Outcome**.  
+- Draft a **Unique Value Zone (UVZ)** (Market → Niche → UVZ).
+
+*Example: Digital planners → Wedding planners → Destination wedding budget tracker.*
+
+**Tasks:**
+- [ ] Create a table listing topics with Audience/Problem/Outcome/UVZ.  
+- [ ] Shortlist promising niches (notes + links to comps).
+
+### A2) AI-Led Path
+
+**Prompt — Topic Radar (paste into AI):**
+
+You are a market analyst. Propose 20 digital-product topics that show proven buyer demand now. For each: (a) audience, (b) specific problem, (c) tangible outcome, (d) top 3 competing product angles, (e) where demand is visible (marketplaces/ad types), (f) initial price tier, (g) 3 UVZ angles.
+Return as a table.
+
+**Tasks:**
+- [ ] Run prompt and import table to Notion.  
+- [ ] Merge with A1 list and remove duplicates.
+
+### A3) Scoring Matrix (choose 1–3 to validate)
+
+**Weights:** Demand 0.35 • UVZ 0.20 • Monetization 0.20 • Build speed 0.15 • Skill 0.10
+
+**Score Formula:**  
+`Score = 0.35*Demand + 0.2*UVZ + 0.2*Monetization + 0.15*Build + 0.1*Skill`
+
+**Tasks:**
+- [ ] Score each topic (0–5 scale); rank by **Score**.  
+- [ ] Select **1–3** topics for validation; archive the rest.
+
+---
+
+## 4) Phase B — Validation (2–4 days)
+
+### B1) Manual Triangulation
+
+**Create a Validation database** (use CSV provided). Track: *Source, URL, Offer, Price, Hook, Proof used, Bonus stack, Gravity/Signals, Notes, Your UVZ improvement.*
+
+**ClickBank (signals):**
+- [ ] Filter relevant category; sort by **Gravity**.  
+- [ ] Capture offers with **Gravity > ~20**. Save pitch, hook, price, funnel.
+
+**Meta Ads Library:**
+- [ ] Search main keywords; log **advertiser count**, **ad age (≥ 30–90 days)**, **creative variety**, **angles**.
+
+**Marketplaces (Etsy/Gumroad/etc.):**
+- [ ] Sort by top sellers/“bestseller”; capture **pricing, bundles, reviews** (pain/feature gaps).
+
+**Review Mining:**
+- [ ] Export **50–200 reviews**; tag pain points, requested features, objections.
+
+### B2) AI-Assisted Validation
+
+- [ ] Feed findings to AI; request viability verdict, opportunity gaps, and **3 UVZ angles** that avoid red-ocean parity.
+
+**Gate 1 — Proceed if (tick all):**
+- [ ] ≥ **3 external signals** (CB gravity, ad longevity, marketplace bestsellers).  
+- [ ] Clear **UVZ** that fixes ≥ **2 competitor complaints**.  
+- [ ] **Price tolerance** validated by comps.
+
+> **Validation database**  
+> [validation_sheet.csv](attachment:cc06c0ae-bd2b-4d08-94b5-4109edb08059:validation_sheet.csv)
+
+---
+
+## 5) Phase C — Store Page Before Build (1–2 days)
+
+### C1) Offer Architecture
+
+Fill these fields:
+
+- [ ] **Promise (one sentence)**  
+- [ ] **Avatar (role, stage, context)**  
+- [ ] **Mechanism / UVZ**  
+- [ ] **Deliverables (bullets)**  
+- [ ] **Bonuses**  
+- [ ] **Guarantee (terms + window)**  
+- [ ] **FAQ (objections + answers)**
+
+### C2) Page Wireframe
+
+- **Hero:** H1 outcome + subhead + CTA.  
+- **Credibility/Proof:** demos, screenshots, testimonials (as available).  
+- **Inside the Product:** modules/chapters/templates.  
+- **Benefits:** before/after, use cases, who it’s for/not for.  
+- **Offer Stack:** core + bonuses + value anchors.  
+- **Guarantee**  
+- **FAQs**  
+- **Final CTA** (with urgency/scarcity when relevant).
+
+**Prompt — Landing Copy:**
+
+Write a high-converting landing page for [PRODUCT] for [AVATAR] who want [OUTCOME] without [UNDESIRED THING]. Include: hero, subhead, bullets, “what’s inside”, benefits, objections with answers, guarantee (clear terms), and 3 CTA variants.
+Tone: concise, outcome-driven, plain English.
+
+### C3) Tech Setup
+
+- [ ] Connect payment provider; **test $1 sandbox** product.  
+- [ ] Add conversion tracking (GTM/Pixel/GA4 events: Purchase/InitiateCheckout/ViewContent).  
+- [ ] Configure order delivery email + **download link** + **license terms**.  
+- [ ] Create **UTM templates** for channels (see Appendix A).
+
+**Gate 2 — Proceed if:**
+- [ ] You would personally buy it from the page.  
+- [ ] 2–3 peers confirm clarity and desire.
+
+---
+
+## 6) Phase D — MVP Creation (1–3 days)
+
+### D1) Choose MVP Type
+
+- **Ebook (Gateway):** 7 chapters / **7,000–15,000 words**; add **templates/worksheets/checklists**.
+
+### D2) Draft with AI
+
+**Prompt — Ebook Draft:**
+
+You are a subject-matter analyst and instructional designer. Create an ebook outline and full draft for [TOPIC] targeting [AVATAR] to achieve [OUTCOME].
+Include 7 chapters, each with: goal, step-by-step instructions, examples, a mini checklist, and a key metric to track. End with FAQs, quick-start guide, and “next steps”.
+Return as structured markdown.
+
+### D3) Design & Packaging
+
+- [ ] Import draft into **Canva A4** ebook template; add cover, chapter dividers, icons.  
+- [ ] Insert screenshots/demos; compress images for **≤ 15 MB PDF**.  
+- [ ] Add **License & Usage** page; include support email.  
+- [ ] Export **PDF (standard)** and **PDF (print)**.
+
+### D4) QA
+
+- [ ] Spell/grammar check; fact spot-check; remove jargon; add page numbers.  
+- [ ] Test download, device rendering (desktop/mobile), accessibility (alt text where relevant).
+
+**Gate 3 — Ready when:**
+- [ ] MVP exportable, legible, and **page matches promise**.
+
+---
+
+## 7) Phase E — Launch Traffic (Days 1–14 post-MVP)
+
+### E1) Influencer Arbitrage (Start Here)
+
+**Prospect List Build (Daily 60–90 min):**
+- [ ] Instagram: search keywords/hashtags; open a suitable **micro-influencer (20–50k)** → use *Suggested* for peers.  
+- [ ] Log: handle, followers, avg story views, reel views, niche fit, contact path.
+
+**Qualification Targets:**
+- [ ] ≥ **3%** engagement; ≥ **10k** recent reel views; consistent posting; positive growth; audience **17+**; geo fit.
+
+**Viability Calculator:**
+
+Potential Clickers = StoryViews × EngagementRate
+Potential Buyers   = Potential Clickers × ConvRate   (use 2–4%)
+Revenue            = Potential Buyers × Price
+
+**Outreach Scripts:**
+- **DM #1:** “Hey [Name], quick partnership idea for your audience—commission-only, no upfront. Open to details?”  
+- **Follow-ups:** “Bumping this 👍 can I send a one-pager?” → “Last nudge—happy to circle back later.”
+
+**Data Request (on positive reply):**
+- Avg story views (7d), audience age/location, link clicks (30d).
+
+**Deal Structure:**
+- Commission **30–60%** per sale; unique affiliate link + coupon; **weekly/biweekly payout**.
+
+**Simple Agreement (key terms):**
+- Scope, disclosure **(#ad)**, tracking, payout timing, **refund adjustments**.
+
+**Promo Kit (you provide):**
+- 3-story sequence with copy, stickers, swipe-ups; 2 reels; 5 stills; CTA overlays; tracking links.
+
+**3-Story Structure:**
+1) Poll/Warm-up (“Want me to show you how to [Outcome]?”)  
+2) Method + proof (screens, concise)  
+3) CTA (“Early access for my followers—link here”) + urgency
+
+**Compliance:** Ask for **#ad** or “paid partnership” tags.
+
+**Daily Motion:** Aim **150 DMs/day**; follow up 2–3× daily for max 3 days; move on.
+
+### E2) Paid Ads (After 1–3 sales/proof)
+
+**Before You Spend:**
+- [ ] Pixel/Tags firing; **Purchase** event verified.  
+- [ ] Google Ads primary conversion set.
+
+**Google Search — Setup:**
+1) Campaign: Search → Website traffic → Manual CPC (enhanced) *or* Max Conversions (if events stable).  
+2) Ad groups: **3–5 themes** (“notion planner”, “content planner template”, etc.).  
+3) Keywords: **exact + phrase**; start with 10–30; negatives list (free, pirated, unrelated).  
+4) Ads: **3 RSAs/ad group**; 10–12 headlines (benefit + UVZ + price + CTA), 4 descriptions.  
+5) Budget: ≈ **product price/day**; locations where buyers are.  
+6) Extensions: Sitelinks (Bonuses, What’s Inside, Guarantee), Callouts (Lifetime access, Instant download).
+
+**Meta (FB/IG) — Setup:**
+1) Objective: **Sales**; Conversion location = Website; Pixel = verified.  
+2) Structure: **ABO** to start; **3–5 ad sets** (broad interests + lookalike if traffic exists).  
+3) Creatives: **5 images + 5 videos**; use **AIDA & PAS** copy formulas; limit to **3 angles**.  
+4) Budget: ≈ product price/**ad set/day**; run **7 days**; kill bottom **30–40%** by CPA; duplicate winners.  
+5) Placements: **Advantage+** initially; trim later.  
+6) Landing page: **≤ 2.5 s** load; above-fold CTA; social proof.
+
+**KPI Benchmarks (initial):**
+- Click-thru (Search) **≥ 4–6%**; (Meta) **≥ 0.8–1.5%**  
+- LP CVR **2–5%** (cold); **6–12%** (warm)  
+- CAC **≤ 30–50%** of price at MVP stage; **ROAS ≥ 1.5×** target in tests.
+
+### E3) Organic Content (Compounding)
+
+- **Faceless shorts:** 3–5/week → Hook → Micro-lesson/demo → CTA.  
+- Align topics to product **outcomes**.
+
+**Hook Starters:**
+- “I wasted 6 months doing X—do this instead.”  
+- “3 Notion tweaks that doubled my output.”  
+- “Steal my [template] that saves 4 hrs/week.”
+
+**CTA:** “Get the exact template (link in bio).”
+
+### E4) Profile Ads & Story Conversion Funnel (Pro)
+
+**Objective:** Drive ICP to your **IG/FB/LI profile** with *Profile Ads*, nurture with daily **Stories & feed**, and convert via **Story Ads (retargeting)** + **DM → Setter → Call → Close**.
+
+**Outcome:** Lower CAC vs VSL funnels; fast signal on creative-market fit; compounding profile asset.
+
+### Prerequisites
+
+- [ ] **Business Manager** connected to IG/FB profile; ad account verified.  
+- [ ] **Pixels/Events** active (IG account engagement audiences enabled; GA4/Meta Pixel on booking site if used).  
+- [ ] **Asset Library** created: #1 Video (pattern interrupt), #2 Carousel (results), #3 One-Pager (offer reframe).  
+- [ ] **Daily Story Sequence** template: *Proof → Lesson → Offer → CTA*.  
+- [ ] **DM Keyword** and ManyChat (or native IG auto-reply) flow live.  
+- [ ] **Setter calendar** + reminder automations (24h/4h/1h) and **No-show rebook** sequence.  
+- [ ] **Tracking Sheet** columns added: date, spend, **profile visits**, **CPV**, followers, **$/qualified follower**, convos, booked, show, closed, units, revenue, ROAS.
+
+### C1 — Profile Ads (Traffic to Profile, ABO)
+
+- **Objective:** Engagement → *Instagram profile visits* (or Reach/Engagement optimizing for 2s video if not available).  
+- **Ad Sets (start 3):**  
+  - *Broad Cold* (no interests)  
+  - *Entrepreneurship* interest  
+  - *Open Broad* with advantage targeting  
+- **Placements:** Manual → IG Stories, IG Reels, IG Profile Reels.  
+- **Geo/Age:** 20–50, all genders; set markets per ICP.  
+- **Budget:** $150/day per ad set (or ≈ product price/day if earlier stage).  
+- **Creatives (10–15):** Mix of **#1 Video**, **#2 Carousel**, **#3 One-Pager**. CTAs: *Visit Profile*, *DM “[keyword]”*.  
+- **Notes:** Exclude recent purchasers if site pixel exists; **do not** exclude engagers here (you want profile growth).
+
+### C2 — Story Ads (Retargeting, ABO)
+
+- **Objective:** Messaging or Traffic → *Book/DM*.  
+- **Audiences (separate ad sets):**  
+  - IG account **180-day engagers**  
+  - **Video viewers** 25–95% (last 180d)  
+  - **Story viewers** (last 90–180d)  
+  - **Post engagers** (last 180d)  
+  - **Site visitors / Lead Magnet opt-ins** (last 30–180d)  
+- **Placements:** IG Stories + IG Reels.  
+- **Budget:** $150/day per ad set; consolidate to winners after 3–5 days.  
+- **Creatives:** **Story Ad System** = *Proof → Lesson → Offer → CTA*; **Objection assets** (price/time/risk/fit); **One-Pager reframe**; **Results carousel**.  
+- **Messaging:** 2 CTAs per story (~65% and 100% progress). **Messenger Ads** with CTA *DM me “[keyword]”* (auto-reply delivers LM + booking link).
+
+### Creative & Story Systems
+
+- **Hook → Body → CTA** (hook = curiosity in first 3s, e.g., “11k/month” beats “10k”).  
+- **Daily Story Sequence:** *Curiosity → Mechanism → Data → Solution → Proof → Credibility → CTA*.  
+- **Dynamic Asset Library:** Tag each asset by stage (**Traffic / Nurture / Conversion**) & objection handled.  
+- **Testimonials:** Editor packages **client results → proof reels**; boost top ones as RT ads.
+
+**Prompt — Profile Ad Copy (paste into AI)**
+
+Write 5 Instagram profile ad scripts for [AVATAR] to achieve [OUTCOME] using [MECHANISM].
+Each: 3s hook, 2 lines body, 1 CTA to “Visit profile” + optional “DM [KEYWORD]”.
+Return as table: Hook | Script | CTA | Angle (proof/lesson/offer).
+
+**Prompt — Story Ad Sequence (paste into AI)**
+
+Create a 7-frame IG Story sequence for [AVATAR] with Proof→Lesson→Offer→CTA.
+Add overlays, sticker suggestions, two CTAs (frame 5 and frame 7), and an objection variant for [OBJECTION].
+
+### Automations & Hand-offs
+
+- **Ad Click → Profile Visit** seeds RT audiences automatically.  
+- **Profile follow / Story interaction** → Engager starts warm outbound.  
+- **DM “[keyword]” auto-reply** → Setter receives convo + **booking link + pre-qual**.  
+- **Booked** → calendar invite + **SMS/email reminders** (24h/4h/1h).  
+- **No-show** → **Re-book 2nd Call** + objection-led RT assets.  
+- **Closed-won** → onboarding tasks; **testimonial request at first milestone**; Editor packages proof → RT.  
+- **Churn risk** → CSM save offers (downgrade/continuity perks).
+
+### Roles & Ownership (Swimlanes)
+
+- **Growth Specialist** — Own traffic (#1 Video, #2 Carousel, #3 One-Pager), manage RT audiences/budgets, weekly iteration.  
+- **Content Manager** — Own nurture (SF/LF calendar), daily Story sequence, lead magnet alignment, curate dynamic assets.  
+- **Editor** — Cut/caption shorts; produce carousels/one-pager; edit testimonials; maintain versioning.  
+- **Engager** — Reply to comments/DMs; warm outbound to engagers; micro-qualify; trigger follow-up; hand-off.  
+- **Apt Setter** — DM re-qual → booking link; reminders; no-show rebook path.  
+- **Closer** — Discovery → Offer; follow-ups if no close.  
+- **CSM** — Onboarding within 48h; access checklist; success cadence; request testimonials.
+
+### KPI Benchmarks (initial)
+
+- **Traffic:** CTR, CPC, **Profile Visits**, View-through %. **CPV ≤ $0.20** target.  
+- **Profile/Nurture:** Follower → Convo %, Story reach, **Story reply rate**, Lead Magnet CVR.  
+- **DM/Setting:** **Qualified % ≥ 30%**, **New conversation start ≥ 80%**, **Booked call $80–$100**.  
+- **Sales:** Show ≥ **75%**, Close %, **ASP $3k–$15k**, Sales cycle (days).  
+- **Global:** CAC, LTV, Payback, **ROAS 8–15×** (examples include 10×/15×/30× on small spend).  
+- **Scaling guardrail:** Profile ads often cap around **£300/day** (~£10k/month) before efficiency decays.
+
+### Daily/Weekly Operating Rhythm
+
+- **Daily:**  
+  - Post Stories (7-frame sequence) & 1–2 SF posts; refresh top story creatives.  
+  - Engager clears inbound; warm outbound to engagers.  
+  - Setter books, runs reminders, rebooks no-shows.  
+- **Weekly:**  
+  - Rotate in 3–5 new creatives; archive bottom **30–40% by CPA/CPV**.  
+  - Consolidate budgets to top ad sets/creatives; expand geos only after stability.  
+  - Update Tracking Sheet; review KPIs vs benchmarks; document learnings.
+
+### Implementation Checklist
+
+- [ ] **C1 Profile Ads** live (3 ad sets, manual IG placements, 10–15 creatives).  
+- [ ] **C2 Story RT** live (≥ 3 audience types, objection assets included).  
+- [ ] **DM keyword** + auto-reply flow tested end-to-end.  
+- [ ] **Setter** SLAs (reply within 10 min in hours; reminders 24h/4h/1h).  
+- [ ] **No-show** rebook path active.  
+- [ ] **Testimonial cadence** defined; first milestone trigger set.  
+- [ ] **Tracking** validated (CPV, $/qualified follower, booked CPA, show %, close %, ROAS).
+
+**Proceed to scale** when, over 3 consecutive days: **CPV ≤ $0.20**, **$/qualified follower ≤ $13–$14**, **Booked CPA ≤ $100**, **Show ≥ 75%**, and **ROAS ≥ 8×** on RT spend.
+
+---
+
+## 8) Phase F — Pricing, Offers, Monetization Ladder
+
+**Objective:** Design a monetization ladder and attach the right **Money Models** (attraction, upsell, downsell, continuity) to maximize **CVR, AOV, LTV, and Payback** while keeping CAC in check.
+
+### F1) Monetization Ladder (set ranges & SKUs)
+
+- **Gateway** (lead-in): $9–$49 — ebook/worksheet/mini-tool.  
+- **Core** (primary SKU): $29–$149 — templates/toolkits/mini-course.  
+- **Advanced** (flagship): $149–$999+ — full system/automation/white-label.  
+- **Continuity** (MRR): $9–$49/mo — updates/community/automation credits.  
+- **Attach Points:** Attraction → Gateway/Core → **Upsell** → **Continuity**; failed/hesitant buyers → **Downsell**.
+
+**Offer Flow (default):** *Attraction* → Landing → Core Checkout → **Post-purchase Upsell** → **Continuity Pitch (Day 10/Onboarding)** → **Downsell** (if exit/decline) → **Re-targeting Loop**.
+
+### F2) Money Models — Catalog & Selection
+
+**A) Attraction Offers (TOFU lead capture & profile growth)**  
+- **Win Your Money Back:** Goal-based refund/store credit on proof of completion.  
+  - *Use when:* High-confidence outcomes; you can define clear success criteria.  
+  - *Guardrail:* Plain-English terms; verification steps; time window.  
+- **Giveaway:** Prize in exchange for contact info/DM keyword.  
+  - *Use when:* List growth needed; seasonal promos.  
+  - *Guardrail:* Eligibility, dates, winner selection, region/legal.  
+- **Decoy:** Present free/discounted entry alongside a premium option to anchor value.  
+- **Buy X Get Y Free:** Bundle incentive (e.g., Core + Bonus Pack).  
+- **Pay Less Now or More Later:** Early decision discount + bonus stack; standard price later.
+
+**B) Upsell Offers (increase AOV/solve next problem)**  
+- **Classic Upsell:** Offer the step-two solution immediately after purchase.  
+- **Menu Upsell:** Advise what to skip vs buy; curated path by avatar.  
+- **Anchor Upsells:** Show highest-tier first; down-shift if balk.  
+- **Rollover Upsells:** Credit prior purchase toward the next offer.
+
+**C) Downsell Offers (salvage revenue; improve access)**  
+- **Payment Plan Downsells** • **Trial with Penalty** • **Feature Downsells (Lite)**
+
+**D) Continuity Offers (stabilize LTV; compounding value)**  
+- **Continuity Bonus Offer** • **Continuity Discount Offers** • **Waived Fee Offers**
+
+### F3) Configure Your Stack (fill & commit)
+
+**Select one per row (or mark N/A) and link assets/pages.**
+
+- **Attraction (pick 1–2):**  
+  ☐ Win-Back ☐ Giveaway ☐ Decoy ☐ Buy X Get Y Free ☐ Pay Less Now/Later
+
+- **Primary Checkout:**  
+  ☐ Gateway | ☐ Core | ☐ Advanced
+
+- **Upsell (pick 1–2):**  
+  ☐ Classic ☐ Menu ☐ Anchor ☐ Rollover
+
+- **Downsell (pick 1–2):**  
+  ☐ Payment Plan ☐ Trial w/ Penalty ☐ Feature Lite
+
+- **Continuity (pick 1):**  
+  ☐ Bonus ☐ Discount ☐ Waived Fee
+
+### F4) Copy/Asset Prompts (paste into AI)
+
+**Prompt — Money Model Designer**
+
+Given [PRODUCT], [AVATAR], and [OUTCOME], propose a ladder (Gateway/Core/Advanced/Continuity) with pricing,
+and map Attraction, Upsell, Downsell, Continuity models from the catalog.
+Return: Offer name, promise, deliverables, price, risk reversal, objection handled, CTA, and tracking KPI per offer.
+
+**Prompt — Upsell Script (Classic vs Anchor)**
+
+Write 2 post-purchase upsell scripts: (1) Classic solves next problem, (2) Anchor shows premium then down-shifts.
+Each: headline, 3 bullets, price/terms, CTA, objection answer in 30 words.
+
+**Prompt — Continuity Pitch**
+
+Create 2 continuity pitches: (A) Bonus-on-join today, (B) Waived-fee-for-term.
+Include value math (monthly ARPU, expected updates), cancel terms, and 2 urgency lines.
+
+---
+
+## 9) Phase G — Post-Purchase, Retention & LTV
+
+**Delivery & Onboarding:**
+- [ ] Thank-you page with download + **quick-start video (3–5 min)**.  
+- [ ] Email #1 (Instant): Receipt + download + license.  
+- [ ] Email #2 (Day 1): Setup checklist.  
+- [ ] Email #3 (Day 3): Use-case demo + success story.  
+- [ ] Email #4 (Day 7): Troubleshooting + “reply if stuck”.  
+- [ ] Email #5 (Day 10): Upsell/cross-sell (course/templates bundle).  
+- [ ] Email #6 (Day 14): Review request + **affiliate invite**.
+
+**Support SOP:**  
+- [ ] SLA: **within 24h** response on business days.  
+- [ ] Macro replies: delivery issues, refund policy, how-to resources.
+
+**Refund Policy:**  
+- [ ] Plain-English terms; eligibility window and conditions.
+
+---
+
+## 10) Phase H — Analytics, Dashboards & Cadence
+
+**Core Metrics:**
+- [ ] Visitors, CTR, CPC/CPV, LP CVR, ATC rate, Purchase CVR, AOV, CAC, ROAS, Refund%.  
+- [ ] Influencer: Clicks, Sales, Revenue, Commission %, **ROAS by partner**.
+
+**Formulas:**
+
+CAC = Spend / New Customers
+ROAS = Revenue / Spend
+Profit/Visitor = (Revenue – Spend – Commissions) / Sessions
+
+---
+
+## 11) 30-60-90 Sample Plan
+
+**Days 0–30**  
+- [ ] Pick **1–3 topics** → validate → pick winner.  
+- [ ] Build store page → connect **payments/tracking**.  
+- [ ] Draft & design **MVP** → export.  
+- [ ] Outreach 1: **1,000-lead** influencer list; **150 DMs/day**; onboard 3–5 partners.
+
+**Days 31–60**  
+- [ ] Scale to **10–20** active partners; iterate 3-story kits.  
+- [ ] Start **Google Search** + **low-budget Meta** tests.  
+- [ ] Launch faceless channel: **3–5 posts/week**.  
+- [ ] Add template **bonus pack**; **test price**.
+
+**Days 61–90**  
+- [ ] Promote top **SKU**; add **course/toolkit** upsell.  
+- [ ] Formalize **dashboards**; SOPs for outreach/ads/content.  
+- [ ] Evaluate **continuity** (updates/community) if retention signals exist.
+
+---
+
+## 12) Appendices — Ready-to-Use Templates
+
+### A) UTM Builder
+
+https://yourstore.com/product?utm_source=[source]&utm_medium=[medium]&utm_campaign=[campaign]&utm_content=[creative]
+
+### B) Influencer One-Pager (paste into doc)
+- **What:** [Product] for [Avatar] to achieve [Outcome].  
+- **Why it works:** 3 bullets (proof/benefits).  
+- **Commission:** __% of each sale; weekly payouts.  
+- **How to promote:** 3-story sequence + link.  
+- **Tracking:** Unique affiliate link + coupon.  
+- **Disclosure:** Use #ad or paid partnership tag.
+
+### C) Mini Affiliate Agreement (extract)
+- **Scope:** Promote [Product] via social posts/stories.  
+- **Tracking:** Sales via unique link/coupon only.  
+- **Commission & Payouts:** __% net, paid weekly; refunds deducted.  
+- **Content:** Must follow platform policies; no misleading claims.  
+- **Termination:** Either party can terminate with 3-day notice.
+
+### D) VSL Script Outline (3–4 min)
+1. Problem & stakes (30s)  
+2. Mechanism/UVZ (45s)  
+3. Demo/What’s inside (60s)  
+4. Proof & objections (45s)  
+5. Offer, bonuses, guarantee, CTA (30s)
+
+### E) Ad Copy Starters
+- **PAS:** Problem → Agitation → Solution (+ CTA)  
+- **AIDA:** Attention → Interest → Desire → Action
+
+### F) QA Launch Checklist
+- [ ] Payments live; **test purchase OK**.  
+- [ ] Pixel/Tags fire; conversions recorded.  
+- [ ] Download link works; email delivery sent.  
+- [ ] Page loads **≤ 2.5 s**; mobile optimized.  
+- [ ] All **UTMs** verified; no 404s.
+
+### G) Spreadsheet Schemas (see CSVs)
+**Leads (Influencers):**  
+[leads_influencers.csv](attachment:6a51d3c2-1ce9-4397-adf3-e6f4363436b0:leads_influencers.csv)
+
+**Ads:**  
+[ads_tracker.csv](attachment:40b1bbce-8a2e-4efd-a9bd-a72e7e30cbb2:ads_tracker.csv)
+
+**Sales:**  
+[sales_log.csv](attachment:f8edc996-94a6-4572-9bd6-2918594e619c:sales_log.csv)
+
+**Validation:**  
+[validation_sheet.csv](attachment:2defec4a-18b8-4be1-b057-2e739b588407:validation_sheet.csv)
+
+---
+
+## 13) Close — The Only Lever That Never Runs Out
+
+The market rewards **speed of learning**. Ship the MVP, gather signal, and spin again.
+
+**One sale** proves possibility; **ten sales** prove repeatability; **one hundred** justify scale. Go.
+
+---
