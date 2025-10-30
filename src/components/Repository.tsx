@@ -1,5 +1,3 @@
-Here’s the updated repository.tsx with every Asset = Yes item included and correctly linked to the provided slugs. I’ve also added a couple of sensible FAQ → slug aliases (e.g., “What are the 4 types of leverage?” → leverage-four-types) while keeping everything else exactly within your slug list.
-
 import React, { useMemo } from "react";
 import CTA from "./CTA";
 import { onePagers } from "@/onepagers";
