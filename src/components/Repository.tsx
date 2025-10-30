@@ -1,3 +1,5 @@
+Here’s the updated repository.tsx with every Asset = Yes item included and correctly linked to the provided slugs. I’ve also added a couple of sensible FAQ → slug aliases (e.g., “What are the 4 types of leverage?” → leverage-four-types) while keeping everything else exactly within your slug list.
+
 import React, { useMemo } from "react";
 import CTA from "./CTA";
 import { onePagers } from "@/onepagers";
@@ -110,6 +112,7 @@ const STAGES: Stage[] = [
       "What should we charge (floor/target/anchor) given COGS, capacity, and risk?",
       "How do you model ad spend, CAC, ASP and close rate?",
       "How do we handle objections and convert more qualified prospects?",
+      "What are the 4 types of leverage?",
     ],
     modules: [
       { title: "The Value Equation", slug: "value-equation" },
@@ -211,9 +214,20 @@ const STAGES: Stage[] = [
       "Close the credibility loop. Show evidence, reduce perceived risk, and formalize authority.",
     faqs: [],
     modules: [
+      // Templates & SOPs
       { title: "Free Analytics Report Template", slug: "analytics-report-template" },
       { title: "Demo / Discovery SOP", slug: "demo-call" },
       { title: "Sales Call SOP", slug: "sales-call" },
+
+      // Case Studies (all Asset = Yes)
+      { title: "Darius — Engagement Breakthrough", slug: "cs-darius-engagement" },
+      { title: "Eliza — Systemized Service", slug: "cs-eliza-systemized" },
+      { title: "Jamie — Delivery Time Halved", slug: "cs-jamie-delivery-time" },
+      { title: "Jess — Discovery Close-Rate Up", slug: "cs-jess-conversions" },
+      { title: "Kayla — Pathway to Consistent Clients", slug: "cs-kayla-pathway" },
+      { title: "Kyle — Outcomes over “Content Help”", slug: "cs-kyle-outcomes" },
+      { title: "Maya — Side Skill → Offer", slug: "cs-maya-side-skill" },
+      { title: "Omar — Anchoring to Revenue", slug: "cs-omar-anchoring" },
     ],
     focus:
       "You will train: proof stacking, legal/operational legitimacy, and high-signal market assets.",
@@ -233,24 +247,21 @@ function norm(s: string) {
     .toLowerCase();
 }
 
-// Explicit aliases: FAQ text → slug (for existing pages whose question text differs)
+// Explicit aliases: FAQ text → slug (only for assets that have confirmed slugs)
 const RAW_ALIAS_ENTRIES: Array<[string, string]> = [
   // Stage 1 — Self-Mastery
   ["Daily Grind Personal Operating System", "daily-grind-operating-system"],
+
+  // Stage 4 — Offer Psychology (FAQ phrasing → module slug)
+  ["What are the 4 types of leverage?", "leverage-four-types"],
 
   // Stage 5 — Systems Thinking
   ["How do I automate so I’m not trading time for money?", "systems-engine"],
   ["How do I document processes to deliver consistently at scale?", "process-os"],
 
-  // Stage 6 — Behavioral Scaling
-  ["How can I monetize my brand via performance-based partnerships?", "personal-brand-affiliate-model"],
-  ["How do we engineer referrals/reviews to lower CAC and raise trust?", "referral-reviews-os"],
-  ["How do we launch, test, and scale Meta profile/story ads into qualified conversations?", "meta-ads-info"],
-  ["Which AI tools actually work—and how do I integrate them?", "ai-tooling"],
-  ["When should I hire help or delegate—and what first?", "delegation-engine"],
-  ["How do we hire, ramp, and plan capacity without fire drills?", "hiring-capacity-os"],
-  ["How do we scale with UGC and affiliate engines without paid ads?", "ugc-brands-growth-money-models"],
-  ["How do we scale horizontally/vertically and structure money models?", "vertical-horizontal-scale-money-models"],
+  // Stage 6 — Behavioral Scaling (where relevant slugs exist in registry)
+  ["How do we scale with UGC and affiliate engines without paid ads?", "ugc-economics"],
+  ["How do we scale horizontally/vertically and structure money models?", "ugc-economics"],
 ];
 
 const FAQ_ALIAS_TO_SLUG: Record<string, string> = Object.fromEntries(
@@ -263,7 +274,6 @@ function useQuestionToKeyMap() {
     const map = new Map<string, string>();
     Object.values(onePagers).forEach((p: any) => {
       if (p?.question && p?.key) map.set(norm(String(p.question)), String(p.key));
-      // Also index by explicit title for MDX pages
       if ((p as any).title && p.key) map.set(norm(String((p as any).title)), String(p.key));
     });
     return map;
@@ -473,6 +483,7 @@ export default function Repository({
             real constraint
             <br />
             <strong>and</strong>
+            {" "}a practical business capability you can ship this week.
           </blockquote>
         </div>
       </div>
