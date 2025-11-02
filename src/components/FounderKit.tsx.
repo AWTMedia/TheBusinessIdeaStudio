@@ -1,0 +1,428 @@
+import React from "react";
+
+const C = {
+  bg: "#0B0F19", // ink
+  text: "#F2EDDF", // cream
+  accent: "#C9F93E",
+  border: "rgba(255,255,255,0.08)",
+  card: "rgba(15,20,32,0.6)",
+};
+
+type KitItem = {
+  name: string;
+  tagline: string;
+  desc: string;
+  rec: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+// You’ll edit this list with real tools / offers / gear / templates.
+// Each category has a title + short framing + items.
+const KIT_CATEGORIES: {
+  key: string;
+  label: string;
+  headline: string;
+  blurb: string;
+  items: KitItem[];
+}[] = [
+  {
+    key: "content",
+    label: "Content / Positioning",
+    headline: "Make strangers believe you before they ever speak to you.",
+    blurb:
+      "This is how you capture attention, frame the problem, and position yourself as the obvious answer — without spamming trends or ‘posting for vibes’.",
+    items: [
+      {
+        name: "Content Pillar & Hook Bank System",
+        tagline: "Your next 30 days of positioning, mapped.",
+        desc:
+          "We build 3 core pillars (pain, proof, CTA) and generate hooks, angles, and talking points. You stop guessing what to post.",
+        rec: "Use this if you’re the face of the business and you sell expertise / outcomes.",
+        ctaLabel: "See System",
+        ctaHref: "#/repo", // link to your playbook library
+      },
+      {
+        name: "Proof Clip / Win Reel Format",
+        tagline: "Turn delivery wins into market leverage.",
+        desc:
+          "A repeatable structure for screenshot wins, before/after breakdowns, audits, and ‘look, this works’ posts.",
+        rec: "Use this if you already deliver results but haven’t packaged them publicly.",
+        ctaLabel: "Show Me How",
+        ctaHref: "#/book-a-call",
+      },
+    ],
+  },
+
+  {
+    key: "acquisition",
+    label: "Acquisition / Pipeline",
+    headline: "How we get qualified strangers to book a call.",
+    blurb:
+      "This is controlled demand gen. Profile funnel, CTA language, landing flow, and the booking stack that fills your calendar.",
+    items: [
+      {
+        name: "Profile Funnel Rewrite",
+        tagline: "Your bio stops being a resume.",
+        desc:
+          "We rewrite ‘who you are’ → ‘who you get results for, and how to move forward today.’ We also script the pinned proof post and CTA (DM trigger).",
+        rec: "Use this on IG / LinkedIn / X. Especially if people are already lurking but not raising their hand.",
+        ctaLabel: "Get My Profile Built",
+        ctaHref: "#/book-a-call",
+      },
+      {
+        name: "One-Page Conversion Landing",
+        tagline: "Problem → Promise → Proof → CTA.",
+        desc:
+          "Not a website. A focused page that exists only to make booking the next step. Integrates with intake + calendar.",
+        rec: "Use this if you’re getting DMs / interest but losing people in back-and-forth.",
+        ctaLabel: "View Structure",
+        ctaHref: "#/install", // your Offer Landing
+      },
+    ],
+  },
+
+  {
+    key: "sales",
+    label: "Sales / Closing",
+    headline: "Book → Diagnose → Close (without a 45-minute ramble).",
+    blurb:
+      "This is the one-call close infrastructure: intake, script, objection map, next-step logic. Removes ‘winging it.’",
+    items: [
+      {
+        name: "1-Call Close Script",
+        tagline: "Diagnose → Fit → Plan → Price → Next step.",
+        desc:
+          "We give you the exact talk track so the call feels like leadership, not begging. Includes objection handling for price / time / trust / partner.",
+        rec: "Use this if calls feel good but rarely convert same-day.",
+        ctaLabel: "See Script Flow",
+        ctaHref: "#/book-a-call",
+      },
+      {
+        name: "Qualifying Intake Form",
+        tagline: "Filter out the ‘just curious’.",
+        desc:
+          "The pre-call form that frames urgency, context, and budget before you ever show up. Also boosts show-up rate.",
+        rec: "Use this if you get lots of calls that go nowhere.",
+        ctaLabel: "Get Intake Template",
+        ctaHref: "#/book-a-call",
+      },
+    ],
+  },
+
+  {
+    key: "delivery",
+    label: "Delivery / Onboarding",
+    headline: "Stop chaos after the ‘yes.’",
+    blurb:
+      "This is where churn dies. Clean onboarding, kickoff structure, success metric in the first 14 days, and weekly reporting rhythm.",
+    items: [
+      {
+        name: "Client Onboarding Pack",
+        tagline: "No more ‘cool so what happens next?’",
+        desc:
+          "Kickoff call agenda, expectation script, first-14-days success metric, access checklist. You set frame immediately.",
+        rec: "Use this if delivery always starts messy and reactive.",
+        ctaLabel: "See Onboarding Flow",
+        ctaHref: "#/install",
+      },
+      {
+        name: "Weekly Progress Report Template",
+        tagline: "‘Here’s what happened. Here’s what’s next.’",
+        desc:
+          "We give you the cadence to send wins, metrics, and next steps every 7 days. Clients feel led and stay longer.",
+        rec: "Use this if clients get anxious between calls.",
+        ctaLabel: "Get Template",
+        ctaHref: "#/book-a-call",
+      },
+    ],
+  },
+
+  {
+    key: "proof",
+    label: "Proof / Credibility Flywheel",
+    headline: "Turn client delivery into more client demand.",
+    blurb:
+      "Your delivery outputs become front-end marketing. That’s how you raise price and shorten the sales cycle.",
+    items: [
+      {
+        name: "Proof Capture Workflow",
+        tagline: "Never lose a win again.",
+        desc:
+          "Exactly when and how to capture screenshots, before/after deltas, testimonials, and KPI jumps — and where to store them.",
+        rec: "Use this if you ‘do great work’ but have nothing to show publicly.",
+        ctaLabel: "See Capture Workflow",
+        ctaHref: "#/repo",
+      },
+      {
+        name: "Authority / Audit Asset",
+        tagline: "Your flagship proof piece.",
+        desc:
+          "We turn one client teardown / audit / transformation into a portable ‘this is what we do’ asset you can send, pin, or run ads behind.",
+        rec: "Use this if you’ve been relying on word-of-mouth credibility.",
+        ctaLabel: "Build My Proof Asset",
+        ctaHref: "#/book-a-call",
+      },
+    ],
+  },
+];
+
+export default function FounderKit() {
+  return (
+    <main
+      className="min-h-screen w-full text-white"
+      style={{ backgroundColor: C.bg, color: C.text }}
+    >
+      {/* HERO */}
+      <section
+        className="px-4 sm:px-6 lg:px-8 pt-20 pb-16 border-b"
+        style={{ borderColor: C.border }}
+      >
+        <div className="max-w-4xl mx-auto text-center">
+          <div
+            className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-medium tracking-widest uppercase"
+            style={{
+              borderColor: C.accent,
+              color: C.accent,
+              backgroundColor: "rgba(201,249,62,0.07)",
+            }}
+          >
+            Founder Infrastructure Kit
+          </div>
+
+          <h1
+            className="mt-6 text-4xl sm:text-5xl font-black leading-[1.1] tracking-[-0.03em]"
+            style={{ color: C.text }}
+          >
+            The exact systems we install to build your
+            acquisition and delivery machine.
+          </h1>
+
+          <p className="mt-6 text-base sm:text-lg leading-relaxed text-white/70 max-w-2xl mx-auto">
+            This isn’t “tools we like.” It’s the pipeline we deploy in your
+            business: positioning, inbound capture, booking, closing, onboarding,
+            proof loop. Use this to see what you actually need — and what you
+            don’t.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="#/install"
+              className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold tracking-wide uppercase"
+              style={{
+                backgroundColor: C.accent,
+                color: "#0B0F19",
+              }}
+            >
+              See The Install →
+            </a>
+
+            <a
+              href="#/book-a-call"
+              className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold tracking-wide uppercase border"
+              style={{
+                backgroundColor: "transparent",
+                borderColor: C.border,
+                color: C.text,
+              }}
+            >
+              Build My System
+            </a>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-[10px] font-medium tracking-widest uppercase text-white/40">
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: C.accent }}
+              />
+              No fluff
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: C.accent }}
+              />
+              Operator-first
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: C.accent }}
+              />
+              Built to be run weekly
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* CATEGORIES */}
+      <section
+        className="px-4 sm:px-6 lg:px-8 py-16 border-b"
+        style={{ borderColor: C.border }}
+      >
+        <div className="max-w-6xl mx-auto space-y-16">
+          {KIT_CATEGORIES.map((cat, idx) => (
+            <div key={cat.key} className="space-y-8">
+              {/* Category header */}
+              <header className="max-w-4xl">
+                <div className="text-[10px] font-semibold tracking-widest uppercase text-white/50">
+                  {idx + 1}. {cat.label}
+                </div>
+                <h2
+                  className="mt-3 text-2xl sm:text-3xl font-bold leading-tight tracking-[-0.03em]"
+                  style={{ color: C.text }}
+                >
+                  {cat.headline}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-white/70 max-w-3xl">
+                  {cat.blurb}
+                </p>
+              </header>
+
+              {/* Items grid */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {cat.items.map((item, i) => (
+                  <div
+                    key={i}
+                    className="rounded-2xl border p-6 flex flex-col justify-between shadow-[0_30px_120px_rgba(0,0,0,0.8)]"
+                    style={{
+                      backgroundColor: C.card,
+                      borderColor: C.border,
+                    }}
+                  >
+                    <div className="flex-1">
+                      <div className="text-[11px] font-semibold tracking-widest uppercase text-white/60">
+                        {item.name}
+                      </div>
+
+                      <div
+                        className="mt-2 text-lg font-semibold leading-snug"
+                        style={{ color: C.text }}
+                      >
+                        {item.tagline}
+                      </div>
+
+                        <p className="mt-4 text-sm leading-relaxed text-white/70">
+                          {item.desc}
+                        </p>
+
+                        <p className="mt-4 text-sm leading-relaxed text-white/50">
+                          <span
+                            className="text-[10px] font-bold tracking-widest uppercase mr-2"
+                            style={{ color: C.accent }}
+                          >
+                            Use this if:
+                          </span>
+                          {item.rec}
+                        </p>
+                    </div>
+
+                    <a
+                      href={item.ctaHref}
+                      className="mt-6 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold tracking-wide uppercase text-center"
+                      style={{
+                        backgroundColor: C.accent,
+                        color: "#0B0F19",
+                      }}
+                    >
+                      {item.ctaLabel} →
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-medium tracking-widest uppercase"
+            style={{
+              borderColor: C.accent,
+              color: C.accent,
+              backgroundColor: "rgba(201,249,62,0.07)",
+            }}
+          >
+            Next Step
+          </div>
+
+          <h2
+            className="mt-6 text-3xl sm:text-4xl font-black leading-[1.1] tracking-[-0.03em]"
+            style={{ color: C.text }}
+          >
+            We don’t “coach.” We install the system you’ll run every week.
+          </h2>
+
+          <p className="mt-6 text-base leading-relaxed text-white/70 max-w-xl mx-auto">
+            If you can deliver real outcomes and you’re ready to scale client
+            acquisition online — we’ll build your pipeline, hand it to you,
+            and lock the first version in place in 30–45 days.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <a
+              href="#/book-a-call"
+              className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold tracking-wide uppercase"
+              style={{
+                backgroundColor: C.accent,
+                color: "#0B0F19",
+              }}
+            >
+              Book the Install Call →
+            </a>
+
+            <a
+              href="#/install"
+              className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold tracking-wide uppercase border"
+              style={{
+                backgroundColor: "transparent",
+                borderColor: C.border,
+                color: C.text,
+              }}
+            >
+              See How It Works
+            </a>
+          </div>
+
+          <div className="mt-8 text-[11px] tracking-widest uppercase text-white/40">
+            Founder Psychology → Acquisition Machine → Proof Loop
+          </div>
+        </div>
+
+        <footer className="mt-16 text-center text-[11px] tracking-widest uppercase text-white/40">
+          <div>The Business Idea Studio</div>
+          <div className="mt-2 text-white/30">
+            © {new Date().getFullYear()} The Business Idea Studio.
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-4 justify-center">
+            <a
+              className="hover:text-white/70"
+              style={{ color: C.text }}
+              href="#/install"
+            >
+              The Install
+            </a>
+            <a
+              className="hover:text-white/70"
+              style={{ color: C.text }}
+              href="#/repo"
+            >
+              Library
+            </a>
+            <a
+              className="hover:text-white/70"
+              style={{ color: C.text }}
+              href="#/book-a-call"
+            >
+              Book a Call
+            </a>
+          </div>
+        </footer>
+      </section>
+    </main>
+  );
+}
