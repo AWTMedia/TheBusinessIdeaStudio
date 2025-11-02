@@ -87,47 +87,6 @@ function SectionCard({
   );
 }
 
-// Small bordered block for each asset
-function AssetBlock({
-  n,
-  title,
-  desc,
-  deliverable,
-  why,
-}: {
-  n: string;
-  title: string;
-  desc: string;
-  deliverable: React.ReactNode;
-  why: React.ReactNode;
-}) {
-  return (
-    <div
-      className="mt-6 rounded-xl border p-4"
-      style={{ borderColor: C.gray }}
-    >
-      <div className="text-sm font-semibold" style={{ color: C.ink }}>
-        {n}. {title}
-      </div>
-      <p className="mt-2 text-sm opacity-90 leading-relaxed">{desc}</p>
-
-      <div className="mt-3 text-sm leading-relaxed">
-        <span className="font-semibold" style={{ color: C.ink }}>
-          What you get:
-        </span>{" "}
-        {deliverable}
-      </div>
-
-      <div className="mt-2 text-sm leading-relaxed">
-        <span className="font-semibold" style={{ color: C.ink }}>
-          Why this matters:
-        </span>{" "}
-        {why}
-      </div>
-    </div>
-  );
-}
-
 // ===== Page =====
 
 export default function OfferInstall() {
@@ -164,20 +123,30 @@ export default function OfferInstall() {
               className="mt-5 text-4xl leading-tight sm:text-5xl sm:leading-tight font-black"
               style={{ color: C.ink }}
             >
-              We install your acquisition and delivery machine in 30–45 days
+              We install your acquisition and delivery machine
             </h1>
 
             <p className="mt-4 text-lg max-w-prose opacity-90">
-              We work with founders who can deliver real value — but don’t yet
-              have a clean, reliable way to generate clients and keep them. We
-              come in, build the core revenue system, and hand it to you. You
-              keep it. You run it. You stop guessing.
+              We work with established businesses that can already deliver real
+              results — but don’t yet have a reliable system to attract,
+              convert, and onboard new clients online. We come in, build the
+              core revenue engine, and hand it to you. You keep it. You run it.
+              You stop guessing.
             </p>
 
             <ul className="mt-5 space-y-2 text-sm opacity-90">
-              <li>• Offer, proof, funnel, booking flow, close script</li>
-              <li>• Outbound rhythm and content cadence that creates demand</li>
-              <li>• Onboarding and delivery rhythm that keeps clients</li>
+              <li>
+                • Offer, positioning, messaging, and content angles (you still
+                record the content, we design the system)
+              </li>
+              <li>
+                • Profile funnel, proof, landing, booking pipeline, close
+                script
+              </li>
+              <li>
+                • Onboarding + proof capture so every new win turns into more
+                demand
+              </li>
             </ul>
 
             <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
@@ -223,7 +192,7 @@ export default function OfferInstall() {
                 className="rounded-full border px-3 py-1 bg-white"
                 style={{ borderColor: C.gray, color: C.ink }}
               >
-                30–45 Day Build
+                Fast Implementation
               </span>
             </div>
           </div>
@@ -264,7 +233,7 @@ export default function OfferInstall() {
                   Watch: How we install the revenue machine
                 </div>
                 <p className="mt-1 text-xs opacity-80">
-                  8–12 minutes. We walk through ICP, proof, funnel, booking,
+                  We walk through avatar, offer, positioning, funnel, booking,
                   close, onboarding — end to end.
                 </p>
               </div>
@@ -283,30 +252,36 @@ export default function OfferInstall() {
           meta="Who this is for"
         >
           <p className="leading-relaxed">
-            We work with founders who can deliver real value — but don’t yet
-            have a clean, reliable way to generate clients.
+            We work with business owners who can actually deliver a result,
+            already have revenue, and are now serious about scaling their
+            acquisition online.
           </p>
 
-          <p className="mt-4 leading-relaxed">You’re usually:</p>
+          <p className="mt-4 leading-relaxed">You’re typically:</p>
           <ul className="mt-2 space-y-2">
-            <li>• A solo operator or a tiny team (0–3 people).</li>
             <li>
-              • You already have a skill, a service, or the ability to get
-              someone a result.
+              • You’re already making money (often $20k+/mo), or you’re a mature
+              offline service with obvious demand.
             </li>
             <li>
-              • You’ve made some money (or you know you can), but you don’t have
-              a consistent pipeline.
+              • You know you can help clients — that’s not the problem. The
+              problem is getting enough of the right ones, consistently.
             </li>
             <li>
-              • You’re stuck doing everything manually: outreach, sales,
-              delivery.
+              • You don’t yet have a reliable online acquisition system that
+              turns attention into booked qualified calls.
+            </li>
+            <li>
+              • You’re willing to show up and record content, but you don’t want
+              to “figure out the funnel” from scratch.
             </li>
           </ul>
 
           <p className="mt-4 leading-relaxed">
-            You’re not asking for “branding.” You’re asking for a working
-            acquisition and delivery machine so you can actually breathe.
+            You’re not asking for “make my brand pretty.”
+            <br />
+            You’re asking for a clear, controlled pipeline you can run every
+            week.
           </p>
 
           <p
@@ -322,21 +297,19 @@ export default function OfferInstall() {
           id="outcome"
           badge="2"
           title="The outcome we promise"
-          meta="30–45 day result"
+          meta="What you leave with"
         >
           <p className="leading-relaxed">
             We install a working client acquisition and delivery system in your
-            business so you consistently book qualified calls, close paying
-            clients, and deliver without chaos — in 30–45 days.
+            business so you can consistently book qualified calls, close paying
+            clients, and onboard cleanly — without chaos.
           </p>
 
-          <p className="mt-4 leading-relaxed">Said another way:</p>
-
-          <p className="mt-2 leading-relaxed">
-            We build and operationalize your offer, proof, funnel, booking
-            pipeline, close script, onboarding, and delivery rhythm — so you can
-            sell and fulfill like a real company, not like a freelancer trying
-            to hold everything in your head.
+          <p className="mt-4 leading-relaxed">
+            Said simply: we build and operationalize your avatar, offer,
+            positioning, content angles, profile funnel, proof, one-page
+            landing, booking pipeline, close script, onboarding, and proof
+            capture rhythm.
           </p>
 
           <p
@@ -351,194 +324,277 @@ export default function OfferInstall() {
           </p>
         </SectionCard>
 
-        {/* Mechanism / assets */}
+        {/* Mechanism / 7-stage pathway */}
         <SectionCard
           id="mechanism"
           badge="3"
-          title="What we actually do (the mechanism)"
-          meta="How we create the result"
+          title="How we actually create that result"
+          meta="The 7-stage install"
         >
-          <p className="leading-relaxed">
-            Our service is not “content agency” and it’s not “coaching in a
-            Google Meet.”
-          </p>
-          <p className="mt-3 leading-relaxed">
-            What we do is simple: we come in, build the core revenue machine,
-            and hand it to you.
-          </p>
+          {/* Stage 1: Avatar */}
+          <div className="mt-0 space-y-6">
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                1. Avatar
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: choose exactly who we’re solving a painful problem for.
+              </p>
 
-          <p
-            className="mt-4 leading-relaxed font-semibold"
-            style={{ color: C.ink }}
-          >
-            We deliver 6 core assets that make you money:
-          </p>
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                pick one specific customer segment, define urgent pain +
+                desired outcome + buying trigger, map budget/timeline/decision
+                style.
+              </div>
 
-          {/* Asset 1 */}
-          <AssetBlock
-            n="1"
-            title="ICP & Offer Lock"
-            desc="We choose one niche and one painful, urgent problem you solve. Then we package it into a Minimum Viable Offer you can confidently sell."
-            deliverable={
-              <>
-                An Offer Doc with the promise, scope, timeline, pricing ladder,
-                and guarantee.
-              </>
-            }
-            why={
-              <>
-                If your positioning is vague, nothing else works. This step is
-                the foundation.
-              </>
-            }
-          />
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                an ICP Snapshot / Avatar Card: who they are, what they’re trying
+                to fix right now, the language they use, and where to reach
+                them.
+              </div>
 
-          {/* Asset 2 */}
-          <AssetBlock
-            n="2"
-            title="Proof Asset"
-            desc="We create or extract one strong proof asset — a mini case study, teardown, before/after, or demo — even if you’ve never had a ‘perfect’ client."
-            deliverable={<>A proof asset you can use in sales immediately.</>}
-            why={
-              <>
-                Proof beats confidence issues. Proof beats long explanations.
-                Proof is what moves buyers from “maybe” to “oh, this is real.”
-              </>
-            }
-          />
-
-          {/* Asset 3 */}
-          <AssetBlock
-            n="3"
-            title="Profile Funnel + One-Page Landing"
-            desc="We rebuild your outward face: bio, pinned post(s), CTA (“DM me ‘X’”), and a one-page landing that goes Problem → Promise → Proof → CTA (book a call)."
-            deliverable={
-              <>
-                A working profile funnel and a lean landing page that directs
-                people to book, not wander.
-              </>
-            }
-            why={
-              <>
-                Your social presence stops being a resume and starts acting like
-                a live funnel.
-              </>
-            }
-          />
-
-          {/* Asset 4 */}
-          <div
-            className="mt-6 rounded-xl border p-4"
-            style={{ borderColor: C.gray }}
-          >
-            <div className="text-sm font-semibold" style={{ color: C.ink }}>
-              4. Booking Stack + Call Script
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                If the avatar isn’t specific, all messaging is generic. When
+                it’s specific, hooks sharpen, proof lands, pricing makes sense,
+                and calls convert faster.
+              </div>
             </div>
-            <p className="mt-2 text-sm opacity-90 leading-relaxed">
-              We build the booking infrastructure and hand you the close
-              process.
+
+            {/* Stage 2: Offer */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                2. Offer
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: package the outcome into something urgent and obvious to
+                buy.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                define the promise (“we help [avatar] go from A → B in [time
+                frame]”), set scope/boundaries, build price ladder (floor /
+                target / anchor), and craft a defensible guarantee.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                a full Offer Doc: promise, transformation, timeline, method,
+                pricing ladder, guarantee.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                If the offer is muddy, no funnel can save it. Once it’s crisp,
+                everything else is distribution and throughput.
+              </div>
+            </div>
+
+            {/* Stage 3: Positioning & Content System */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                3. Positioning &amp; Content System
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: script what you say publicly so high-intent buyers see you
+                as the obvious solution.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                extract your angles, wins, credibility; map 3 pillars (pain,
+                proof, offer/CTA); generate 30 days of hooks and talking
+                points.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                a Messaging Spine (the narratives we repeat everywhere) and a
+                Content System (hook bank, proof formats, weekly rhythm).
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                Content here is not “posting for vibes.” It’s controlled
+                positioning that warms demand before the call.
+              </div>
+            </div>
+
+            {/* Stage 4: Profile Funnel */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                4. Profile Funnel
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: turn your public profile into a working intake surface,
+                not a CV.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                rewrite bios to speak directly to the avatar/outcome, build
+                pinned proof/cred reels, add a direct CTA (“DM me ‘AUDIT’ for
+                the plan”).
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                fully reworked IG / LinkedIn / X profile(s), CTA language,
+                pinned proof, reusable positioning blurb.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                Now every profile visit becomes a lead-touch and feeds the
+                pipeline.
+              </div>
+            </div>
+
+            {/* Stage 5: Leads Funnel */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                5. Leads Funnel
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: capture interest and route it into booked calls.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                build a one-page landing (Problem → Promise → Proof → CTA),
+                then install the booking stack (calendar link, intake form,
+                auto-confirm, reminders, show-up optimization).
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                a conversion landing page and a booking flow that qualifies,
+                reminds, and puts people directly on your calendar.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                This creates a predictable path: profile/post → DM/click →
+                landing → booking. No more 47-message back-and-forth.
+              </div>
+            </div>
+
+            {/* Stage 6: Conversion System */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                6. Conversion System
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: turn booked calls into paying clients.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                install a one-call close (Diagnose → Fit → Plan → Price → Next
+                Step), map objection handling (price, time, trust, partner),
+                define next-step logic (pay now, deposit, proposal window).
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                a call script, objection tree, and proposal/terms bundle so you
+                can close in minutes, not weeks.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                No more rambling. No more “so uh what do you think?”
+              </div>
+            </div>
+
+            {/* Stage 7: Proof Capture System */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ borderColor: C.gray }}
+            >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
+                7. Proof Capture System
+              </div>
+              <p className="mt-2 text-sm opacity-90 leading-relaxed">
+                Goal: turn delivery into reusable proof so the machine
+                compounds.
+              </p>
+
+              <div className="mt-3 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  What we do with you:
+                </span>{" "}
+                install onboarding + kickoff (expectations, success metric in
+                14 days), weekly reporting (wins / metrics / next 7-day plan),
+                and a “capture proof here” workflow for screenshots,
+                before/afters, testimonials, KPI deltas.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed">
+                <span className="font-semibold" style={{ color: C.ink }}>
+                  You walk away with:
+                </span>{" "}
+                onboarding checklist, kickoff agenda, weekly report template,
+                and a proof capture pipeline that keeps feeding marketing.
+              </div>
+
+              <div className="mt-2 text-sm leading-relaxed opacity-90">
+                This reduces churn and continuously generates fresh proof that
+                drives more demand, higher pricing, and easier closes.
+              </div>
+            </div>
+
+            <p
+              className="mt-6 text-sm leading-relaxed font-semibold"
+              style={{ color: C.ink }}
+            >
+              That’s the machine.
+              <br />
+              It’s not “branding,” it’s not “post more,” it’s not coaching
+              vibes.
+              <br />
+              It’s an install.
             </p>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                What you get:
-              </span>
-            </div>
-            <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-1">
-              <li>• Your calendar link</li>
-              <li>• Intake form</li>
-              <li>• Auto-confirm + show-up reminders</li>
-              <li>
-                • A 1-call close script (diagnose → fit → plan → price → next
-                step)
-              </li>
-            </ul>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                Why this matters:
-              </span>{" "}
-              No more improvising or “explaining for 45 minutes.” You’ll have a
-              repeatable path from stranger → booked call → paid.
-            </div>
           </div>
-
-          {/* Asset 5 */}
-          <div
-            className="mt-6 rounded-xl border p-4"
-            style={{ borderColor: C.gray }}
-          >
-            <div className="text-sm font-semibold" style={{ color: C.ink }}>
-              5. Outbound &amp; Content Rhythm
-            </div>
-            <p className="mt-2 text-sm opacity-90 leading-relaxed">
-              We install the first consistent traffic engine.
-            </p>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                What you get:
-              </span>
-            </div>
-            <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-1">
-              <li>• A 30-day content plan (authority / proof / offer)</li>
-              <li>
-                • Daily outbound/DM/email scripts (what to send, to who, how
-                often)
-              </li>
-            </ul>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                Why this matters:
-              </span>{" "}
-              You wake up knowing exactly how to create conversations and where
-              your next bookings are coming from.
-            </div>
-          </div>
-
-          {/* Asset 6 */}
-          <div
-            className="mt-6 rounded-xl border p-4"
-            style={{ borderColor: C.gray }}
-          >
-            <div className="text-sm font-semibold" style={{ color: C.ink }}>
-              6. Onboarding &amp; Delivery Rhythm
-            </div>
-            <p className="mt-2 text-sm opacity-90 leading-relaxed">
-              We formalize how you onboard and keep clients happy.
-            </p>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                What you get:
-              </span>
-            </div>
-            <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-1">
-              <li>• Onboarding checklist</li>
-              <li>• Kickoff call agenda</li>
-              <li>• Weekly reporting template</li>
-              <li>• 90-day roadmap structure</li>
-            </ul>
-
-            <div className="mt-3 text-sm leading-relaxed">
-              <span className="font-semibold" style={{ color: C.ink }}>
-                Why this matters:
-              </span>{" "}
-              This stops churn, protects your reputation, and turns delivery
-              into repeatable proof for future sales.
-            </div>
-          </div>
-
-          <p
-            className="mt-8 text-sm leading-relaxed font-semibold"
-            style={{ color: C.ink }}
-          >
-            That’s the core product:
-            <br />
-            We build the system you’ll run every single week to acquire and keep
-            clients.
-          </p>
         </SectionCard>
 
         {/* Delivery model + Pricing */}
@@ -546,7 +602,7 @@ export default function OfferInstall() {
           id="delivery-and-pricing"
           badge="4"
           title="How we deliver and how we charge"
-          meta="Sprint structure & pricing"
+          meta="Engagement model"
         >
           <div>
             <div className="text-sm font-semibold" style={{ color: C.ink }}>
@@ -554,29 +610,79 @@ export default function OfferInstall() {
             </div>
 
             <p className="mt-2 text-sm leading-relaxed opacity-90">
-              We work in a focused 30–45 day implementation sprint.
+              We take you through seven upgrades, in order:
             </p>
 
-            <p className="mt-3 text-sm leading-relaxed">
-              It looks like this:
-            </p>
+            <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-4">
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  1. Avatar
+                </div>
+                <div className="opacity-90">
+                  We pick exactly who you’re solving for.
+                </div>
+              </li>
 
-            <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-1">
-              <li>• Week 1: Positioning, ICP, Offer Lock</li>
-              <li>• Week 2: Proof Asset + Landing + Profile Funnel</li>
-              <li>• Week 3: Booking Stack + Sales Script + Outbound Block</li>
-              <li>• Week 4: Delivery Rhythm + Handover + KPIs</li>
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  2. Offer
+                </div>
+                <div className="opacity-90">
+                  We package the outcome in a way they’ll pay for.
+                </div>
+              </li>
+
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  3. Positioning &amp; Content System
+                </div>
+                <div className="opacity-90">
+                  We script what you say publicly so demand sees you as the
+                  answer.
+                </div>
+              </li>
+
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  4. Profile Funnel
+                </div>
+                <div className="opacity-90">
+                  We turn your profile into a working intake funnel.
+                </div>
+              </li>
+
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  5. Leads Funnel
+                </div>
+                <div className="opacity-90">
+                  We build the booking pipeline (landing + calendar + intake).
+                </div>
+              </li>
+
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  6. Conversion System
+                </div>
+                <div className="opacity-90">
+                  We give you the script and structure to close on one call.
+                </div>
+              </li>
+
+              <li>
+                <div className="font-semibold" style={{ color: C.ink }}>
+                  7. Proof Capture System
+                </div>
+                <div className="opacity-90">
+                  We install onboarding and weekly reporting so every new win
+                  becomes new proof, which feeds back into step 3.
+                </div>
+              </li>
             </ul>
 
             <p className="mt-4 text-sm leading-relaxed opacity-90">
-              This is not an endless “coaching container.” This is not “we’ll
-              post for you forever.” We are here to install the core revenue
-              infrastructure so you can run it without us.
-            </p>
-
-            <p className="mt-3 text-sm leading-relaxed opacity-90">
-              Our whole brand is built around: move fast, ship real assets,
-              eliminate chaos.
+              Our whole brand is built around one idea: move fast, ship real
+              assets, eliminate chaos.
             </p>
           </div>
 
@@ -595,12 +701,13 @@ export default function OfferInstall() {
                 Option A. Implementation Sprint (most common)
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                You pay a flat fee (think in the ~$2K–$5K USD range depending on
+                Flat fee (typically in the ~$2K–$5K USD range depending on
                 scope). We build and install the entire system above.
               </p>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                You leave with: offer, proof, funnel, booking, sales script,
-                outbound rhythm, onboarding.
+                You leave with: avatar, offer, positioning system, profile
+                funnel, proof, landing, booking flow, call script, onboarding,
+                proof capture.
               </p>
               <p
                 className="mt-2 text-sm leading-relaxed font-semibold"
@@ -609,10 +716,10 @@ export default function OfferInstall() {
                 No fluff. You own the machine.
               </p>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                This is perfect for the founder who says:
+                This is for the founder who says:
                 <br />
-                “I don’t need motivation. I need a pipeline I can execute
-                tomorrow without guessing.”
+                “I don’t need motivation. I need a pipeline I can run this
+                week.”
               </p>
             </div>
 
@@ -625,16 +732,16 @@ export default function OfferInstall() {
                 Option B. Sprint + 30-Day Support
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                After the build, you stay on with us for ~30 days of refinement.
-                We review your calls, sharpen objections, tweak your content
-                hooks, and keep you inside the rhythm.
+                After the install, you stay on with us ~30 days. We review your
+                sales calls, sharpen objections, tune hooks, and keep you in the
+                rhythm while momentum is fragile.
               </p>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                That becomes a light retainer (for example, ~$1K/mo).
+                That’s a light retainer (for example, around ~$1K/mo).
               </p>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                This keeps you accountable to the system we just installed and
-                protects conversion rate while you’re getting momentum.
+                Goal: protect close rate and stop you from drifting back into
+                guesswork.
               </p>
             </div>
 
@@ -644,17 +751,15 @@ export default function OfferInstall() {
               style={{ borderColor: C.gray }}
             >
               <div className="text-sm font-semibold" style={{ color: C.ink }}>
-                Option C. Performance / Revshare (selective, later-stage)
+                Option C. Performance / Revshare (selective)
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                For the right founders, we’ll stay involved and tie
-                compensation to revenue or booked calls. We only do this with
-                people who are clearly in motion and just need force applied,
-                not rescuing.
+                For the right operator, we’ll tie part of our compensation to
+                revenue or booked calls. This is only for people already in
+                motion who need force, not rescuing.
               </p>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
-                This becomes our “portfolio,” but that’s not the default offer.
-                It’s earned.
+                This becomes our “portfolio,” not the default engagement.
               </p>
             </div>
           </div>
@@ -668,9 +773,10 @@ export default function OfferInstall() {
           meta="Why this exists"
         >
           <p className="text-sm leading-relaxed opacity-90">
-            We install your acquisition and delivery infrastructure — offer,
-            proof, funnel, booking flow, close script, and onboarding — so you
-            can consistently book and close qualified clients in under 45 days
+            We install your acquisition and delivery infrastructure — avatar,
+            offer, positioning, content system, profile funnel, proof, landing,
+            booking flow, one-call close script, onboarding, and proof capture —
+            so you can consistently book and close qualified clients online
             without hiring a full agency.
           </p>
 
@@ -684,12 +790,12 @@ export default function OfferInstall() {
 
           <ul className="mt-2 text-sm leading-relaxed opacity-90 space-y-1">
             <li>
-              • The founder psychology side (we fix the operator: focus,
-              self-trust, rhythm)
+              • Founder psychology side: we fix the operator (focus,
+              conviction, rhythm).
             </li>
             <li>
-              • The business systems side (we build the machine: offer, proof,
-              funnel, pipeline, delivery)
+              • Business systems side: we build the machine (offer, funnel,
+              pipeline, delivery, proof loop).
             </li>
           </ul>
 
