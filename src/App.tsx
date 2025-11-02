@@ -20,6 +20,8 @@ const KnowledgeGraph = lazy(() => import("./components/KnowledgeGraph"));
 const FounderMastery = lazy(() => import("./components/FounderMastery"));
 const BusinessSystems = lazy(() => import("./components/BusinessSystems"));
 const OfferInstall = lazy(() => import("./components/OfferInstall"));
+const FounderKit = lazy(() => import("./components/FounderKit"));
+const OfferLanding = lazy(() => import("./components/OfferLanding"));
 
 const C = {
   blue: "#2F5DE8",
@@ -77,7 +79,9 @@ type Route =
   | { page: "graph" }
   | { page: "founder" }
   | { page: "bizsystems" }
-  | { page: "offer" };
+  | { page: "offer" }
+  | { page: "kit" }
+  | { page: "install" };
 
 const useHashRouter = () => {
   const parseHash = (): Route => {
@@ -110,6 +114,8 @@ const useHashRouter = () => {
     if (normalized.startsWith("/business-systems"))
       return { page: "bizsystems" };
     if (normalized.startsWith("/offer-install")) return { page: "offer" };
+    if (normalized.startsWith("/kit")) return { page: "kit" };
+    if (normalized.startsWith("/install")) return { page: "install" };
 
     if (normalized.startsWith("/p/")) {
       const slug = normalized.slice(3);
@@ -142,6 +148,10 @@ const useHashRouter = () => {
       window.location.hash = "/business-systems";
     else if (r.page === "offer")
       window.location.hash = "/offer-install";
+    else if (r.page === "kit")
+      window.location.hash = "/kit";
+    else if (r.page === "install")
+      window.location.hash = "/install";
     else window.location.hash = `/p/${(r as any).slug}`;
   };
 
@@ -797,7 +807,9 @@ export default function App() {
   // NEW
   const onNavFounder = () => nav({ page: "founder" });
   const onNavBizSystems = () => nav({ page: "bizsystems" });
-  const onNavOffer = () => nav({ page: "offer" });
+  const onNavOfferInstall = () => nav({ page: "offer" });
+  const onNavKit = () => nav({ page: "kit" });
+  const onNavInstallLanding = () => nav({ page: "install" });
 
   const onOpenPager = (k: string) => nav({ page: "onepager", slug: k });
 
@@ -950,6 +962,24 @@ export default function App() {
           canonicalPath: "/offer-install",
           ogImage: OG_IMAGE,
         };
+      case "kit":
+        return {
+          title:
+            "Founder Infrastructure Kit — The Business Idea Studio Stack",
+          description:
+            "The exact positioning, pipeline, booking, close, onboarding, and proof systems we install in your business.",
+          canonicalPath: "/kit",
+          ogImage: OG_IMAGE,
+        };
+      case "install":
+        return {
+          title:
+            "Acquisition & Delivery Install — Your Revenue Infrastructure",
+          description:
+            "We don’t coach. We install the system you’ll run every single week to acquire and keep clients.",
+          canonicalPath: "/install",
+          ogImage: OG_IMAGE,
+        };
       case "onepager":
         return {
           title: `${currentPagerTitle} — One-Pager`,
@@ -991,6 +1021,10 @@ export default function App() {
       : route.page === "bizsystems"
       ? "home"
       : route.page === "offer"
+      ? "home"
+      : route.page === "kit"
+      ? "home"
+      : route.page === "install"
       ? "home"
       : "home";
 
@@ -1147,6 +1181,30 @@ export default function App() {
           }
         >
           <OfferInstall />
+        </Suspense>
+      )}
+
+      {route.page === "kit" && (
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 text-center">
+              Loading Founder Kit…
+            </section>
+          }
+        >
+          <FounderKit />
+        </Suspense>
+      )}
+
+      {route.page === "install" && (
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 text-center">
+              Loading Install Landing…
+            </section>
+          }
+        >
+          <OfferLanding />
         </Suspense>
       )}
 
