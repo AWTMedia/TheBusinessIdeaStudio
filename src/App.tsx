@@ -17,6 +17,9 @@ const Community = lazy(() => import("./components/Community"));
 const Ai = lazy(() => import("./components/Ai"));
 const Systems = lazy(() => import("./components/Software"));
 const KnowledgeGraph = lazy(() => import("./components/KnowledgeGraph"));
+// NEW
+const FounderMastery = lazy(() => import("./components/FounderMastery"));
+const BusinessSystems = lazy(() => import("./components/BusinessSystems"));
 
 const C = {
   blue: "#2F5DE8",
@@ -71,7 +74,9 @@ type Route =
   | { page: "community" }
   | { page: "ai" }
   | { page: "systems" }
-  | { page: "graph" };
+  | { page: "graph" }
+  | { page: "founder" }
+  | { page: "bizsystems" };
 
 const useHashRouter = () => {
   const parseHash = (): Route => {
@@ -80,6 +85,7 @@ const useHashRouter = () => {
     if (!h.startsWith("/")) h = "/" + h;
     const path = h.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
 
+    // alias / mappings
     const normalized =
       path === "/compliance"
         ? "/governance"
@@ -99,6 +105,12 @@ const useHashRouter = () => {
     if (normalized.startsWith("/ai")) return { page: "ai" };
     if (normalized.startsWith("/systems")) return { page: "systems" };
     if (normalized.startsWith("/graph")) return { page: "graph" };
+
+    // NEW routes
+    if (normalized.startsWith("/founder-mastery")) return { page: "founder" };
+    if (normalized.startsWith("/business-systems"))
+      return { page: "bizsystems" };
+
     if (normalized.startsWith("/p/")) {
       const slug = normalized.slice(3);
       return { page: "onepager", slug };
@@ -124,6 +136,10 @@ const useHashRouter = () => {
     else if (r.page === "ai") window.location.hash = "/ai";
     else if (r.page === "systems") window.location.hash = "/systems";
     else if (r.page === "graph") window.location.hash = "/graph";
+    else if (r.page === "founder")
+      window.location.hash = "/founder-mastery";
+    else if (r.page === "bizsystems")
+      window.location.hash = "/business-systems";
     else window.location.hash = `/p/${(r as any).slug}`;
   };
 
@@ -196,7 +212,7 @@ function Home({
   onNavBook,
   onNavGovernance,
   onNavGraph,
-  // optional (so the call sites never error)
+  // optional
   onNavCommunity,
   onNavSystems,
   onNavAi,
@@ -403,7 +419,7 @@ function Home({
         </p>
       </section>
 
-      {/* 2) Community — video left, text centered */}
+      {/* 2) Community */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 self-center justify-self-center w-full">
@@ -459,7 +475,7 @@ function Home({
         </div>
       </section>
 
-      {/* 3) Software — text left, video right */}
+      {/* 3) Software */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 self-center">
@@ -516,7 +532,7 @@ function Home({
         </div>
       </section>
 
-      {/* 4) AI — video left, text right */}
+      {/* 4) AI */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-6 self-center justify-self-center w-full">
@@ -775,6 +791,11 @@ export default function App() {
   const onNavAi = () => nav({ page: "ai" });
   const onNavSystems = () => nav({ page: "systems" });
   const onNavGraph = () => nav({ page: "graph" });
+
+  // NEW
+  const onNavFounder = () => nav({ page: "founder" });
+  const onNavBizSystems = () => nav({ page: "bizsystems" });
+
   const onOpenPager = (k: string) => nav({ page: "onepager", slug: k });
 
   const currentPager: OnePager | undefined =
@@ -782,8 +803,8 @@ export default function App() {
       ? onePagers[(route as any).slug] || onePagers["not-found"]
       : undefined;
 
-  // ====== SEO per route (safe for non-browser too) ======
-  const OG_IMAGE = "/og-default.png"; // <— matches your /public file
+  // ====== SEO per route ======
+  const OG_IMAGE = "/og-default.png"; // matches your /public file
   const isClient = typeof window !== "undefined";
   const origin = isClient ? window.location.origin : "";
   const currentPagerTitle =
@@ -901,6 +922,22 @@ export default function App() {
             url: origin + "/#/book-a-call",
           },
         };
+      case "founder":
+        return {
+          title: "Founder Mastery — The 7 Stages of Becoming a Business Typhoon",
+          description:
+            "The psychological progression: control → conviction → resonance → persuasion → rhythm → leverage → embodied authority.",
+          canonicalPath: "/founder-mastery",
+          ogImage: OG_IMAGE,
+        };
+      case "bizsystems":
+        return {
+          title: "Business Systems — Weekly Operating Rhythm",
+          description:
+            "Your execution engine: scorecards, cadence, operating loops. This is where psychology becomes logistics.",
+          canonicalPath: "/business-systems",
+          ogImage: OG_IMAGE,
+        };
       case "onepager":
         return {
           title: `${currentPagerTitle} — One-Pager`,
@@ -937,6 +974,10 @@ export default function App() {
       ? "graph"
       : route.page === "repo"
       ? "repo"
+      : route.page === "founder"
+      ? "home"
+      : route.page === "bizsystems"
+      ? "home"
       : "home";
 
   return (
@@ -1056,6 +1097,30 @@ export default function App() {
           }
         >
           <KnowledgeGraph />
+        </Suspense>
+      )}
+
+      {route.page === "founder" && (
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
+              Loading Founder Mastery…
+            </section>
+          }
+        >
+          <FounderMastery />
+        </Suspense>
+      )}
+
+      {route.page === "bizsystems" && (
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
+              Loading Business Systems…
+            </section>
+          }
+        >
+          <BusinessSystems />
         </Suspense>
       )}
 
