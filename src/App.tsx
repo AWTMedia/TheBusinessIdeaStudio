@@ -20,6 +20,7 @@ const KnowledgeGraph = lazy(() => import("./components/KnowledgeGraph"));
 // NEW
 const FounderMastery = lazy(() => import("./components/FounderMastery"));
 const BusinessSystems = lazy(() => import("./components/BusinessSystems"));
+const OfferInstall = lazy(() => import("./components/OfferInstall"));
 
 const C = {
   blue: "#2F5DE8",
@@ -76,7 +77,8 @@ type Route =
   | { page: "systems" }
   | { page: "graph" }
   | { page: "founder" }
-  | { page: "bizsystems" };
+  | { page: "bizsystems" }
+  | { page: "offer" };
 
 const useHashRouter = () => {
   const parseHash = (): Route => {
@@ -110,6 +112,7 @@ const useHashRouter = () => {
     if (normalized.startsWith("/founder-mastery")) return { page: "founder" };
     if (normalized.startsWith("/business-systems"))
       return { page: "bizsystems" };
+    if (normalized.startsWith("/offer-install")) return { page: "offer" };
 
     if (normalized.startsWith("/p/")) {
       const slug = normalized.slice(3);
@@ -140,6 +143,8 @@ const useHashRouter = () => {
       window.location.hash = "/founder-mastery";
     else if (r.page === "bizsystems")
       window.location.hash = "/business-systems";
+    else if (r.page === "offer")
+      window.location.hash = "/offer-install";
     else window.location.hash = `/p/${(r as any).slug}`;
   };
 
@@ -795,6 +800,7 @@ export default function App() {
   // NEW
   const onNavFounder = () => nav({ page: "founder" });
   const onNavBizSystems = () => nav({ page: "bizsystems" });
+  const onNavOffer = () => nav({ page: "offer" });
 
   const onOpenPager = (k: string) => nav({ page: "onepager", slug: k });
 
@@ -938,6 +944,15 @@ export default function App() {
           canonicalPath: "/business-systems",
           ogImage: OG_IMAGE,
         };
+      case "offer":
+        return {
+          title:
+            "Offer Install Sprint — We Build Your Acquisition & Delivery Machine",
+          description:
+            "We install your ICP, offer, proof, funnel, booking stack, close script, outbound rhythm, and onboarding in 30–45 days.",
+          canonicalPath: "/offer-install",
+          ogImage: OG_IMAGE,
+        };
       case "onepager":
         return {
           title: `${currentPagerTitle} — One-Pager`,
@@ -977,6 +992,8 @@ export default function App() {
       : route.page === "founder"
       ? "home"
       : route.page === "bizsystems"
+      ? "home"
+      : route.page === "offer"
       ? "home"
       : "home";
 
@@ -1121,6 +1138,18 @@ export default function App() {
           }
         >
           <BusinessSystems />
+        </Suspense>
+      )}
+
+      {route.page === "offer" && (
+        <Suspense
+          fallback={
+            <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
+              Loading Offer Install…
+            </section>
+          }
+        >
+          <OfferInstall />
         </Suspense>
       )}
 
