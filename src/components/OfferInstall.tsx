@@ -157,7 +157,7 @@ export default function OfferInstall() {
                 background: "#fff",
               }}
             >
-              Offer Install / Acquisition & Delivery Sprint
+              Offer Install / Acquisition &amp; Delivery Sprint
             </span>
 
             <h1
@@ -169,9 +169,9 @@ export default function OfferInstall() {
 
             <p className="mt-4 text-lg max-w-prose opacity-90">
               We work with founders who can deliver real value — but don’t yet
-              have a clean, reliable way to generate clients and keep them.
-              We come in, build the core revenue system, and hand it to you.
-              You keep it. You run it. You stop guessing.
+              have a clean, reliable way to generate clients and keep them. We
+              come in, build the core revenue system, and hand it to you. You
+              keep it. You run it. You stop guessing.
             </p>
 
             <ul className="mt-5 space-y-2 text-sm opacity-90">
@@ -211,13 +211,13 @@ export default function OfferInstall() {
                 className="rounded-full border px-3 py-1 bg-white"
                 style={{ borderColor: C.gray, color: C.ink }}
               >
-                Install > Inspire
+                Install &gt; Inspire
               </span>
               <span
                 className="rounded-full border px-3 py-1 bg-white"
                 style={{ borderColor: C.gray, color: C.ink }}
               >
-                Proof > Promises
+                Proof &gt; Promises
               </span>
               <span
                 className="rounded-full border px-3 py-1 bg-white"
@@ -343,8 +343,10 @@ export default function OfferInstall() {
             className="mt-4 leading-relaxed font-semibold"
             style={{ color: C.ink }}
           >
-            We’re not selling “motivation.”<br />
-            We’re not selling “vibes.”<br />
+            We’re not selling “motivation.”
+            <br />
+            We’re not selling “vibes.”
+            <br />
             We’re installing infrastructure.
           </p>
         </SectionCard>
@@ -429,10 +431,7 @@ export default function OfferInstall() {
             className="mt-6 rounded-xl border p-4"
             style={{ borderColor: C.gray }}
           >
-            <div
-              className="text-sm font-semibold"
-              style={{ color: C.ink }}
-            >
+            <div className="text-sm font-semibold" style={{ color: C.ink }}>
               4. Booking Stack + Call Script
             </div>
             <p className="mt-2 text-sm opacity-90 leading-relaxed">
@@ -441,10 +440,7 @@ export default function OfferInstall() {
             </p>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 What you get:
               </span>
             </div>
@@ -459,10 +455,7 @@ export default function OfferInstall() {
             </ul>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 Why this matters:
               </span>{" "}
               No more improvising or “explaining for 45 minutes.” You’ll have a
@@ -475,21 +468,15 @@ export default function OfferInstall() {
             className="mt-6 rounded-xl border p-4"
             style={{ borderColor: C.gray }}
           >
-            <div
-              className="text-sm font-semibold"
-              style={{ color: C.ink }}
-            >
-              5. Outbound & Content Rhythm
+            <div className="text-sm font-semibold" style={{ color: C.ink }}>
+              5. Outbound &amp; Content Rhythm
             </div>
             <p className="mt-2 text-sm opacity-90 leading-relaxed">
               We install the first consistent traffic engine.
             </p>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 What you get:
               </span>
             </div>
@@ -502,10 +489,7 @@ export default function OfferInstall() {
             </ul>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 Why this matters:
               </span>{" "}
               You wake up knowing exactly how to create conversations and where
@@ -518,21 +502,15 @@ export default function OfferInstall() {
             className="mt-6 rounded-xl border p-4"
             style={{ borderColor: C.gray }}
           >
-            <div
-              className="text-sm font-semibold"
-              style={{ color: C.ink }}
-            >
-              6. Onboarding & Delivery Rhythm
+            <div className="text-sm font-semibold" style={{ color: C.ink }}>
+              6. Onboarding &amp; Delivery Rhythm
             </div>
             <p className="mt-2 text-sm opacity-90 leading-relaxed">
               We formalize how you onboard and keep clients happy.
             </p>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 What you get:
               </span>
             </div>
@@ -544,10 +522,7 @@ export default function OfferInstall() {
             </ul>
 
             <div className="mt-3 text-sm leading-relaxed">
-              <span
-                className="font-semibold"
-                style={{ color: C.ink }}
-              >
+              <span className="font-semibold" style={{ color: C.ink }}>
                 Why this matters:
               </span>{" "}
               This stops churn, protects your reputation, and turns delivery
@@ -574,10 +549,7 @@ export default function OfferInstall() {
           meta="Sprint structure & pricing"
         >
           <div>
-            <div
-              className="text-sm font-semibold"
-              style={{ color: C.ink }}
-            >
+            <div className="text-sm font-semibold" style={{ color: C.ink }}>
               Our delivery model
             </div>
 
@@ -610,10 +582,7 @@ export default function OfferInstall() {
 
           {/* Pricing options */}
           <div className="mt-8">
-            <div
-              className="text-sm font-semibold"
-              style={{ color: C.ink }}
-            >
+            <div className="text-sm font-semibold" style={{ color: C.ink }}>
               Our pricing model
             </div>
 
@@ -622,10 +591,7 @@ export default function OfferInstall() {
               className="mt-4 rounded-xl border p-4"
               style={{ borderColor: C.gray }}
             >
-              <div
-                className="text-sm font-semibold"
-                style={{ color: C.ink }}
-              >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
                 Option A. Implementation Sprint (most common)
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
@@ -655,10 +621,7 @@ export default function OfferInstall() {
               className="mt-4 rounded-xl border p-4"
               style={{ borderColor: C.gray }}
             >
-              <div
-                className="text-sm font-semibold"
-                style={{ color: C.ink }}
-              >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
                 Option B. Sprint + 30-Day Support
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
@@ -680,10 +643,7 @@ export default function OfferInstall() {
               className="mt-4 rounded-xl border p-4"
               style={{ borderColor: C.gray }}
             >
-              <div
-                className="text-sm font-semibold"
-                style={{ color: C.ink }}
-              >
+              <div className="text-sm font-semibold" style={{ color: C.ink }}>
                 Option C. Performance / Revshare (selective, later-stage)
               </div>
               <p className="mt-2 text-sm leading-relaxed opacity-90">
