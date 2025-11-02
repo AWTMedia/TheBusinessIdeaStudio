@@ -36,16 +36,38 @@ export default function Footer() {
             <a className={linkCls} style={{ color: C.ink }} href="#/">
               Home
             </a>
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/founder-mastery"
+            >
+              Founder Mastery
+            </a>
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/business-systems"
+            >
+              Business Systems
+            </a>
             <a className={linkCls} style={{ color: C.ink }} href="#/repo">
               Repository
             </a>
             <a className={linkCls} style={{ color: C.ink }} href="#/faq">
               FAQ
             </a>
-            <a className={linkCls} style={{ color: C.ink }} href="#/governance">
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/governance"
+            >
               Governance
             </a>
-            <a className={linkCls} style={{ color: C.ink }} href="#/community">
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/community"
+            >
               Community
             </a>
             <a className={linkCls} style={{ color: C.ink }} href="#/systems">
