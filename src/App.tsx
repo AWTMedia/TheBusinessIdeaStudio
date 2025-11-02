@@ -17,7 +17,6 @@ const Community = lazy(() => import("./components/Community"));
 const Ai = lazy(() => import("./components/Ai"));
 const Systems = lazy(() => import("./components/Software"));
 const KnowledgeGraph = lazy(() => import("./components/KnowledgeGraph"));
-// NEW
 const FounderMastery = lazy(() => import("./components/FounderMastery"));
 const BusinessSystems = lazy(() => import("./components/BusinessSystems"));
 const OfferInstall = lazy(() => import("./components/OfferInstall"));
@@ -107,8 +106,6 @@ const useHashRouter = () => {
     if (normalized.startsWith("/ai")) return { page: "ai" };
     if (normalized.startsWith("/systems")) return { page: "systems" };
     if (normalized.startsWith("/graph")) return { page: "graph" };
-
-    // NEW routes
     if (normalized.startsWith("/founder-mastery")) return { page: "founder" };
     if (normalized.startsWith("/business-systems"))
       return { page: "bizsystems" };
