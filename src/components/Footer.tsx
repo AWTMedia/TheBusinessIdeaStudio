@@ -50,6 +50,13 @@ export default function Footer() {
             >
               Business Systems
             </a>
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/offer-install"
+            >
+              Offer Install
+            </a>
             <a className={linkCls} style={{ color: C.ink }} href="#/repo">
               Repository
             </a>
