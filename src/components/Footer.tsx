@@ -19,15 +19,18 @@ export default function Footer() {
       style={{ borderColor: C.gray, background: "#FFF" }}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 grid gap-8 md:grid-cols-3 text-sm">
+        {/* Brand blurb */}
         <div>
           <div className="font-semibold" style={{ color: C.ink }}>
             The Business Idea Studio
           </div>
           <p className="mt-2 opacity-80">
-            Evidence-led playbooks, systems, and tools for operators.
+            We install acquisition and delivery infrastructure for
+            owner-led businesses — and we publish the playbooks for free.
           </p>
         </div>
 
+        {/* Internal nav */}
         <nav>
           <div className="text-xs uppercase tracking-widest opacity-60">
             Pages
@@ -36,6 +39,7 @@ export default function Footer() {
             <a className={linkCls} style={{ color: C.ink }} href="#/">
               Home
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -43,6 +47,7 @@ export default function Footer() {
             >
               Founder Mastery
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -50,6 +55,7 @@ export default function Footer() {
             >
               Business Systems
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -57,12 +63,31 @@ export default function Footer() {
             >
               Offer Install
             </a>
+
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/kit"
+            >
+              Founder Kit
+            </a>
+
+            <a
+              className={linkCls}
+              style={{ color: C.ink }}
+              href="#/install"
+            >
+              Acquisition &amp; Delivery Install
+            </a>
+
             <a className={linkCls} style={{ color: C.ink }} href="#/repo">
               Repository
             </a>
+
             <a className={linkCls} style={{ color: C.ink }} href="#/faq">
               FAQ
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -70,6 +95,7 @@ export default function Footer() {
             >
               Governance
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -77,15 +103,19 @@ export default function Footer() {
             >
               Community
             </a>
+
             <a className={linkCls} style={{ color: C.ink }} href="#/systems">
               Software
             </a>
+
             <a className={linkCls} style={{ color: C.ink }} href="#/ai">
               AI (Private)
             </a>
+
             <a className={linkCls} style={{ color: C.ink }} href="#/graph">
               Knowledge Graph
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
@@ -96,6 +126,7 @@ export default function Footer() {
           </div>
         </nav>
 
+        {/* External nav */}
         <nav>
           <div className="text-xs uppercase tracking-widest opacity-60">
             Elsewhere
@@ -104,52 +135,53 @@ export default function Footer() {
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="https://x.com/yourhandle"
+              href="https://x.com/"
               target="_blank"
               rel="noreferrer"
             >
               X / Twitter
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="https://www.youtube.com/@yourchannel"
+              href="https://www.youtube.com/"
               target="_blank"
               rel="noreferrer"
             >
               YouTube
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="mailto:hello@yourapp.com"
+              href="mailto:hello@example.com"
             >
               Email
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="https://www.skool.com/your-group"
+              href="https://www.skool.com/"
               target="_blank"
               rel="noreferrer"
             >
               Skool
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="https://yourapp.com/privacy"
-              target="_blank"
-              rel="noreferrer"
+              href="#/governance"
             >
               Privacy
             </a>
+
             <a
               className={linkCls}
               style={{ color: C.ink }}
-              href="https://yourapp.com/terms"
-              target="_blank"
-              rel="noreferrer"
+              href="#/governance"
             >
               Terms
             </a>
