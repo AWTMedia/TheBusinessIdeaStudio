@@ -9,7 +9,7 @@ import UtilityStrip from "./components/UtilityStrip";
 import Footer from "./components/Footer";
 import SEO from "./components/SEO";
 
-// Lazy pages
+// Lazy pages (these all exist in repo already)
 const Repository = lazy(() => import("./components/Repository"));
 const Faq = lazy(() => import("./components/Faq"));
 const Governance = lazy(() => import("./components/Governance"));
@@ -20,9 +20,11 @@ const KnowledgeGraph = lazy(() => import("./components/KnowledgeGraph"));
 const FounderMastery = lazy(() => import("./components/FounderMastery"));
 const BusinessSystems = lazy(() => import("./components/BusinessSystems"));
 const OfferInstall = lazy(() => import("./components/OfferInstall"));
-const FounderKit = lazy(() => import("./components/FounderKit"));
-const OfferLanding = lazy(() => import("./components/OfferLanding"));
+// ❗ We are NOT lazily importing FounderKit / OfferLanding anymore,
+// because CI failed resolving those files on main. We'll inline stubs below.
 
+// ------------------------------------------------------------------
+// Brand colors
 const C = {
   blue: "#2F5DE8",
   cream: "#F2EDDF",
@@ -34,6 +36,8 @@ const C = {
 
 const HERO_VIDEO_URL = "https://youtu.be/XwzU4RikbGs";
 
+// ------------------------------------------------------------------
+// Small icons
 function Eye({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden>
@@ -55,6 +59,8 @@ function Check({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
+// ------------------------------------------------------------------
+// Shared badge
 function Badge({ children }: { children: React.ReactNode }) {
   return (
     <span
@@ -66,6 +72,67 @@ function Badge({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ------------------------------------------------------------------
+// Simple inline stubs to unblock build
+// If/when src/components/FounderKit.tsx and OfferLanding.tsx
+// actually land in main, you can remove these stubs and reintroduce lazy() imports.
+function FounderKitStub() {
+  return (
+    <section
+      className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16"
+      style={{ color: C.ink }}
+    >
+      <div
+        className="rounded-2xl border bg-white/90 p-8"
+        style={{ borderColor: C.gray }}
+      >
+        <h1 className="text-3xl font-black">Founder Kit</h1>
+        <p className="mt-4 text-sm leading-6 opacity-90">
+          This page will list the full founder infrastructure kit (positioning,
+          pipeline, booking stack, close script, onboarding rhythm, proof loop).
+          It’s coming online. For now, book a call and we’ll walk you through
+          it.
+        </p>
+        <div className="mt-6">
+          <CTA href="#/book-a-call">Book a Strategy Call →</CTA>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OfferLandingStub() {
+  return (
+    <section
+      className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16"
+      style={{ color: C.ink }}
+    >
+      <div
+        className="rounded-2xl border bg-white/90 p-8"
+        style={{ borderColor: C.gray }}
+      >
+        <h1 className="text-3xl font-black">
+          Acquisition & Delivery Install
+        </h1>
+        <p className="mt-4 text-sm leading-6 opacity-90">
+          This page is the high-conversion landing that explains the install:
+          avatar, offer, positioning/content system, profile funnel, leads
+          funnel, booking stack, close script, onboarding cadence, proof loop.
+        </p>
+        <p className="mt-4 text-sm leading-6 opacity-90">
+          We don’t coach. We install the system you’ll run weekly to acquire and
+          keep clients.
+        </p>
+        <div className="mt-6">
+          <CTA href="#/book-a-call">Get the install →</CTA>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ------------------------------------------------------------------
+// Route type
 type Route =
   | { page: "home" }
   | { page: "repo" }
@@ -83,6 +150,8 @@ type Route =
   | { page: "kit" }
   | { page: "install" };
 
+// ------------------------------------------------------------------
+// Hash router
 const useHashRouter = () => {
   const parseHash = (): Route => {
     let h = window.location.hash || "#/";
@@ -158,6 +227,8 @@ const useHashRouter = () => {
   return { route, nav };
 };
 
+// ------------------------------------------------------------------
+// Stages list for homepage
 const STAGES = [
   {
     k: "self",
@@ -196,6 +267,8 @@ const STAGES = [
   },
 ] as const;
 
+// ------------------------------------------------------------------
+// YouTube helper
 function toEmbed(url: string) {
   try {
     const u = new URL(url);
@@ -218,6 +291,8 @@ function toEmbed(url: string) {
   }
 }
 
+// ------------------------------------------------------------------
+// Home page component (hero, stages, community/software/ai/etc)
 function Home({
   onNavRepo,
   onOpenPager,
@@ -775,15 +850,18 @@ function Home({
 export default function App() {
   const { route, nav } = useHashRouter();
 
+  // initial hash redirect
   useEffect(() => {
     if (!window.location.hash) nav({ page: "home" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // scroll to top on route change
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [route.page]);
 
+  // legacy hash aliases
   useEffect(() => {
     const h = window.location.hash;
     if (/#\/?compliance$/i.test(h)) window.location.hash = "/governance";
@@ -794,6 +872,7 @@ export default function App() {
       window.location.hash = "/graph";
   }, [route.page]);
 
+  // nav helpers
   const onNavHome = () => nav({ page: "home" });
   const onNavRepo = () => nav({ page: "repo" });
   const onNavBook = () => nav({ page: "bookacall" });
@@ -804,7 +883,7 @@ export default function App() {
   const onNavSystems = () => nav({ page: "systems" });
   const onNavGraph = () => nav({ page: "graph" });
 
-  // NEW
+  // extra routes
   const onNavFounder = () => nav({ page: "founder" });
   const onNavBizSystems = () => nav({ page: "bizsystems" });
   const onNavOfferInstall = () => nav({ page: "offer" });
@@ -813,6 +892,7 @@ export default function App() {
 
   const onOpenPager = (k: string) => nav({ page: "onepager", slug: k });
 
+  // work out current onepager data
   const currentPager: OnePager | undefined =
     route.page === "onepager"
       ? onePagers[(route as any).slug] || onePagers["not-found"]
@@ -939,7 +1019,8 @@ export default function App() {
         };
       case "founder":
         return {
-          title: "Founder Mastery — The 7 Stages of Becoming a Business Typhoon",
+          title:
+            "Founder Mastery — The 7 Stages of Becoming a Business Typhoon",
           description:
             "The psychological progression: control → conviction → resonance → persuasion → rhythm → leverage → embodied authority.",
           canonicalPath: "/founder-mastery",
@@ -1000,7 +1081,10 @@ export default function App() {
   };
   // ====== /SEO per route ======
 
+  // hide top strip for onepager
   const showStrip = route.page !== "onepager";
+
+  // which UtilityStrip tab is 'active'
   const stripActive =
     route.page === "faq"
       ? "faq"
@@ -1050,6 +1134,7 @@ export default function App() {
         />
       )}
 
+      {/* HOME */}
       {route.page === "home" && (
         <Home
           onNavRepo={onNavRepo}
@@ -1064,6 +1149,7 @@ export default function App() {
         />
       )}
 
+      {/* REPO */}
       {route.page === "repo" && (
         <Suspense
           fallback={
@@ -1076,6 +1162,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* FAQ */}
       {route.page === "faq" && (
         <Suspense
           fallback={
@@ -1088,6 +1175,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* GOVERNANCE */}
       {route.page === "governance" && (
         <Suspense
           fallback={
@@ -1100,6 +1188,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* COMMUNITY */}
       {route.page === "community" && (
         <Suspense
           fallback={
@@ -1112,6 +1201,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* SYSTEMS / SOFTWARE */}
       {route.page === "systems" && (
         <Suspense
           fallback={
@@ -1124,6 +1214,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* AI */}
       {route.page === "ai" && (
         <Suspense
           fallback={
@@ -1136,6 +1227,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* GRAPH */}
       {route.page === "graph" && (
         <Suspense
           fallback={
@@ -1148,6 +1240,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* FOUNDER MASTERY */}
       {route.page === "founder" && (
         <Suspense
           fallback={
@@ -1160,6 +1253,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* BUSINESS SYSTEMS */}
       {route.page === "bizsystems" && (
         <Suspense
           fallback={
@@ -1172,6 +1266,7 @@ export default function App() {
         </Suspense>
       )}
 
+      {/* OFFER INSTALL (full delivery machine breakdown) */}
       {route.page === "offer" && (
         <Suspense
           fallback={
@@ -1184,36 +1279,21 @@ export default function App() {
         </Suspense>
       )}
 
-      {route.page === "kit" && (
-        <Suspense
-          fallback={
-            <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 text-center">
-              Loading Founder Kit…
-            </section>
-          }
-        >
-          <FounderKit />
-        </Suspense>
-      )}
+      {/* KIT (stub for now, until /components/FounderKit.tsx is in main) */}
+      {route.page === "kit" && <FounderKitStub />}
 
-      {route.page === "install" && (
-        <Suspense
-          fallback={
-            <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 text-center">
-              Loading Install Landing…
-            </section>
-          }
-        >
-          <OfferLanding />
-        </Suspense>
-      )}
+      {/* INSTALL (stub for now, until /components/OfferLanding.tsx is in main) */}
+      {route.page === "install" && <OfferLandingStub />}
 
+      {/* BOOK A CALL */}
       {route.page === "bookacall" && <BookACall />}
 
+      {/* ONE-PAGER VIEW */}
       {route.page === "onepager" && currentPager && (
         <OnePagerView pager={currentPager} onBack={onNavRepo} />
       )}
 
+      {/* ONE-PAGER FALLBACK */}
       {route.page === "onepager" && !currentPager && (
         <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
           <div
